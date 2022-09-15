@@ -1,5 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useState } from "react";
+import NavBar from "./Navbar";
+import { BrowserRouter as Router } from "react-router-dom";
+git
 
 function App() {
   return (
