@@ -1,12 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import { makeStyles } from "@mui/styles";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import CoinTable from "./CoinTable";
+import StickyTableContainer from "../containers/StickyTableContainer";
 import CreateBasketPage from "./CreateBasketPage";
 
 
@@ -77,23 +76,19 @@ export default function NavTabs(props) {
           aria-label="nav tabs example"
         >
           <LinkTab label="Coins" href="/coins" {...a11yProps(0)} />
-          <LinkTab label="Baskets" href="/baskets" {...a11yProps(1)} />
-          <LinkTab label="Create" href="/create" {...a11yProps(2)} />
-          <LinkTab label="Sign in" href="/signin" {...a11yProps(3)} />
+          <LinkTab label="Create a basket" href="/baskets" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <CoinTable
+        <StickyTableContainer
           loggedIn={props.loggedIn}
           currentUserId={props.currentUserId}
         >
           {" "}
-        </CoinTable>
+        </StickyTableContainer>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <CreateBasketPage
-          loggedIn={props.loggedIn}
-          currentUserId={props.currentUserId}
         ></CreateBasketPage>
       </TabPanel>
       

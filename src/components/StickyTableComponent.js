@@ -1,46 +1,53 @@
 import * as React from 'react';
-// import { makeStyles } from "@mui/styles";
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-
 import TableHeader from "./TableHeader";
 import Copyright from "./Copyright";
 import Box from '@mui/material/Box';
+import { TableHead } from '@mui/material';
+import { ConstructionOutlined } from '@mui/icons-material';
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     width: "100%"
-//   },
-//   paper: {
-//     width: "100%",
-//     marginBottom: theme.spacing(2)
-//   },
-//   table: {
-//     minWidth: 750
-//   },
-//   visuallyHidden: {
-//     border: 0,
-//     clip: "rect(0 0 0 0)",
-//     height: 1,
-//     margin: -1,
-//     overflow: "hidden",
-//     padding: 0,
-//     position: "absolute",
-//     top: 20,
-//     width: 1
-//   }
-// }));
 
-export default function EnhancedTable(props) {
-//   const classes = useStyles();
+let columns;
+
+columns = [ { id: 'Name', label: 'Name', minWidth: 170 },
+  { id: 'Symbol', label: 'Symbol', minWidth: 100 },
+  {
+    id: 'Price',
+    label: 'Price ($)',
+    minWidth: 170,
+    align: 'right',
+    format: (value: number) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'Change',
+    label: '24hΔ',
+    minWidth: 170,
+    align: 'right',
+    format: (value: number) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'MarketCapitalization',
+    label: 'Market Capitalization',
+    minWidth: 170,
+    align: 'right',
+    format: (value: number) => value.toFixed(2),
+  },
+];
+
+
+
+
+export default function StickyHeadTable(props) {
+  console.log(props)
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -57,42 +64,6 @@ export default function EnhancedTable(props) {
   const handleChangeDense = event => {
     setDense(event.target.checked);
   };
-  //API STRINGS
-  const LOCAL_TEST_API = "http://localhost:3000";
-  // const PRODUCTION_API = "https://gentle-wildwood-07928.herokuapp.com";
-  // const FAVORITE_API = PRODUCTION_API + "/favorites";
-  const FAVORITE_API = LOCAL_TEST_API + "/favorites";
-
-  const handleAddToWatchList = event => {
-    let coin_gecko_id = event.target.id;
-
-    console.log(props.loggedIn);
-    props.loggedIn
-      ? fetch(FAVORITE_API, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "*"
-          },
-          body: JSON.stringify({
-            favorite: {
-              symbol: event.target.value,
-              user_id: props.currentUserId,
-              coin_gecko_id: coin_gecko_id
-            }
-          })
-        })
-          .then(response => console.log(response.status))
-          .then(
-            alert(
-              `${event.target.value} was successfully added to your watchlist. You can view your basket or remove digital assets from your watchlist under Basket.`
-            )
-          )
-      : alert(
-          "This digital asset was not added to your watchlist. Please sign in to add a digital asset to your watchlist."
-        );
-  };
 
   return (
     <div>
@@ -102,21 +73,35 @@ export default function EnhancedTable(props) {
             stickyHeader 
             aria-label="sticky table"
           >
-            <TableHeader
-              rowCount={props.rows.length}
-            ></TableHeader>
+          <TableHead>
+          <TableRow>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
 
+          </TableHead>
+            {/* <TableHeader
+              rowCount={props.rows.length}
+            ></TableHeader> */}
             <TableBody>
               {props.rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
+
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
-                    <TableRow hover key={row[1]}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row[1]}>
                       <TableCell padding="checkbox">
                         <Checkbox
-                          onChange={handleAddToWatchList}
+                        
                           value={row[1]}
                           id={row[5]}
                           inputProps={{ "aria-labelledby": labelId }}
