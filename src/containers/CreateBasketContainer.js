@@ -1,24 +1,26 @@
-import React, {useState} from "react";
+import React, {useEffect} from "react";
 import BasketForm from "../components/BasketForm";
 import BasketContainer from "./BasketContainer";
 import Grid from "@mui/material/Grid";
-
+import axios from 'axios';
 
 export default function CreateBasketContainer(props) {
-    const [names, setNames] = useState([]);
     
+    // state ={
+    //   names: []
+    // }
     useEffect( () => {
-      const fetchData = async() => {
-         data = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h")
-        }
+         axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h")
+         .then(data => console.log(data))
     },[]);
 
-    updateNames(data) {
-      data.forEach( coin => {
-        names.push(coin.name)
-      })
-    };
+
+    // generateList(data) {
+    //       data.data.forEach( coin =>
+    //         names.push(coin.name));
+    // }
   
+    // console.log("names",names)
 
  
 
