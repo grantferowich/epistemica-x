@@ -250,7 +250,6 @@ export default function BasketForm(props) {
                 <TextField
                   id="name"
                   label="Basket Name"
-                  
                   fullWidth
                   required
                   onChange={event => {
@@ -262,7 +261,6 @@ export default function BasketForm(props) {
                 <TextField
                   id="standard-helperText"
                   label="Starting date"
-                  
                   fullWidth
                   required
                   defaultValue=""
@@ -302,6 +300,7 @@ export default function BasketForm(props) {
               <TextField
                 id="component 1"
                 select
+                Value={currency1}
                 onChange={handleChange1}
                 SelectProps={{
                   native: true

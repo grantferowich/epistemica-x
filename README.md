@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+#About
+Epistemica-X is a web application for managing investment thesis ideas. Evidence-based reaasoning helps managers determine how different mixtures of crypto tokens perform. Epistemica-X incorporates a Solana wallet interface as well.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Suppose a basket with an initial value of \$10,000.00. Assume the aim is to determine the basket's return since the start of the year, January 1st, 2022. Then say the basket whose performance is to be measured is comprised of equal parts Bitcoin and Ether. Next solve for the quantity of Bitcoin and Ether $10,000.00 is good for at the historical prices. 
 
-## Available Scripts
+The core business logic to be performed in state is this: 
 
-In the project directory, you can run:
+Initial Basket Value [user input] * BTC weighting (.5) [user input] / historical price [value from API] = BTC quantity [value calcuated in state]
+Initial Basket Value [user input] * ETH weighting (.5) [user input] / historical price [value from API] = ETH quantity [value calculated in state]
 
-### `npm start`
+BTC Quantity [value calculated in state] * present BTC price [value from API]
++ ETH Quantity [value calculated in state] * present ETH price [value from API]
+----
+= Present Basket Value [value calculated in state]
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Total return [value calculated in state] = (Present Basket Value [value calculated in state] - Initial Basket Value [user input]) / Initial Basket Value [user input]
+-------
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+#Demo
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#Technologies
+Epistemica-X is a single page application built with React.js, React Hooks, Material UI, and JavaScript. CoinTiger uses CoinGecko's API for getting market data. The application makes calls directly to public endpoints. Solana wallet functionality is provided. 
 
-### `npm run build`
+#Link to Web App
+TBD
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#Contributions
+Some features that would be really cool that I haven't gotten to yet but wouldn't mind getting around to at some point:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Chart.js to with basic ROI curves for each basket. Ideally you can click on the card, it flips over, then you see the chart of it's performance since the indexing date.
+2. Covarience and correlation calculations for different baskets or correlation between a basket and the Nasdaq or S&P 500 index.

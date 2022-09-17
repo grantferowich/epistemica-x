@@ -8,7 +8,7 @@ import axios from 'axios';
 export default class CreateBasketContainer extends Component {
   
   state = {
-        names: [],
+        names: ["Select"],
         pageUp: false
       };
     
