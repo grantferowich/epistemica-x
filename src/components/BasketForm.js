@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-// import { makeStyles } from "@mui/styles";
+import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -9,43 +8,11 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Copyright from "./Copyright";
 import Box from "@mui/material/Box";
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     "& > *": {
-//       width: 525,
-//       margin: "auto"
-//     }
-//   },
-//   root2: {
-//     "& .MuiTextField-root": {
-//       width: 525
-//     }
-//   },
-//   paper: {
-//     margin: "auto",
-//     display: "flex",
-//     flexWrap: "wrap",
-//     flexDirection: "column",
-//     alignItems: "center",
-//     justify: "center"
-//   },
-//   form: {
-//     width: "100%",
-//     flexWrap: "wrap",
-//     marginTop: theme.spacing(1),
-//     alignItems: "center"
-//   },
-//   submit: {
-//     margin: theme.spacing(3, 0, 2)
-//   }
-// }));
-
 export default function BasketForm() {
-
-//   const classes = useStyles();
   const [name, setName] = React.useState("");
   const [indexDate, setIndexDate] = React.useState("");
-
+  const [initialBasketValue, setInitialBasketValue] = React.useState("");
+  
   const [currency1, setCurrency1] = React.useState("");
   const [currency1API, setCurrency1API] = React.useState("");
   const currency1Q = 0;
@@ -72,20 +39,10 @@ export default function BasketForm() {
   const [currency5Amount, setCurrency5Amount] = React.useState("");
   const currency5Q = 0;
 
-  const [watchList, setWatchlist] = React.useState([]);
 
-  //API STRINGS
-//   const LOCAL_TEST_API = "http://localhost:3000"
-  // const PRODUCTION_API = "https://gentle-wildwood-07928.herokuapp.com";
-  // const FavoritesAPI = PRODUCTION_API + "/favorites";
-  // const BasketsAPI = PRODUCTION_API + "/baskets";
-//   const FavoritesAPI = LOCAL_TEST_API + "/favorites";
-//   const BasketsAPI = LOCAL/_TEST_API + "/baskets";
-
-  const UID = localStorage.getItem("UID");
   const basket = {
     name: name,
-    initialBasketValue: 10000,
+    initialBasketValue: initialBasketValue,
     indexDate: indexDate,
     coinOne: currency1,
     coin_1_q: currency1Q,
@@ -102,24 +59,8 @@ export default function BasketForm() {
     coinFive: currency5,
     coin_5_q: currency5Q,
     coinFiveId: currency5API,
-    user_id: UID
   };
 
-//   useEffect(() => {
-//     fetch(FavoritesAPI)
-//       .then(res => res.json())
-//       .then(data => collectFavorites(data));
-//   });
-
-  const collectFavorites = data => {
-    let collected = [];
-
-    let userFavorites = data.filter(
-      favorite => favorite.user_id === parseInt(UID)
-    );
-    userFavorites.map(f => collected.push([f.symbol, f.coin_gecko_id]));
-    setWatchlist(collected);
-  };
 
   const handleNameChange = event => {
     setName(event.target.value);
@@ -278,6 +219,8 @@ export default function BasketForm() {
     // }).then(console.log(basket));
   };
 
+  const watchList = ["ax","xx","x"]
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -354,11 +297,6 @@ export default function BasketForm() {
                 }}
                 helperText="Please select a digital asset"
               >
-                {watchList.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option[0]}
-                  </option>
-                ))}
               </TextField>
             </div>
             <TextField

@@ -6,7 +6,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import StickyTableContainer from "../containers/StickyTableContainer";
-import CreateBasketPage from "./CreateBasketPage";
+import CreateBasketPage from "../containers/CreateBasketContainer";
 
 
 function TabPanel(props) {
@@ -51,12 +51,6 @@ function LinkTab(props) {
   );
 }
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     flexGrow: 1,
-//     backgroundColor: theme.palette.background.paper
-//   }
-// }));
 
 export default function NavTabs(props) {
 //   const classes = useStyles();
@@ -76,20 +70,12 @@ export default function NavTabs(props) {
           aria-label="nav tabs example"
         >
           <LinkTab label="Coins" href="/coins" {...a11yProps(0)} />
-          <LinkTab label="Create a basket" href="/baskets" {...a11yProps(1)} />
+         
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <StickyTableContainer
-          loggedIn={props.loggedIn}
-          currentUserId={props.currentUserId}
-        >
-          {" "}
-        </StickyTableContainer>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <CreateBasketPage
-        ></CreateBasketPage>
+        <StickyTableContainer/>
+        <CreateBasketPage/>
       </TabPanel>
       
     </div>

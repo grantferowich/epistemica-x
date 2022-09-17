@@ -6,14 +6,9 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import TableHeader from "./TableHeader";
-import Copyright from "./Copyright";
-import Box from '@mui/material/Box';
 import { TableHead } from '@mui/material';
-import { ConstructionOutlined } from '@mui/icons-material';
 
 
 let columns;
@@ -43,11 +38,9 @@ columns = [ { id: 'Name', label: 'Name', minWidth: 170 },
   },
 ];
 
-
-
-
 export default function StickyHeadTable(props) {
-  console.log(props)
+  console.log("names", props.names)
+  
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -87,9 +80,6 @@ export default function StickyHeadTable(props) {
             </TableRow>
 
           </TableHead>
-            {/* <TableHeader
-              rowCount={props.rows.length}
-            ></TableHeader> */}
             <TableBody>
               {props.rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -99,14 +89,7 @@ export default function StickyHeadTable(props) {
 
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={row[1]}>
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                        
-                          value={row[1]}
-                          id={row[5]}
-                          inputProps={{ "aria-labelledby": labelId }}
-                        />
-                      </TableCell>
+                      
                       <TableCell
                         component="th"
                         id={labelId}
@@ -141,9 +124,6 @@ export default function StickyHeadTable(props) {
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
-      <Box mt={8}>
-        <Copyright />
-      </Box>
     </div>
   );
 }
