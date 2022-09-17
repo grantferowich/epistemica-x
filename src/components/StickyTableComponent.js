@@ -39,7 +39,6 @@ columns = [ { id: 'Name', label: 'Name', minWidth: 170 },
 ];
 
 export default function StickyHeadTable(props) {
-  console.log("names", props.names)
   
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);

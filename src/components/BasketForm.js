@@ -8,7 +8,10 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Copyright from "./Copyright";
 import Box from "@mui/material/Box";
 
-export default function BasketForm() {
+export default function BasketForm(props) {
+
+  const watchList  = props.children[1];
+  // const watchList = ["BTC", "ETH", "SOL"]
   const [name, setName] = React.useState("");
   const [indexDate, setIndexDate] = React.useState("");
   const [initialBasketValue, setInitialBasketValue] = React.useState("");
@@ -69,6 +72,10 @@ export default function BasketForm() {
   const handleDateChange = event => {
     setIndexDate(event.target.value);
   };
+
+  const handleIBVChange = event => {
+    setInitialBasketValue(event.target.value);
+  }
 
   const handleAmountOne = event => {
     setCurrency1Amount(event.target.value);
@@ -219,7 +226,7 @@ export default function BasketForm() {
     // }).then(console.log(basket));
   };
 
-  const watchList = ["ax","xx","x"]
+  
 
   return (
     <Container component="main" maxWidth="xs">
@@ -227,6 +234,9 @@ export default function BasketForm() {
       <div >
         <Typography component="h1" variant="h5">
           Build Your Basket
+        </Typography>
+        <Typography variant="p">
+          INSTRUCTIONS: Calculate the historical performance of a basket by selecting up to 5 crypto tokens and a weighting for each crypto token. Try 50% Bitcoin and 50% Ether with a start date of 01-01-2022 to see how the calculator works for yourself! 
         </Typography>
         <Box mx="auto">
           <form
@@ -240,6 +250,7 @@ export default function BasketForm() {
                 <TextField
                   id="name"
                   label="Basket Name"
+                  
                   fullWidth
                   required
                   onChange={event => {
@@ -251,6 +262,7 @@ export default function BasketForm() {
                 <TextField
                   id="standard-helperText"
                   label="Starting date"
+                  
                   fullWidth
                   required
                   defaultValue=""
@@ -263,18 +275,19 @@ export default function BasketForm() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   id="initial-basket-value"
-                  label="Initial Basket Value"
+                  label="Initial Basket $ Value"
+                  required
                   fullWidth
-                  defaultValue="$10,000"
-                  InputProps={{
-                    readOnly: true
+                  defaultValue=""
+                  onChange={ event => {
+                    handleIBVChange(event)
                   }}
                 />
               </Grid>
             </Grid>
             <TextField
               id="amount1"
-              label="Amount 1"
+              label="Select"
               variant="filled"
               type="number"
               onChange={event => {
@@ -289,27 +302,34 @@ export default function BasketForm() {
               <TextField
                 id="component 1"
                 select
-                // label={currency1}
-                // value={currency1}
                 onChange={handleChange1}
                 SelectProps={{
                   native: true
                 }}
                 helperText="Please select a digital asset"
               >
+                {watchList.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
+                
+
               </TextField>
             </div>
             <TextField
               id="amount2"
-              label="Amount 2"
+              label="Select"
               variant="filled"
               type="number"
+              select
               onChange={event => {
                 handleAmountTwo(event);
               }}
               InputLabelProps={{
                 shrink: true
               }}
+              
             />
             <div >
               <TextField
@@ -325,7 +345,7 @@ export default function BasketForm() {
               >
                 {watchList.map((option, index) => (
                   <option key={index} value={option}>
-                    {option[0]}
+                    {option}
                   </option>
                 ))}
               </TextField>
@@ -333,7 +353,9 @@ export default function BasketForm() {
             <br></br>
             <TextField
               id="amount3"
-              label="Amount 3"
+              label="Select"
+              select
+              children
               variant="filled"
               type="number"
               onChange={event => {
@@ -357,7 +379,7 @@ export default function BasketForm() {
               >
                 {watchList.map((option, index) => (
                   <option key={index} value={option}>
-                    {option[0]}
+                    {option}
                   </option>
                 ))}
               </TextField>
@@ -365,8 +387,10 @@ export default function BasketForm() {
             <br></br>
             <TextField
               id="amount4"
-              label="Amount 4"
+              label="Select"
               variant="filled"
+              select
+              
               type="number"
               onChange={event => {
                 handleAmountFour(event);
@@ -389,7 +413,7 @@ export default function BasketForm() {
               >
                 {watchList.map((option, index) => (
                   <option key={index} value={option}>
-                    {option[0]}
+                    {option}
                   </option>
                 ))}
               </TextField>
@@ -397,7 +421,8 @@ export default function BasketForm() {
             <br></br>
             <TextField
               id="amount5"
-              label="Amount 5"
+              label="Select"
+              select
               variant="filled"
               type="number"
               onChange={event => {
@@ -421,7 +446,7 @@ export default function BasketForm() {
               >
                 {watchList.map((option, index) => (
                   <option key={index} value={option}>
-                    {option[0]}
+                    {option}
                   </option>
                 ))}
               </TextField>

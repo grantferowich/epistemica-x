@@ -5,8 +5,10 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+
+
 import StickyTableContainer from "../containers/StickyTableContainer";
-import CreateBasketPage from "../containers/CreateBasketContainer";
+import CreateBasketContainer from "../containers/CreateBasketContainer";
 
 
 function TabPanel(props) {
@@ -75,7 +77,7 @@ export default function NavTabs(props) {
       </AppBar>
       <TabPanel value={value} index={0}>
         <StickyTableContainer/>
-        <CreateBasketPage/>
+        <CreateBasketContainer/>
       </TabPanel>
       
     </div>
