@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 export default function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © CoinTiger "}
+      {"Copyright © Epistemica X "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
