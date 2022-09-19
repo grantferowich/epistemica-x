@@ -1,20 +1,23 @@
+import axios from "axios";
 import React, { Component } from "react";
-import EnhancedTable from "./EnhancedTable";
+import StickyTableComponent from "../components/StickyTableComponent";
 
-export default class CoinTable extends Component {
+export default class StickyTableContainer extends Component {
   state = {
     rows: [],
     pageUp: false
   };
 
   async componentDidMount() {   
-    const CoinGeckoEndpointMarkets="https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h"
-
-    fetch(CoinGeckoEndpointMarkets).then(data => this.organize(data));
+    console.log("fetch starting")
+    axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h")
+    .then( (data) => this.organize(data.data))
+    .catch((err) =>console.log(err))
   }
 
+
   organize(all) {
-    all.data.forEach(coin => {
+    all.forEach(coin => {
       this.state.rows.push([
         coin.name,
         coin.symbol.toUpperCase(),
@@ -30,11 +33,9 @@ export default class CoinTable extends Component {
   render() {
     return (
       <div>
-        <EnhancedTable
+        <StickyTableComponent
           rows={this.state.rows}
-          loggedIn={this.props.loggedIn}
-          currentUserId={this.props.currentUserId}
-        ></EnhancedTable>
+        ></StickyTableComponent>
       </div>
     );
   }

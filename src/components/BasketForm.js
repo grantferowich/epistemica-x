@@ -1,125 +1,84 @@
-import React, { useEffect } from "react";
-// import { makeStyles } from "@mui/styles";
+import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import CssBaseline from "@mui/material/CssBaseline";
-import Copyright from "./Copyright";
 import Box from "@mui/material/Box";
+import axios from "axios";
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     "& > *": {
-//       width: 525,
-//       margin: "auto"
-//     }
-//   },
-//   root2: {
-//     "& .MuiTextField-root": {
-//       width: 525
-//     }
-//   },
-//   paper: {
-//     margin: "auto",
-//     display: "flex",
-//     flexWrap: "wrap",
-//     flexDirection: "column",
-//     alignItems: "center",
-//     justify: "center"
-//   },
-//   form: {
-//     width: "100%",
-//     flexWrap: "wrap",
-//     marginTop: theme.spacing(1),
-//     alignItems: "center"
-//   },
-//   submit: {
-//     margin: theme.spacing(3, 0, 2)
-//   }
-// }));
 
-export default function BasketForm() {
+export default function BasketForm(props) {
+  console.log('basketForm props', props.children[1])
+  
+  const tokenObject = props.children[1];
+  const watchList = tokenObject.keys;
+  console.log('watchlist', watchList);
 
-//   const classes = useStyles();
-  const [name, setName] = React.useState("");
-  const [indexDate, setIndexDate] = React.useState("");
+  // const generateWatchlist(props) {
+  //   props.children.forEach( (ele) => watchlist.push(ele[0]))
 
-  const [currency1, setCurrency1] = React.useState("");
-  const [currency1API, setCurrency1API] = React.useState("");
+  // }
+  // const watchList  = props.children[1][0]
+  // const presentBasketValue = 0;
+
+  const [name, setName] = useState('');
+  const [indexDate, setIndexDate] = useState('');
+  const [initialBasketValue, setInitialBasketValue] = useState('');
+  
+  const [currency1, setCurrency1] = useState('');
+  const [currency1weight, setCurrency1weight] = useState('');
+  const [currency1APIKey, setCurrency1APIKey] = useState('');
   const currency1Q = 0;
 
-  const [currency1Amount, setCurrency1Amount] = React.useState("");
+  
 
-  const [currency2, setCurrency2] = React.useState("");
-  const [currency2API, setCurrency2API] = React.useState("");
-  const [currency2Amount, setCurrency2Amount] = React.useState("");
+  const [currency2, setCurrency2] = useState('');
+  const [currency2weight, setCurrency2weight] = useState('');
+  const [currency2APIKey, setCurrency2APIKey] = useState('');
   const currency2Q = 0;
 
-  const [currency3, setCurrency3] = React.useState("");
-  const [currency3API, setCurrency3API] = React.useState("");
-  const [currency3Amount, setCurrency3Amount] = React.useState("");
+  const [currency3, setCurrency3] = useState('');
+  const [currency3weight, setCurrency3weight] = useState('');
+  const [currency3APIKey, setCurrency3APIKey] = useState('');
   const currency3Q = 0;
 
-  const [currency4, setCurrency4] = React.useState("");
-  const [currency4API, setCurrency4API] = React.useState("");
-  const [currency4Amount, setCurrency4Amount] = React.useState("");
+  const [currency4, setCurrency4] = useState('');
+  const [currency4weight, setCurrency4weight] = useState('');
+  const [currency4APIKey, setCurrency4APIKey] = useState('');
   const currency4Q = 0;
 
-  const [currency5, setCurrency5] = React.useState("");
-  const [currency5API, setCurrency5API] = React.useState("");
-  const [currency5Amount, setCurrency5Amount] = React.useState("");
+  const [currency5, setCurrency5] = useState('');
+  const [currency5weight, setCurrency5weight] = useState('');
+  const [currency5APIKey, setCurrency5APIKey] = useState('');
   const currency5Q = 0;
 
-  const [watchList, setWatchlist] = React.useState([]);
 
-  //API STRINGS
-//   const LOCAL_TEST_API = "http://localhost:3000"
-  // const PRODUCTION_API = "https://gentle-wildwood-07928.herokuapp.com";
-  // const FavoritesAPI = PRODUCTION_API + "/favorites";
-  // const BasketsAPI = PRODUCTION_API + "/baskets";
-//   const FavoritesAPI = LOCAL_TEST_API + "/favorites";
-//   const BasketsAPI = LOCAL/_TEST_API + "/baskets";
-
-  const UID = localStorage.getItem("UID");
+  // The basket object contains the crypto token names, initial basket value, historical date and quantity of crypto tokens.
+  // All the basket data fields are from user inputs except the quantity values, which are calculated in state. 
+  // Present basket value will be calculated by multiplying the historically derived quantity by the present price. 
   const basket = {
     name: name,
-    initialBasketValue: 10000,
+    initialBasketValue: initialBasketValue,
     indexDate: indexDate,
     coinOne: currency1,
     coin_1_q: currency1Q,
-    coinOneId: currency1API,
+    tokne_1_api_key: currency1APIKey,
     coinTwo: currency2,
     coin_2_q: currency2Q,
-    coinTwoId: currency2API,
+    tokne_2_api_key: currency1APIKey,
     coinThree: currency3,
     coin_3_q: currency3Q,
-    coinThreeId: currency3API,
+    tokne_3_api_key: currency1APIKey,
     coinFour: currency4,
     coin_4_q: currency4Q,
-    coinFourId: currency4API,
+    tokne_4_api_key: currency1APIKey,
     coinFive: currency5,
     coin_5_q: currency5Q,
-    coinFiveId: currency5API,
-    user_id: UID
+    tokne_5_api_key: currency1APIKey
   };
 
-//   useEffect(() => {
-//     fetch(FavoritesAPI)
-//       .then(res => res.json())
-//       .then(data => collectFavorites(data));
-//   });
-
-  const collectFavorites = data => {
-    let collected = [];
-
-    let userFavorites = data.filter(
-      favorite => favorite.user_id === parseInt(UID)
-    );
-    userFavorites.map(f => collected.push([f.symbol, f.coin_gecko_id]));
-    setWatchlist(collected);
-  };
 
   const handleNameChange = event => {
     setName(event.target.value);
@@ -129,161 +88,154 @@ export default function BasketForm() {
     setIndexDate(event.target.value);
   };
 
-  const handleAmountOne = event => {
-    setCurrency1Amount(event.target.value);
+  const handleIBVChange = event => {
+    setInitialBasketValue(event.target.value);
+  }
+
+  const handleWeight1 = event => {
+    setCurrency1weight(event.target.value);
+    console.log('currency1weight', currency1weight)
   };
 
-  const handleAmountTwo = event => {
-    setCurrency2Amount(event.target.value);
+  const handleWeight2 = event => {
+    setCurrency2weight(event.target.value);
+    console.log('currency2weight', currency2weight)
   };
 
-  const handleAmountThree = event => {
-    setCurrency3Amount(event.target.value);
+  const handleWeight3 = event => {
+    setCurrency3weight(event.target.value);
+    console.log('currency3weight', currency3weight)
   };
 
-  const handleAmountFour = event => {
-    setCurrency4Amount(event.target.value);
+  const handleWeight4 = event => {
+    setCurrency4weight(event.target.value);
+    console.log('currency4weight', currency4weight)
   };
 
-  const handleAmountFive = event => {
-    setCurrency5Amount(event.target.value);
+  const handleWeight5 = event => {
+    setCurrency5weight(event.target.value);
+    console.log('currency5weight', currency5weight)
   };
 
   const handleChange1 = event => {
     const items = event.target.value.split(",");
     setCurrency1(items[0]);
-    setCurrency1API(items[1]);
+    setCurrency1APIKey(items[1]);
   };
 
   const handleChange2 = event => {
     const items = event.target.value.split(",");
     setCurrency2(items[0]);
-    setCurrency2API(items[1]);
+    setCurrency2APIKey(items[1]);
   };
   const handleChange3 = event => {
     const items = event.target.value.split(",");
     setCurrency3(items[0]);
-    setCurrency3API(items[1]);
+    setCurrency3APIKey(items[1]);
   };
 
   const handleChange4 = event => {
     const items = event.target.value.split(",");
     setCurrency4(items[0]);
-    setCurrency4API(items[1]);
+    setCurrency4APIKey(items[1]);
   };
   const handleChange5 = event => {
     const items = event.target.value.split(",");
     setCurrency5(items[0]);
-    setCurrency5API(items[1]);
-  };
-
-  const getQuantities = async event => {
-    if (currency1API !== "") {
-      const quantity1Conversion = price => {
-        let q = currency1Amount / price;
-        // console.log(q);
-        basket.coin_1_q = q;
-      };
-      let string =
-        "https://api.coingecko.com/api/v3/coins/" +
-        currency1API +
-        "/history?date=" +
-        indexDate +
-        "&localization=false";
-      await fetch(string)
-        .then(resp => resp.json())
-        .then(data => quantity1Conversion(data.market_data.current_price.usd));
-    }
-
-    if (currency2API !== "") {
-      const quantity2Conversion = price => {
-        const q = currency2Amount / price;
-        basket.coin_2_q = q;
-      };
-      let string =
-        "https://api.coingecko.com/api/v3/coins/" +
-        currency2API +
-        "/history?date=" +
-        indexDate +
-        "&localization=false";
-      await fetch(string)
-        .then(resp => resp.json())
-        .then(data => quantity2Conversion(data.market_data.current_price.usd));
-    }
-
-    if (currency3API !== "") {
-      const quantity3Conversion = price => {
-        const q = currency3Amount / price;
-        // console.log(q);
-        basket.coin_3_q = q;
-      };
-      let string =
-        "https://api.coingecko.com/api/v3/coins/" +
-        currency3API +
-        "/history?date=" +
-        indexDate +
-        "&localization=false";
-      await fetch(string)
-        .then(resp => resp.json())
-        .then(data => quantity3Conversion(data.market_data.current_price.usd));
-    }
-
-    if (currency4API !== "") {
-      const quantity4Conversion = price => {
-        const q = currency4Amount / price;
-        // console.log(q);
-        basket.coin_4_q = q;
-      };
-      let string =
-        "https://api.coingecko.com/api/v3/coins/" +
-        currency4API +
-        "/history?date=" +
-        indexDate +
-        "&localization=false";
-      await fetch(string)
-        .then(resp => resp.json())
-        .then(data => quantity4Conversion(data.market_data.current_price.usd));
-    }
-
-    if (currency5API !== "") {
-      const quantity5Conversion = price => {
-        const q = currency5Amount / price;
-        console.log(q);
-        basket.coin_5_q = q;
-      };
-      let string =
-        "https://api.coingecko.com/api/v3/coins/" +
-        currency5API +
-        "/history?date=" +
-        indexDate +
-        "&localization=false";
-      await fetch(string)
-        .then(resp => resp.json())
-        .then(data => quantity5Conversion(data.market_data.current_price.usd));
-    }
+    setCurrency5APIKey(items[1]);
   };
 
   const handleSubmit = async event => {
     event.preventDefault();
+    console.log('handleSubmit')
 
-    await getQuantities(event);
+    const calculateQuantity1 = async (currency1APIKey, currency1Weight, indexDate) => {
+      let historicalPriceAPI = "https://api.coingecko.com/api/v3/coins/"+currency1.toLowerCase()+"/history?date="+indexDate+"&localization=false";
+      console.log(historicalPriceAPI)
+      let historicalPrice = await axios.get(historicalPriceAPI).then((response) => response.data.market_data.current_price.usd)
+      console.log("historicalPrice", historicalPrice)
+      let quantity = ((currency1Weight/100) * initialBasketValue) / historicalPrice;
+      console.log("basket.coin_1_q", quantity)
+      basket.coin_1_q = quantity;
+    }
+  
+    const calculateQuantity2 = async (currency2APIKey, currency2Weight, indexDate) => {
+      let historicalPriceAPI2 = "https://api.coingecko.com/api/v3/coins/"+currency2.toLowerCase()+"/history?date="+indexDate+"&localization=false";
+      console.log("api2", historicalPriceAPI2)
+      let historicalPrice2 = await axios.get(historicalPriceAPI2).then((response) => response.data.market_data.current_price.usd)
+      console.log("historicalPrice", historicalPrice2)
+      let quantity2 = ((currency2Weight/100) * initialBasketValue) / historicalPrice2;
+      console.log("basket.coin_2_q", quantity2)
+      basket.coin_2_q = quantity2;
+    }
+  
+    const calculateQuantity3 = async (currency3APIKey, currency3Weight, indexDate) => {
+      let historicalPriceAPI3 = "https://api.coingecko.com/api/v3/coins/"+currency3.toLowerCase()+"/history?date="+indexDate+"&localization=false";
+      let historicalPrice3 = await axios.get(historicalPriceAPI3).then((response) => response.data.market_data.current_price.usd)
+      console.log("historicalPrice", historicalPrice3)
+      let quantity3 = ((currency3Weight/100) * initialBasketValue) / historicalPrice3;
+      console.log("basket.coin_3_q", quantity3)
+      basket.coin_3_q = quantity3;
+    }
+  
+    const calculateQuantity4 = async (currency4APIKey, currency4Weight, indexDate) => {
+      let historicalPriceAPI4 = "https://api.coingecko.com/api/v3/coins/"+currency4.toLowerCase()+"/history?date="+indexDate+"&localization=false";
+      let historicalPrice4 = await axios.get(historicalPriceAPI4).then((response) => response.data.market_data.current_price.usd)
+      console.log("historicalPrice", historicalPrice4)
+      let quantity4 = ((currency4Weight/100) * initialBasketValue) / historicalPrice4;
+      console.log("basket.coin_4_q", quantity4)
+      basket.coin_4_q = quantity4;
+    }
+  
+    const calculateQuantity5 = async (currency5APIKey, currency5Weight, indexDate) => {
+      let historicalPriceAPI5 = "https://api.coingecko.com/api/v3/coins/"+currency5.toLowerCase()+"/history?date="+indexDate+"&localization=false";
+      let historicalPrice5 = await axios.get(historicalPriceAPI5).then((response) => response.market_data.current_price.usd)
+      console.log("historicalPrice", historicalPrice5)
+      let quantity5 = ((currency5Weight/100) * initialBasketValue) / historicalPrice5;
+      console.log("basket.coin_5_q", quantity5)
+      basket.coin_5_q = quantity5;
+    }
 
-    // fetch(BasketsAPI, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json"
-    //   },
-    //   body: JSON.stringify({ basket })
-    // }).then(console.log(basket));
+  if (currency1 !== "") {
+    console.log('currency1', currency1APIKey)
+    calculateQuantity1(currency1APIKey, currency1weight, indexDate)
+   
+  }
+
+  if (currency2 !== "") {
+    console.log("currency2", currency2APIKey)
+    setTimeout(calculateQuantity2(currency2APIKey, currency2weight, indexDate),1000)
+  }
+
+  if (currency3 !== "") {
+    console.log("currency3", currency3)
+    setTimeout(calculateQuantity3(currency3APIKey, currency3weight, indexDate),1000)
+  }
+
+  if (currency4 !== "") {
+    console.log("currency4", currency4)
+    setTimeout(calculateQuantity4(currency4APIKey, currency4weight, indexDate),1000)
+  }
+
+  if (currency5 !== "") {
+    console.log("currency5", currency5)
+    setTimeout(calculateQuantity5(currency5APIKey, currency5weight, indexDate),1000)
+  }
+
   };
 
+  
+
+  
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div >
         <Typography component="h1" variant="h5">
           Build Your Basket
+        </Typography>
+        <Typography variant="p">
+          INSTRUCTIONS: Calculate the historical performance of a basket by selecting up to 5 crypto tokens and a weighting for each crypto token. Try 50% Bitcoin and 50% Ether with a start date of 01-01-2022 to see how the calculator works for yourself! 
         </Typography>
         <Box mx="auto">
           <form
@@ -320,22 +272,23 @@ export default function BasketForm() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   id="initial-basket-value"
-                  label="Initial Basket Value"
+                  label="Initial Basket $ Value"
+                  required
                   fullWidth
-                  defaultValue="$10,000"
-                  InputProps={{
-                    readOnly: true
+                  defaultValue=""
+                  onChange={ event => {
+                    handleIBVChange(event)
                   }}
                 />
               </Grid>
             </Grid>
             <TextField
-              id="amount1"
-              label="Amount 1"
+              id="weight1"
+              label="Weight (%)"
               variant="filled"
               type="number"
               onChange={event => {
-                handleAmountOne(event);
+                handleWeight1(event);
               }}
               InputLabelProps={{
                 shrink: true
@@ -346,8 +299,7 @@ export default function BasketForm() {
               <TextField
                 id="component 1"
                 select
-                // label={currency1}
-                // value={currency1}
+                value={currency1}
                 onChange={handleChange1}
                 SelectProps={{
                   native: true
@@ -356,29 +308,31 @@ export default function BasketForm() {
               >
                 {watchList.map((option, index) => (
                   <option key={index} value={option}>
-                    {option[0]}
+                    {option}
                   </option>
                 ))}
+                
+
               </TextField>
             </div>
             <TextField
-              id="amount2"
-              label="Amount 2"
+              id="weight2"
+              label="Weight (%)"
               variant="filled"
               type="number"
               onChange={event => {
-                handleAmountTwo(event);
+                handleWeight2(event);
               }}
               InputLabelProps={{
                 shrink: true
               }}
+              
             />
             <div >
               <TextField
                 id="component 2"
                 select
-                // label={currency2}
-                // value={currency2}
+                value={currency2}
                 onChange={handleChange2}
                 SelectProps={{
                   native: true
@@ -387,19 +341,19 @@ export default function BasketForm() {
               >
                 {watchList.map((option, index) => (
                   <option key={index} value={option}>
-                    {option[0]}
+                    {option}
                   </option>
                 ))}
               </TextField>
             </div>
             <br></br>
             <TextField
-              id="amount3"
-              label="Amount 3"
+              id="weight3"
+              label="Weight (%)"
               variant="filled"
               type="number"
               onChange={event => {
-                handleAmountThree(event);
+                handleWeight3(event);
               }}
               InputLabelProps={{
                 shrink: true
@@ -409,8 +363,7 @@ export default function BasketForm() {
               <TextField
                 id="component 3"
                 select
-                // label={currency3}
-                // value={currency3}
+                value={currency3}
                 onChange={handleChange3}
                 SelectProps={{
                   native: true
@@ -419,19 +372,19 @@ export default function BasketForm() {
               >
                 {watchList.map((option, index) => (
                   <option key={index} value={option}>
-                    {option[0]}
+                    {option}
                   </option>
                 ))}
               </TextField>
             </div>
             <br></br>
             <TextField
-              id="amount4"
-              label="Amount 4"
+              id="weight4"
+              label="Weight (%)"
               variant="filled"
               type="number"
               onChange={event => {
-                handleAmountFour(event);
+                handleWeight4(event);
               }}
               InputLabelProps={{
                 shrink: true
@@ -441,8 +394,7 @@ export default function BasketForm() {
               <TextField
                 id="component 4"
                 select
-                // label={currency4}
-                // value={currency4}
+                value={currency4}
                 onChange={handleChange4}
                 SelectProps={{
                   native: true
@@ -451,19 +403,19 @@ export default function BasketForm() {
               >
                 {watchList.map((option, index) => (
                   <option key={index} value={option}>
-                    {option[0]}
+                    {option}
                   </option>
                 ))}
               </TextField>
             </div>
             <br></br>
             <TextField
-              id="amount5"
-              label="Amount 5"
+              id="weight5"
+              label="Weight (%)"
               variant="filled"
               type="number"
               onChange={event => {
-                handleAmountFive(event);
+                handleWeight5(event);
               }}
               InputLabelProps={{
                 shrink: true
@@ -473,8 +425,7 @@ export default function BasketForm() {
               <TextField
                 id="component 5"
                 select
-                // label={currency5}
-                // value={currency5}
+                value={currency5}
                 onChange={handleChange5}
                 SelectProps={{
                   native: true
@@ -483,7 +434,7 @@ export default function BasketForm() {
               >
                 {watchList.map((option, index) => (
                   <option key={index} value={option}>
-                    {option[0]}
+                    {option}
                   </option>
                 ))}
               </TextField>
@@ -499,9 +450,6 @@ export default function BasketForm() {
           </form>
         </Box>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }
