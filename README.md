@@ -18,6 +18,7 @@ Total return [value calculated in state] = (Present Basket Value [value calculat
 
 
 #Demo
+TBD
 
 #Technologies
 Epistemica-X is a single page application built with React.js, React Hooks, Material UI, and JavaScript. CoinTiger uses CoinGecko's API for getting market data. The application makes calls directly to public endpoints. Solana wallet functionality is provided. 

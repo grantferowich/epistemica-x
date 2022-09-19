@@ -7,8 +7,9 @@ import axios from 'axios';
 
 export default class CreateBasketContainer extends Component {
   
-  state = {
-        names: ["Select"],
+      state = {
+        names: [''],
+        ids: [],
         pageUp: false
       };
     
@@ -22,13 +23,10 @@ export default class CreateBasketContainer extends Component {
     
     
       Listify(all) {
-        all.forEach(coin => {
-          this.state.names.push(
-            coin.name
-          );
+        all.forEach(token => {
+          this.state.names[token.name]= token.id});
           this.setState({ pageUp: true });
-        });
-      }
+        }
   
   
   
@@ -42,7 +40,6 @@ export default class CreateBasketContainer extends Component {
       </BasketForm>
         <div id="basketpageDiv" display="flex" flexWrap="wrap">
         <Grid container="true" display="flex" flexWrap="wrap" xs={12}>
-       
        <Grid item xs={9}>
          <BasketContainer/>
        </Grid>
@@ -53,5 +50,5 @@ export default class CreateBasketContainer extends Component {
 
     </div>
     )
-  }
+    }
 }
