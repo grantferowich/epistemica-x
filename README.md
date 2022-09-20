@@ -30,24 +30,3 @@ Some features that would be really cool that I haven't gotten to yet but wouldn'
 
 1. Chart.js to with basic ROI curves for each basket. Ideally you can click on the card, it flips over, then you see the chart of it's performance since the indexing date.
 2. Covarience and correlation calculations for different baskets or correlation between a basket and the Nasdaq or S&P 500 index.
-
-<!-- 
-  Memoize(all) {
-        all.forEach((token) => {
-          this.setState[names[token.name]= token.id]
-          this.setState({ pageUp: true })}
-      } -->
-
-      <!--  // names: {token.name: token.id} -->
-
-
-<!--  -->
-<!--  -->
-
-  const handleChange1 = event => {
-    const key = event.target.value;
-    console.log('key', key)
-    setCurrency1(key);
-    setCurrency1APIKey(namesMap.get(key));
-    console.log(currency1APIKey)
-  };
