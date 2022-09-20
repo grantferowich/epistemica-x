@@ -10,18 +10,22 @@ import axios from "axios";
 
 
 export default function BasketForm(props) {
-  console.log('basketForm props', props.children[1])
   
-  const tokenObject = props.children[1];
-  const watchList = tokenObject.keys;
+  console.log('basketForm props', props.children[1])
+  // console.log('basketForm keys', props.children[1].keys)
+  const [namesMap, setNamesMap] = useState(props.children[1])
+  console.log('namesMap', namesMap)
+  const namesKeys = [...namesMap.keys()] 
+  //NamesKeys is pulling properly
+  console.log('namesKeys', namesKeys )  // does it return a list, does it return an array, in some languages these are different.. 
+  const watchList = namesKeys;
+  // watchList is pulling properly
   console.log('watchlist', watchList);
 
-  // const generateWatchlist(props) {
-  //   props.children.forEach( (ele) => watchlist.push(ele[0]))
 
-  // }
-  // const watchList  = props.children[1][0]
-  // const presentBasketValue = 0;
+  // i think some of the responsiveness wierdness is unrelated to the code and existing because the API itself is somewhat shaky
+  // sometimes the CG api is slow, that's all. 
+  // currency1APIKey = namesMap.get(currency1)
 
   const [name, setName] = useState('');
   const [indexDate, setIndexDate] = useState('');
