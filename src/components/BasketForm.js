@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -9,22 +9,26 @@ import Box from "@mui/material/Box";
 import axios from "axios";
 
 
-export default function BasketForm(props) {
-  
-  console.log('basketForm props', props.children[1]);
-  // console.log('basketForm keys', props.children[1].keys)
-  const [namesMap, setNamesMap] = useState(props.children[1]);
-  console.log('namesMap', namesMap);
-  // namesMap looks ok 
-  console.log('namesMapK', Array.from(namesMap.keys()));
-  // what worked was deleting NamesKeys var, setting watchlist as Array.from(namesMap.keys())
-  const watchList = Array.from(namesMap.keys());
-  console.log('watchlist', watchList);
- // watchList is pulling properly
 
-  // i think some of the responsiveness wierdness is unrelated to the code and existing because the API itself is somewhat shaky
-  // sometimes the CG api is slow, that's all. 
-  // currency1APIKey = namesMap.get(currency1)
+
+export default function BasketForm(props) {
+  const [namesMap, setNamesMap] = useState(new Map());
+  const [watchList, setWatchList] = useState([]);
+
+  useEffect(() => {
+    setNamesMap(props.children[1]);
+
+    for (let entry of namesMap.entries()){
+      watchList.push(entry[0])
+    }
+    //eslint-disable-next-line
+  }, []);
+
+
+  
+  
+  console.log('namesMap', namesMap)
+  console.log('watchlist', watchList);
 
   const [name, setName] = useState('');
   const [indexDate, setIndexDate] = useState('');
@@ -34,8 +38,6 @@ export default function BasketForm(props) {
   const [currency1weight, setCurrency1weight] = useState('');
   const [currency1APIKey, setCurrency1APIKey] = useState('');
   const currency1Q = 0;
-
-  
 
   const [currency2, setCurrency2] = useState('');
   const [currency2weight, setCurrency2weight] = useState('');
@@ -121,31 +123,35 @@ export default function BasketForm(props) {
   };
 
   const handleChange1 = event => {
-    const items = event.target.value.split(",");
-    setCurrency1(items[0]);
-    setCurrency1APIKey(items[1]);
+    const key = event.target.value;
+    setCurrency1(key)
+    setCurrency1APIKey(namesMap.get(key));
+
   };
+  console.log(currency1)
+  console.log(currency1APIKey)
+
 
   const handleChange2 = event => {
-    const items = event.target.value.split(",");
-    setCurrency2(items[0]);
-    setCurrency2APIKey(items[1]);
+   const key = event.target.value;
+    setCurrency2(key)
+    setCurrency2APIKey(namesMap.get(key));
   };
   const handleChange3 = event => {
-    const items = event.target.value.split(",");
-    setCurrency3(items[0]);
-    setCurrency3APIKey(items[1]);
+    const key = event.target.value;
+    setCurrency3(key)
+    setCurrency3APIKey(namesMap.get(key));
   };
 
   const handleChange4 = event => {
-    const items = event.target.value.split(",");
-    setCurrency4(items[0]);
-    setCurrency4APIKey(items[1]);
+    const key = event.target.value;
+    setCurrency4(key)
+    setCurrency4APIKey(namesMap.get(key));
   };
   const handleChange5 = event => {
-    const items = event.target.value.split(",");
-    setCurrency5(items[0]);
-    setCurrency5APIKey(items[1]);
+    const key = event.target.value;
+    setCurrency5(key)
+    setCurrency5APIKey(namesMap.get(key));
   };
 
   const handleSubmit = async event => {
@@ -226,9 +232,6 @@ export default function BasketForm(props) {
   }
 
   };
-
-  
-
   
   return (
     <Container component="main" maxWidth="xs">
