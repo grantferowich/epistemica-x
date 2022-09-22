@@ -1,34 +1,21 @@
 import React, { useEffect, useState } from "react";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
 import axios from "axios";
-
-
-
+import { FormControl, FormHelperText, MenuItem, CssBaseline, Grid, Box, Container, Button, TextField, Typography, Select } from "@mui/material";
 
 export default function BasketForm(props) {
-  const [namesMap, setNamesMap] = useState(new Map());
-  const [watchList, setWatchList] = useState([]);
 
-  useEffect(() => {
-    setNamesMap(props.children[1]);
-
-    for (let entry of namesMap.entries()){
-      watchList.push(entry[0])
+  const [data, setData] = useState([]);
+  const [query, setQuery] = useState('react');
+ 
+  useEffect( () => {
+   
+    async function fetchData() {
+      const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h" + query);
+      const apiData = (response.data);
+      setData(apiData);
     }
-    //eslint-disable-next-line
-  }, []);
-
-
-  
-  
-  console.log('namesMap', namesMap)
-  console.log('watchlist', watchList);
+    fetchData();
+  }, [query]);
 
   const [name, setName] = useState('');
   const [indexDate, setIndexDate] = useState('');
@@ -69,19 +56,19 @@ export default function BasketForm(props) {
     indexDate: indexDate,
     coinOne: currency1,
     coin_1_q: currency1Q,
-    tokne_1_api_key: currency1APIKey,
+    token_1_api_key: currency1APIKey,
     coinTwo: currency2,
     coin_2_q: currency2Q,
-    tokne_2_api_key: currency1APIKey,
+    token_2_api_key: currency1APIKey,
     coinThree: currency3,
     coin_3_q: currency3Q,
-    tokne_3_api_key: currency1APIKey,
+    token_3_api_key: currency1APIKey,
     coinFour: currency4,
     coin_4_q: currency4Q,
-    tokne_4_api_key: currency1APIKey,
+    token_4_api_key: currency1APIKey,
     coinFive: currency5,
     coin_5_q: currency5Q,
-    tokne_5_api_key: currency1APIKey
+    token_5_api_key: currency1APIKey
   };
 
 
@@ -124,34 +111,31 @@ export default function BasketForm(props) {
 
   const handleChange1 = event => {
     const key = event.target.value;
-    setCurrency1(key)
-    setCurrency1APIKey(namesMap.get(key));
-
+    setCurrency1(key.name);
+    setCurrency1APIKey(key.id);
   };
-  console.log(currency1)
-  console.log(currency1APIKey)
-
 
   const handleChange2 = event => {
    const key = event.target.value;
-    setCurrency2(key)
-    setCurrency2APIKey(namesMap.get(key));
+    setCurrency2(key.name);
+    setCurrency2APIKey(key.id);
+    
   };
   const handleChange3 = event => {
     const key = event.target.value;
-    setCurrency3(key)
-    setCurrency3APIKey(namesMap.get(key));
+    setCurrency3(key.name);
+    setCurrency3APIKey(key.id);
   };
 
   const handleChange4 = event => {
     const key = event.target.value;
-    setCurrency4(key)
-    setCurrency4APIKey(namesMap.get(key));
+    setCurrency4(key.name);
+    setCurrency4APIKey(key.id);
   };
   const handleChange5 = event => {
     const key = event.target.value;
-    setCurrency5(key)
-    setCurrency5APIKey(namesMap.get(key));
+    setCurrency5(key.name)
+    setCurrency5APIKey(key.id)
   };
 
   const handleSubmit = async event => {
@@ -302,24 +286,22 @@ export default function BasketForm(props) {
             />
 
             <div >
-              <TextField
-                id="component 1"
-                select
-                value={currency1}
-                onChange={handleChange1}
-                SelectProps={{
-                  native: true
-                }}
-                helperText="Please select a digital asset"
-              >
-                {watchList.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
+              <FormControl>
+                <Select 
+                  displayEmpty
+                  onChange={handleChange1}
+                  inputProps={{ 'aria-label': 'Without label' }}
+                  >
+                  <MenuItem value=""><em>None</em></MenuItem>
+                    {data.map((option) => (
+                  <MenuItem key={option.id} value={option}>
+                    {option.name}
+                  </MenuItem>
                 ))}
-                
 
-              </TextField>
+                </Select>
+                <FormHelperText>Select basket token 1</FormHelperText>
+              </FormControl>
             </div>
             <TextField
               id="weight2"
@@ -335,22 +317,22 @@ export default function BasketForm(props) {
               
             />
             <div >
-              <TextField
-                id="component 2"
-                select
-                value={currency2}
-                onChange={handleChange2}
-                SelectProps={{
-                  native: true
-                }}
-                helperText="Please select a digital asset"
-              >
-                {watchList.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
+            <FormControl>
+                <Select 
+                  displayEmpty
+                  onChange={handleChange2}
+                  inputProps={{ 'aria-label': 'Without label' }}
+                  >
+                  <MenuItem value=""><em>None</em></MenuItem>
+                    {data.map((option) => (
+                  <MenuItem key={option.id} value={option}>
+                    {option.name}
+                  </MenuItem>
                 ))}
-              </TextField>
+
+                </Select>
+                <FormHelperText>Select basket token 2</FormHelperText>
+              </FormControl>
             </div>
             <br></br>
             <TextField
@@ -366,22 +348,22 @@ export default function BasketForm(props) {
               }}
             />
             <div >
-              <TextField
-                id="component 3"
-                select
-                value={currency3}
-                onChange={handleChange3}
-                SelectProps={{
-                  native: true
-                }}
-                helperText="Please select a digital asset"
-              >
-                {watchList.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
+            <FormControl>
+                <Select 
+                  displayEmpty
+                  onChange={handleChange3}
+                  inputProps={{ 'aria-label': 'Without label' }}
+                  >
+                  <MenuItem value=""><em>None</em></MenuItem>
+                    {data.map((option) => (
+                  <MenuItem key={option.id} value={option}>
+                    {option.name}
+                  </MenuItem>
                 ))}
-              </TextField>
+
+                </Select>
+                <FormHelperText>Select basket token 3</FormHelperText>
+              </FormControl>
             </div>
             <br></br>
             <TextField
@@ -397,22 +379,22 @@ export default function BasketForm(props) {
               }}
             />
             <div >
-              <TextField
-                id="component 4"
-                select
-                value={currency4}
-                onChange={handleChange4}
-                SelectProps={{
-                  native: true
-                }}
-                helperText="Please select a digital asset"
-              >
-                {watchList.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
+            <FormControl>
+                <Select 
+                  displayEmpty
+                  onChange={handleChange4}
+                  inputProps={{ 'aria-label': 'Without label' }}
+                  >
+                  <MenuItem value=""><em>None</em></MenuItem>
+                    {data.map((option) => (
+                  <MenuItem key={option.id} value={option}>
+                    {option.name}
+                  </MenuItem>
                 ))}
-              </TextField>
+
+                </Select>
+                <FormHelperText>Select basket token 4</FormHelperText>
+              </FormControl>
             </div>
             <br></br>
             <TextField
@@ -428,22 +410,22 @@ export default function BasketForm(props) {
               }}
             />
             <div >
-              <TextField
-                id="component 5"
-                select
-                value={currency5}
-                onChange={handleChange5}
-                SelectProps={{
-                  native: true
-                }}
-                helperText="Please select a digital asset"
-              >
-                {watchList.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
+            <FormControl>
+                <Select 
+                  displayEmpty
+                  onChange={handleChange5}
+                  inputProps={{ 'aria-label': 'Without label' }}
+                  >
+                  <MenuItem value=""><em>None</em></MenuItem>
+                    {data.map((option) => (
+                  <MenuItem key={option.id} value={option}>
+                    {option.name}
+                  </MenuItem>
                 ))}
-              </TextField>
+
+                </Select>
+                <FormHelperText>Select basket token 5</FormHelperText>
+              </FormControl>
               <Button
                 type="submit"
                 color="primary"

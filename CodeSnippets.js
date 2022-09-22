@@ -1,5 +1,14 @@
 
 
+      
+      //example of what the names ds will look like according to key-value pair.
+     //The names are the keys, the API keys are the values.
+    // names: {
+   //   "bitcoin" => "bitcoin", 
+  //   "binance" => "binancoin", 
+ //   "Polygon" => "matic-network"
+  // }
+
 
 // console.log('basketForm props', props.children[1]);
   // console.log('basketForm keys', props.children[1].keys)
@@ -26,3 +35,9 @@
   // currency1APIKey = namesMap.get(currency1)
 
    // setWatchList(...watchList, Array.from(namesMap.keys));
+
+   {data.map((option) => (
+    <option key={option.id} value={option}>
+      {option.name}
+    </option>
+  ))}
