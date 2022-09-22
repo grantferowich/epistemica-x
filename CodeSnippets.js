@@ -41,3 +41,31 @@
       {option.name}
     </option>
   ))}
+
+  // //BasketCardsContainer class component before the rfc re-write
+  // import React, { Component } from "react";
+  // import Basket from "../components/BasketCard";
+  // import Grid from "@mui/material/Grid";
+  
+  // export default class BasketCardContainer extends Component {
+  //   const [data, setData] = 
+  
+   
+  //   render() {
+  //     return (
+  //       <div>
+  //         <div>
+  //           <h3>My Basket</h3>
+  //           <Grid container="true" display="flex" flexWrap="wrap" xs={12}>
+  //             {this.state.baskets.map(basket => (
+  //               <Grid item xs={12} sm={6}>
+  //                 <Basket key={basket.id} basket={basket}></Basket>
+  //               </Grid>
+  //             ))}
+  //           </Grid>
+  //         </div>
+  //       </div>
+  //     );
+  //   }
+  // }
+  

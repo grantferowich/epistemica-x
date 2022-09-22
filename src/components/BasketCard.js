@@ -1,10 +1,15 @@
 import React, { Component } from "react";
+
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
 
-export default class Basket extends Component {
+export default class BasketCard extends Component {
+  
+
+
+  
   coinOneId = this.props.basket.coinOneId;
   coinTwoId = this.props.basket.coinTwoId;
   coinThreeId = this.props.basket.coinThreeId;
@@ -31,13 +36,7 @@ export default class Basket extends Component {
     val5: 0
   };
 
-//   classes = makeStyles({
-//     card: {
-//       minWidth: "50%"
-//     }
-//   });
-
-
+ 
   async componentDidMount() {
     console.log(this.props);
     const  CoinGeckoEndpoint = "https://api.coingecko.com/api/v3/simple/price?"
@@ -129,13 +128,13 @@ export default class Basket extends Component {
             Basket: {this.props.basket.name}
           </Typography>
           <Typography variant="h5" component="h5">
-            Performance to Date: {`${this.calculatePerformance()}%`}
+            Return: {`${this.calculatePerformance()}%`}
           </Typography>
           <Typography variant="p" component="p">
-            Date of Basket Creation: {this.props.basket.indexDate}
+            Index Date: {this.props.basket.indexDate}
           </Typography>
           <Typography variant="p" component="p">
-            Current Market Value: {`$${this.state.marketValue}`}
+            Present Basket Value: {`$${this.state.marketValue}`}
           </Typography>
           <Typography variant="p" component="p">
             Initial Value: {`$${this.props.basket.initialBasketValue}`}

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FormControl, FormHelperText, MenuItem, CssBaseline, Grid, Box, Container, Button, TextField, Typography, Select } from "@mui/material";
+import BasketCardContainer from '../containers/BasketCardContainer';
 
 export default function BasketForm(props) {
 
   const [data, setData] = useState([]);
-  const [query, setQuery] = useState('react');
+  const [query] = useState('react');
  
   useEffect( () => {
    
@@ -121,6 +122,7 @@ export default function BasketForm(props) {
     setCurrency2APIKey(key.id);
     
   };
+
   const handleChange3 = event => {
     const key = event.target.value;
     setCurrency3(key.name);
@@ -132,6 +134,7 @@ export default function BasketForm(props) {
     setCurrency4(key.name);
     setCurrency4APIKey(key.id);
   };
+
   const handleChange5 = event => {
     const key = event.target.value;
     setCurrency5(key.name)
@@ -140,15 +143,15 @@ export default function BasketForm(props) {
 
   const handleSubmit = async event => {
     event.preventDefault();
-    console.log('handleSubmit')
+    console.log('handleSubmit completed.')
 
     const calculateQuantity1 = async (currency1APIKey, currency1Weight, indexDate) => {
-      let historicalPriceAPI = "https://api.coingecko.com/api/v3/coins/"+currency1.toLowerCase()+"/history?date="+indexDate+"&localization=false";
-      console.log(historicalPriceAPI)
-      let historicalPrice = await axios.get(historicalPriceAPI).then((response) => response.data.market_data.current_price.usd)
-      console.log("historicalPrice", historicalPrice)
-      let quantity = ((currency1Weight/100) * initialBasketValue) / historicalPrice;
-      console.log("basket.coin_1_q", quantity)
+      let historicalPriceAPI1 = "https://api.coingecko.com/api/v3/coins/"+currency1.toLowerCase()+"/history?date="+indexDate+"&localization=false";
+      console.log(historicalPriceAPI1)
+      let historicalPrice1 = await axios.get(historicalPriceAPI1).then((response) => response.data.market_data.current_price.usd)
+      console.log("The historicalPrice1 =", historicalPrice1)
+      let quantity = ((currency1Weight/100) * initialBasketValue) / historicalPrice1;
+      console.log("The basket.coin_1_q =", quantity)
       basket.coin_1_q = quantity;
     }
   
@@ -156,9 +159,9 @@ export default function BasketForm(props) {
       let historicalPriceAPI2 = "https://api.coingecko.com/api/v3/coins/"+currency2.toLowerCase()+"/history?date="+indexDate+"&localization=false";
       console.log("api2", historicalPriceAPI2)
       let historicalPrice2 = await axios.get(historicalPriceAPI2).then((response) => response.data.market_data.current_price.usd)
-      console.log("historicalPrice", historicalPrice2)
+      console.log("The historicalPrice2 =", historicalPrice2)
       let quantity2 = ((currency2Weight/100) * initialBasketValue) / historicalPrice2;
-      console.log("basket.coin_2_q", quantity2)
+      console.log("The basket.coin_2_q =", quantity2)
       basket.coin_2_q = quantity2;
     }
   
@@ -434,6 +437,9 @@ export default function BasketForm(props) {
               >
                 CREATE
               </Button>
+              <BasketCardContainer>
+                 basket={basket}
+              </BasketCardContainer>
             </div>
           </form>
         </Box>

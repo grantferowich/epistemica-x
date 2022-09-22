@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { Component } from "react";
-import StickyTableComponent from "../components/StickyTableComponent";
+import CryptoStickyTableComponent from "../components/CryptoStickyTableComponent";
 
-export default class StickyTableContainer extends Component {
+export default class CryptoStickyTableContainer extends Component {
   state = {
     rows: [],
     pageUp: false
@@ -33,9 +33,9 @@ export default class StickyTableContainer extends Component {
   render() {
     return (
       <div>
-        <StickyTableComponent
+        <CryptoStickyTableComponent
           rows={this.state.rows}
-        ></StickyTableComponent>
+        ></CryptoStickyTableComponent>
       </div>
     );
   }
