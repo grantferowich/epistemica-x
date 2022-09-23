@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FormControl, FormHelperText, MenuItem, CssBaseline, Grid, Box, Container, Button, TextField, Typography, Select } from "@mui/material";
-import BasketCardContainer from '../containers/BasketCardContainer';
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+
 
 export default function BasketForm(props) {
 
   const [data, setData] = useState([]);
   const [query] = useState('react');
- 
+  const [handleSubmitFired, setHandleSubmitFired] = useState(false);
   useEffect( () => {
    
     async function fetchData() {
@@ -21,29 +23,31 @@ export default function BasketForm(props) {
   const [name, setName] = useState('');
   const [indexDate, setIndexDate] = useState('');
   const [initialBasketValue, setInitialBasketValue] = useState('');
-  
+  const [presentBasketValue, setPresentBasketValue] = useState('');
+  const [ percentReturn, setPercentReturn ] = useState('');
+
   const [currency1, setCurrency1] = useState('');
-  const [currency1weight, setCurrency1weight] = useState('');
+  const [currency1Weight, setCurrency1Weight] = useState('');
   const [currency1APIKey, setCurrency1APIKey] = useState('');
   const currency1Q = 0;
 
   const [currency2, setCurrency2] = useState('');
-  const [currency2weight, setCurrency2weight] = useState('');
+  const [currency2Weight, setCurrency2Weight] = useState('');
   const [currency2APIKey, setCurrency2APIKey] = useState('');
   const currency2Q = 0;
 
   const [currency3, setCurrency3] = useState('');
-  const [currency3weight, setCurrency3weight] = useState('');
+  const [currency3Weight, setCurrency3Weight] = useState('');
   const [currency3APIKey, setCurrency3APIKey] = useState('');
   const currency3Q = 0;
 
   const [currency4, setCurrency4] = useState('');
-  const [currency4weight, setCurrency4weight] = useState('');
+  const [currency4Weight, setCurrency4Weight] = useState('');
   const [currency4APIKey, setCurrency4APIKey] = useState('');
   const currency4Q = 0;
 
   const [currency5, setCurrency5] = useState('');
-  const [currency5weight, setCurrency5weight] = useState('');
+  const [currency5Weight, setCurrency5Weight] = useState('');
   const [currency5APIKey, setCurrency5APIKey] = useState('');
   const currency5Q = 0;
 
@@ -51,26 +55,7 @@ export default function BasketForm(props) {
   // The basket object contains the crypto token names, initial basket value, historical date and quantity of crypto tokens.
   // All the basket data fields are from user inputs except the quantity values, which are calculated in state. 
   // Present basket value will be calculated by multiplying the historically derived quantity by the present price. 
-  const basket = {
-    name: name,
-    initialBasketValue: initialBasketValue,
-    indexDate: indexDate,
-    coinOne: currency1,
-    coin_1_q: currency1Q,
-    token_1_api_key: currency1APIKey,
-    coinTwo: currency2,
-    coin_2_q: currency2Q,
-    token_2_api_key: currency1APIKey,
-    coinThree: currency3,
-    coin_3_q: currency3Q,
-    token_3_api_key: currency1APIKey,
-    coinFour: currency4,
-    coin_4_q: currency4Q,
-    token_4_api_key: currency1APIKey,
-    coinFive: currency5,
-    coin_5_q: currency5Q,
-    token_5_api_key: currency1APIKey
-  };
+ 
 
 
   const handleNameChange = event => {
@@ -86,39 +71,42 @@ export default function BasketForm(props) {
   }
 
   const handleWeight1 = event => {
-    setCurrency1weight(event.target.value);
-    console.log('currency1weight', currency1weight)
+    setCurrency1Weight(event.target.value);
+    console.log('currency1weight', currency1Weight)
   };
 
   const handleWeight2 = event => {
-    setCurrency2weight(event.target.value);
-    console.log('currency2weight', currency2weight)
+    setCurrency2Weight(event.target.value);
+    console.log('currency2weight', currency2Weight)
   };
 
   const handleWeight3 = event => {
-    setCurrency3weight(event.target.value);
-    console.log('currency3weight', currency3weight)
+    setCurrency3Weight(event.target.value);
+    console.log('currency3weight', currency3Weight)
   };
 
   const handleWeight4 = event => {
-    setCurrency4weight(event.target.value);
-    console.log('currency4weight', currency4weight)
+    setCurrency4Weight(event.target.value);
+    console.log('currency4weight', currency4Weight)
   };
 
   const handleWeight5 = event => {
-    setCurrency5weight(event.target.value);
-    console.log('currency5weight', currency5weight)
+    setCurrency5Weight(event.target.value);
+    console.log('currency5weight', currency5Weight)
   };
 
   const handleChange1 = event => {
     const key = event.target.value;
     setCurrency1(key.name);
+    console.log("key is", key);
+    console.log("key.id is", key.id);
     setCurrency1APIKey(key.id);
   };
 
   const handleChange2 = event => {
    const key = event.target.value;
     setCurrency2(key.name);
+
     setCurrency2APIKey(key.id);
     
   };
@@ -142,85 +130,98 @@ export default function BasketForm(props) {
   };
 
   const handleSubmit = async event => {
+
     event.preventDefault();
     console.log('handleSubmit completed.')
+    const currencyQs = [currency1Q, currency2Q, currency3Q, currency4Q, currency5Q]
+    const apiKeys = [currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey];
+    const currencies = [currency1, currency2, currency3, currency4, currency5]
+    const weights = [currency1Weight, currency2Weight, currency3Weight, currency4Weight, currency5Weight];
+    
+    const calculateQuantityX = async (currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate) => {
+      console.log('calculateQuantityX function started.')
+      
+      for (let z=0; z <apiKeys.length; z++) {
+        if (apiKeys[z] !== ""){
+          let historicalPriceAPI = "https://api.coingecko.com/api/v3/coins/"+apiKeys[z]+"/history?date="+indexDate+"&localization=false";
+          let historicalPrice = await axios.get(historicalPriceAPI).then((response) => response.data.market_data.current_price.usd);
+          console.log('historicalPrice is', historicalPrice);
 
-    const calculateQuantity1 = async (currency1APIKey, currency1Weight, indexDate) => {
-      let historicalPriceAPI1 = "https://api.coingecko.com/api/v3/coins/"+currency1.toLowerCase()+"/history?date="+indexDate+"&localization=false";
-      console.log(historicalPriceAPI1)
-      let historicalPrice1 = await axios.get(historicalPriceAPI1).then((response) => response.data.market_data.current_price.usd)
-      console.log("The historicalPrice1 =", historicalPrice1)
-      let quantity = ((currency1Weight/100) * initialBasketValue) / historicalPrice1;
-      console.log("The basket.coin_1_q =", quantity)
-      basket.coin_1_q = quantity;
+          let quantity = ((weights[z]/100) * initialBasketValue) / historicalPrice;
+          //this sets currencyXQ where x is 1,2,3,4,5
+          console.log('quantity is', quantity)
+          currencyQs[z] = quantity;
+          console.log('currencyQs[z]', currencyQs[z]) 
+        }
+      }     
     }
   
-    const calculateQuantity2 = async (currency2APIKey, currency2Weight, indexDate) => {
-      let historicalPriceAPI2 = "https://api.coingecko.com/api/v3/coins/"+currency2.toLowerCase()+"/history?date="+indexDate+"&localization=false";
-      console.log("api2", historicalPriceAPI2)
-      let historicalPrice2 = await axios.get(historicalPriceAPI2).then((response) => response.data.market_data.current_price.usd)
-      console.log("The historicalPrice2 =", historicalPrice2)
-      let quantity2 = ((currency2Weight/100) * initialBasketValue) / historicalPrice2;
-      console.log("The basket.coin_2_q =", quantity2)
-      basket.coin_2_q = quantity2;
-    }
-  
-    const calculateQuantity3 = async (currency3APIKey, currency3Weight, indexDate) => {
-      let historicalPriceAPI3 = "https://api.coingecko.com/api/v3/coins/"+currency3.toLowerCase()+"/history?date="+indexDate+"&localization=false";
-      let historicalPrice3 = await axios.get(historicalPriceAPI3).then((response) => response.data.market_data.current_price.usd)
-      console.log("historicalPrice", historicalPrice3)
-      let quantity3 = ((currency3Weight/100) * initialBasketValue) / historicalPrice3;
-      console.log("basket.coin_3_q", quantity3)
-      basket.coin_3_q = quantity3;
-    }
-  
-    const calculateQuantity4 = async (currency4APIKey, currency4Weight, indexDate) => {
-      let historicalPriceAPI4 = "https://api.coingecko.com/api/v3/coins/"+currency4.toLowerCase()+"/history?date="+indexDate+"&localization=false";
-      let historicalPrice4 = await axios.get(historicalPriceAPI4).then((response) => response.data.market_data.current_price.usd)
-      console.log("historicalPrice", historicalPrice4)
-      let quantity4 = ((currency4Weight/100) * initialBasketValue) / historicalPrice4;
-      console.log("basket.coin_4_q", quantity4)
-      basket.coin_4_q = quantity4;
-    }
-  
-    const calculateQuantity5 = async (currency5APIKey, currency5Weight, indexDate) => {
-      let historicalPriceAPI5 = "https://api.coingecko.com/api/v3/coins/"+currency5.toLowerCase()+"/history?date="+indexDate+"&localization=false";
-      let historicalPrice5 = await axios.get(historicalPriceAPI5).then((response) => response.market_data.current_price.usd)
-      console.log("historicalPrice", historicalPrice5)
-      let quantity5 = ((currency5Weight/100) * initialBasketValue) / historicalPrice5;
-      console.log("basket.coin_5_q", quantity5)
-      basket.coin_5_q = quantity5;
-    }
+    const calculatePercentReturn = ( async(presentBasketValue, currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey, currency1Q, currency2Q, currency3Q, currency4Q, currency5Q) => {
+      console.log('calculatePercentReturn function started.');
 
-  if (currency1 !== "") {
-    console.log('currency1', currency1APIKey)
-    calculateQuantity1(currency1APIKey, currency1weight, indexDate)
+      for (let x = 0; x <= apiKeys.length; x++) {
+        const apiID = apiKeys[x]
+        if ((apiKeys[x] !== "") && !(apiKeys[x] === undefined)) {
+          console.log("apiID is", apiID)
+          const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeys[x]+"&vs_currencies=usd";
+          console.log("presentPriceAPI", presentPriceAPI)
+          const presentPrice = await axios.get(presentPriceAPI).then((response) => response.data[apiKeys[x]].usd); 
+          console.log("presentPrice", presentPrice);
+          console.log('quantities', currencyQs[x]);
+          presentBasketValue += (presentPrice * currencyQs[x]);
+        } 
+      }
+      setPresentBasketValue(presentBasketValue)
+      console.log('presentBasketvalue is', presentBasketValue)
+      console.log('initial Basket value', initialBasketValue)
+      const pctReturn = (100 * (presentBasketValue - initialBasketValue) / initialBasketValue);
+      setPercentReturn(pctReturn)
+      console.log('percent return', pctReturn)
+    });
+    
+    const discoverCurencies = () => {
+      console.log("discoverCurrencies function started.")
+      
+      if (currencies[0] !=="") {
+        calculateQuantityX(currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate)
+        calculatePercentReturn(presentBasketValue, currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey, currency1Q, currency2Q, currency3Q, currency4Q, currency5Q)
+      }
+   }
+   discoverCurencies(); 
+   setHandleSubmitFired(true);
    
-  }
+   console.log("handleSubmitFired truth value =", handleSubmitFired === true)
+    //calculateQuantityX sets the currency1Q, currency2Q, currency3Q, currency4Q, currency5Q state
+    //calculateQuantityX runs after handleSubmit AND after there is a determination of a currency value being discovered
+    //calculatePercentReturn will return a string of the XX.YY% return for the basket
+   
 
-  if (currency2 !== "") {
-    console.log("currency2", currency2APIKey)
-    setTimeout(calculateQuantity2(currency2APIKey, currency2weight, indexDate),1000)
-  }
-
-  if (currency3 !== "") {
-    console.log("currency3", currency3)
-    setTimeout(calculateQuantity3(currency3APIKey, currency3weight, indexDate),1000)
-  }
-
-  if (currency4 !== "") {
-    console.log("currency4", currency4)
-    setTimeout(calculateQuantity4(currency4APIKey, currency4weight, indexDate),1000)
-  }
-
-  if (currency5 !== "") {
-    console.log("currency5", currency5)
-    setTimeout(calculateQuantity5(currency5APIKey, currency5weight, indexDate),1000)
-  }
 
   };
   
+
+  const card = (
+    <React.Fragment>
+       <><CardContent>
+         <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+           {name}
+         </Typography>
+         <Typography variant="h5" component="div">
+           Return: {percentReturn.toString().slice(0,5)}%
+         </Typography>
+         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+           Present basket value=${presentBasketValue}
+           <br></br>
+           Basket value on {indexDate}=${initialBasketValue}
+         </Typography>
+       </CardContent></>
+    </React.Fragment>
+  );
+
+
+   //Ternary operator at the fron of the rendering logic: if handleSubmit has NOT fired then show the basket form,  else show the basket card.
   return (
+    (handleSubmitFired === false) ? (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div >
@@ -437,13 +438,15 @@ export default function BasketForm(props) {
               >
                 CREATE
               </Button>
-              <BasketCardContainer>
-                 basket={basket}
-              </BasketCardContainer>
             </div>
           </form>
         </Box>
       </div>
-    </Container>
+    </Container>) : (
+    <Box sx={{ minWidth: 275}}>
+     <Card>
+      {card}
+     </Card>
+     </Box>)
   );
 }

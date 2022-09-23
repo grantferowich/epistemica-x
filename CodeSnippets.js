@@ -69,3 +69,24 @@
   //   }
   // }
   
+
+  // const basket = {
+  //   name: name,
+  //   initialBasketValue: initialBasketValue,
+  //   indexDate: indexDate,
+  //   coinOne: currency1,
+  //   coin_1_q: currency1Q,
+  //   token_1_api_key: currency1APIKey,
+  //   coinTwo: currency2,
+  //   coin_2_q: currency2Q,
+  //   token_2_api_key: currency1APIKey,
+  //   coinThree: currency3,
+  //   coin_3_q: currency3Q,
+  //   token_3_api_key: currency1APIKey,
+  //   coinFour: currency4,
+  //   coin_4_q: currency4Q,
+  //   token_4_api_key: currency1APIKey,
+  //   coinFive: currency5,
+  //   coin_5_q: currency5Q,
+  //   token_5_api_key: currency1APIKey
+  // };
