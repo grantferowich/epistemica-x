@@ -5,11 +5,14 @@ import Grid from "@mui/material/Grid";
 export default function BasketCardContainer(props) {
     console.log("BasketContainer props", props.children[1]);
     const [data, setData] = useState([]);
+    
     useEffect( () => {
-      setData(props.children[1])
+      const object = props.children[1];
+
+      setData(object);
     },[]);
 
-    console.log("data", data);
+    console.log("Basketdata", data);
 
 
 
