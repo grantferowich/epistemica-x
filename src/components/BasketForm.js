@@ -3,7 +3,7 @@ import axios from "axios";
 import { FormControl, FormHelperText, MenuItem, CssBaseline, Grid, Box, Container, Button, TextField, Typography, Select } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-
+import Copyright from "./Copyright";
 
 export default function BasketForm(props) {
 
@@ -189,7 +189,7 @@ export default function BasketForm(props) {
    }
    discoverCurencies(); 
    setHandleSubmitFired(true);
-   
+
    console.log("handleSubmitFired truth value =", handleSubmitFired === true)
     //calculateQuantityX sets the currency1Q, currency2Q, currency3Q, currency4Q, currency5Q state
     //calculateQuantityX runs after handleSubmit AND after there is a determination of a currency value being discovered
@@ -441,12 +441,18 @@ export default function BasketForm(props) {
             </div>
           </form>
         </Box>
+        <Copyright/>
       </div>
-    </Container>) : (
-    <Box sx={{ minWidth: 275}}>
-     <Card>
-      {card}
-     </Card>
-     </Box>)
+
+    </Container>): (
+      <div>
+        <Box sx={{ minWidth: 275}}>
+          <Card>
+             {card}
+          </Card>
+        </Box>
+     <Copyright/>
+    </div>)
   );
+  
 }
