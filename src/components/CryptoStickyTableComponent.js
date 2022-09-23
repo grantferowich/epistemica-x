@@ -15,26 +15,26 @@ import { TableHead } from '@mui/material';
 let columns;
 
 columns = [ { id: 'Name', label: 'Name', minWidth: 170 },
-  { id: 'Symbol', label: 'Symbol', minWidth: 100 },
+  { id: 'Symbol', label: 'Symbol', minWidth: 80 },
   {
     id: 'Price',
     label: 'Price ($)',
-    minWidth: 170,
-    align: 'right',
+    minWidth: 40,
+    align: 'left',
     format: (value: number) => value.toLocaleString('en-US'),
   },
   {
     id: 'Change',
     label: '24hΔ',
-    minWidth: 170,
-    align: 'right',
+    minWidth: 100,
+    align: 'left',
     format: (value: number) => value.toLocaleString('en-US'),
   },
   {
     id: 'MarketCapitalization',
     label: 'Market Capitalization',
-    minWidth: 170,
-    align: 'right',
+    minWidth: 100,
+    align: 'left',
     format: (value: number) => value.toFixed(2),
   },
 ];
