@@ -7,8 +7,6 @@ import Typography from "@mui/material/Typography";
 
 export default class BasketCard extends Component {
   
-
-
   
   coinOneId = this.props.basket.coinOneId;
   coinTwoId = this.props.basket.coinTwoId;
