@@ -67,7 +67,7 @@ export default function BasketForm(props) {
   };
 
   const handleIBVChange = event => {
-    setInitialBasketValue(event.target.value);
+    setInitialBasketValue(parseFloat(event.target.value));
   }
 
   const handleWeight1 = event => {
@@ -174,13 +174,9 @@ export default function BasketForm(props) {
           console.log('quantities', currencyQs[x]);
           let value = parseFloat(presentPrice * currencyQs[x]);
           presentBasketValue = parseFloat(presentBasketValue+value) 
-          console.log(value);
           setPresentBasketValue(presentBasketValue);
         } 
-      }
-
-
-      
+      }      
       console.log('presentBasketvalue is', presentBasketValue)
       console.log('initial Basket value', initialBasketValue)
       const pctReturn = (100 * (presentBasketValue - initialBasketValue) / initialBasketValue);
@@ -192,9 +188,7 @@ export default function BasketForm(props) {
       console.log("discoverCurrencies function started.")
       
       if (currencies[0] !=="") {
-        // calculateQuantityX(currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate)
         calculatePercentReturn(presentBasketValue, currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey, currency1Q, currency2Q, currency3Q, currency4Q, currency5Q)
-
       }
    }
    discoverCurencies(); 
@@ -220,9 +214,9 @@ export default function BasketForm(props) {
            Return: {percentReturn.toString().slice(0,5)}%
          </Typography>
          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-           Present basket value=${presentBasketValue}
+           Present basket value = ${presentBasketValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
            <br></br>
-           Basket value on {indexDate}=${initialBasketValue}
+           Basket value on {indexDate} = ${initialBasketValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
          </Typography>
        </CardContent></>
     </React.Fragment>
