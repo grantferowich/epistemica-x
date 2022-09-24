@@ -250,7 +250,7 @@ export default function BasketForm(props) {
                   }}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} >
                 <TextField
                   id="standard-helperText"
                   label="Starting date"
@@ -263,7 +263,7 @@ export default function BasketForm(props) {
                   }}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   id="initial-basket-value"
                   label="Initial Basket $ Value"
@@ -275,21 +275,21 @@ export default function BasketForm(props) {
                   }}
                 />
               </Grid>
-            </Grid>
-            <TextField
-              id="weight1"
-              label="Weight (%)"
-              variant="filled"
-              type="number"
-              onChange={event => {
-                handleWeight1(event);
-              }}
-              InputLabelProps={{
-                shrink: true
-              }}
-            />
-
-            <div >
+              <Grid item xs={6} >
+                   <TextField
+                  id="weight1"
+                  label="Weight (%) 1"
+                  variant="filled"
+                  type="number"
+                  onChange={event => {
+                  handleWeight1(event);
+                  }}
+                  InputLabelProps={{
+                  shrink: true
+                  }}
+                  />
+              </Grid>
+              <Grid item xs={6}>
               <FormControl>
                 <Select 
                   displayEmpty
@@ -302,12 +302,12 @@ export default function BasketForm(props) {
                     {option.name}
                   </MenuItem>
                 ))}
-
                 </Select>
                 <FormHelperText>Select basket token 1</FormHelperText>
               </FormControl>
-            </div>
-            <TextField
+              </Grid>
+              <Grid item xs={6}> 
+              <TextField
               id="weight2"
               label="Weight (%)"
               variant="filled"
@@ -318,10 +318,10 @@ export default function BasketForm(props) {
               InputLabelProps={{
                 shrink: true
               }}
-              
-            />
-            <div >
-            <FormControl>
+              />
+              </Grid>
+              <Grid item xs={6}>
+              <FormControl>
                 <Select 
                   displayEmpty
                   onChange={handleChange2}
@@ -333,26 +333,27 @@ export default function BasketForm(props) {
                     {option.name}
                   </MenuItem>
                 ))}
-
                 </Select>
                 <FormHelperText>Select basket token 2</FormHelperText>
               </FormControl>
-            </div>
-            <br></br>
-            <TextField
-              id="weight3"
-              label="Weight (%)"
-              variant="filled"
-              type="number"
-              onChange={event => {
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                id="weight3"
+                label="Weight (%)"
+                variant="filled"
+                type="number"
+                onChange={event => {
                 handleWeight3(event);
-              }}
-              InputLabelProps={{
+                }}
+                InputLabelProps={{
                 shrink: true
-              }}
-            />
-            <div >
-            <FormControl>
+                }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+              <div >
+              <FormControl>
                 <Select 
                   displayEmpty
                   onChange={handleChange3}
@@ -368,9 +369,9 @@ export default function BasketForm(props) {
                 </Select>
                 <FormHelperText>Select basket token 3</FormHelperText>
               </FormControl>
-            </div>
-            <br></br>
-            <TextField
+              </div>
+              </Grid>
+              <Grid item xs={6}><TextField
               id="weight4"
               label="Weight (%)"
               variant="filled"
@@ -381,9 +382,10 @@ export default function BasketForm(props) {
               InputLabelProps={{
                 shrink: true
               }}
-            />
-            <div >
-            <FormControl>
+              /></Grid>
+              <Grid item xs={6}> 
+              <div>
+              <FormControl>
                 <Select 
                   displayEmpty
                   onChange={handleChange4}
@@ -395,13 +397,13 @@ export default function BasketForm(props) {
                     {option.name}
                   </MenuItem>
                 ))}
-
                 </Select>
                 <FormHelperText>Select basket token 4</FormHelperText>
               </FormControl>
-            </div>
-            <br></br>
-            <TextField
+              </div>
+              </Grid>
+              <Grid item xs={6}>
+              <TextField
               id="weight5"
               label="Weight (%)"
               variant="filled"
@@ -412,9 +414,10 @@ export default function BasketForm(props) {
               InputLabelProps={{
                 shrink: true
               }}
-            />
-            <div >
-            <FormControl>
+              /> 
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl>
                 <Select 
                   displayEmpty
                   onChange={handleChange5}
@@ -429,16 +432,18 @@ export default function BasketForm(props) {
 
                 </Select>
                 <FormHelperText>Select basket token 5</FormHelperText>
-              </FormControl>
-              <Button
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
                 type="submit"
                 color="primary"
-                variant="contained"
-                
-              >
+                variant="contained" 
+               >
                 CREATE
-              </Button>
-            </div>
+                </Button>
+              </Grid>
+            </Grid>
           </form>
         </Box>
         <Copyright/>

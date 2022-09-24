@@ -6,11 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import { TableHead } from '@mui/material';
-
-
 
 let columns;
 
@@ -42,7 +38,6 @@ columns = [ { id: 'Name', label: 'Name', minWidth: 170 },
 export default function StickyHeadTable(props) {
   
   const [page, setPage] = useState(0);
-  const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(50);
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -52,10 +47,6 @@ export default function StickyHeadTable(props) {
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
-  };
-
-  const handleChangeDense = event => {
-    setDense(event.target.checked);
   };
 
   return (
@@ -78,7 +69,6 @@ export default function StickyHeadTable(props) {
                 </TableCell>
               ))}
             </TableRow>
-
           </TableHead>
             <TableBody>
               {props.rows
@@ -114,10 +104,6 @@ export default function StickyHeadTable(props) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
     </div>
   );
 }
