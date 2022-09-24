@@ -49,6 +49,8 @@ export default function StickyHeadTable(props) {
     setPage(0);
   };
 
+  
+
   return (
     <div>
       <Paper  sx={{ width: '100%', overflow: 'hidden' }}>
@@ -83,11 +85,11 @@ export default function StickyHeadTable(props) {
                         {row[0]}
                       </TableCell>
                       <TableCell>{row[1]}</TableCell>
-                      <TableCell>{"$" + row[2]}</TableCell>
+                      <TableCell>{`$${row[2].toLocaleString(undefined, { maximumFractionDigits: 2 })}`}</TableCell>
                       <TableCell>
                         {row[3].toString().slice(0, 4) + "%"}
                       </TableCell>
-                      <TableCell>{"$" + row[4]}</TableCell>
+                      <TableCell>{`$${row[4].toLocaleString(undefined, { maximumFractionDigits: 2 })}`}</TableCell>
                      </TableRow>
                   );
                 })}
