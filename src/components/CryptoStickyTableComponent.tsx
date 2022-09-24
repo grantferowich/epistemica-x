@@ -15,26 +15,26 @@ import { TableHead } from '@mui/material';
 let columns;
 
 columns = [ { id: 'Name', label: 'Name', minWidth: 170 },
-  { id: 'Symbol', label: 'Symbol', minWidth: 100 },
+  { id: 'Symbol', label: 'Symbol', minWidth: 80 },
   {
     id: 'Price',
     label: 'Price ($)',
-    minWidth: 170,
-    align: 'right',
+    minWidth: 40,
+    align: 'left',
     format: (value: number) => value.toLocaleString('en-US'),
   },
   {
     id: 'Change',
     label: '24hΔ',
-    minWidth: 170,
-    align: 'right',
+    minWidth: 100,
+    align: 'left',
     format: (value: number) => value.toLocaleString('en-US'),
   },
   {
     id: 'MarketCapitalization',
     label: 'Market Capitalization',
-    minWidth: 170,
-    align: 'right',
+    minWidth: 100,
+    align: 'left',
     format: (value: number) => value.toFixed(2),
   },
 ];
@@ -45,12 +45,12 @@ export default function StickyHeadTable(props) {
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(50);
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
-    setRowsPerPage(parseInt(event.target.value, 50));
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
@@ -83,18 +83,12 @@ export default function StickyHeadTable(props) {
             <TableBody>
               {props.rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-
-                  const labelId = `enhanced-table-checkbox-${index}`;
-
+                .map((row) => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row[1]}>
-                      
+                    <TableRow hover  tabIndex={-1} key={row[1]}>
                       <TableCell
-                        component="th"
-                        id={labelId}
                         scope="row"
-                        padding="none"
+                        padding="normal"
                       >
                         {row[0]}
                       </TableCell>
@@ -104,7 +98,7 @@ export default function StickyHeadTable(props) {
                         {row[3].toString().slice(0, 4) + "%"}
                       </TableCell>
                       <TableCell>{"$" + row[4]}</TableCell>
-                    </TableRow>
+                     </TableRow>
                   );
                 })}
             </TableBody>
@@ -116,8 +110,8 @@ export default function StickyHeadTable(props) {
           count={props.rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
       <FormControlLabel

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { Component } from "react";
-import CryptoStickyTableComponent from "../components/CryptoStickyTableComponent";
+import CryptoStickyTableComponent from "../components/CryptoStickyTableComponent.tsx";
 
 export default class CryptoStickyTableContainer extends Component {
   state = {
