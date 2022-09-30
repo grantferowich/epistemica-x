@@ -3,8 +3,10 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from '@mui/material/Toolbar';
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import CryptoStickyTableContainer from "../containers/CryptoStickyTableContainer";
 import CreateBasketContainer from "../containers/CreateBasketContainer";
+
 
 export default function NavTabs(props) {
 //State
@@ -42,12 +44,6 @@ export default function NavTabs(props) {
     
   };
 
-
-
-  const renderConnectedContainer = () => {
-   
-  }
-
   useEffect(() => {
     const onLoad = async () => {
       await checkIfWalletIsConnected();
@@ -57,12 +53,12 @@ export default function NavTabs(props) {
   },[])
 
   const renderNotConnectedContainer = () => (
-    <button
+    <Button
     className="cta-button connect-wallet-button"
     onClick={connectWallet}
     >
     Connect to Wallet
-    </button>
+    </Button>
   );  
 
 
@@ -75,7 +71,7 @@ export default function NavTabs(props) {
             Epistemica-X
           </Typography>
           { walletAddress ?  <Typography variant="h6" color="inherit" align="right">
-      {walletAddress} is connected!
+                                 {walletAddress} is connected!
     </Typography> : (renderNotConnectedContainer())}
         </Toolbar>
       </AppBar>
