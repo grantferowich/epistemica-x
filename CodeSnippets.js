@@ -90,3 +90,20 @@
   //   coin_5_q: currency5Q,
   //   token_5_api_key: currency1APIKey
   // };
+
+  //
+//   // <TableCell
+//   key={column.id}
+
+//   id={labelId}
+//   scope="row"
+//   padding="normal"
+// >
+//   {row[0]}
+// </TableCell>
+// <TableCell>{row[1]}</TableCell>
+// <TableCell>{"$" + row[2]}</TableCell>
+// <TableCell>
+//   {row[3].toString().slice(0, 4) + "%"}
+// </TableCell>
+// <TableCell>{"$" + row[4]}</TableCell>
