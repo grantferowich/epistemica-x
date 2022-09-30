@@ -106,9 +106,7 @@ export default function BasketForm(props) {
   const handleChange2 = event => {
    const key = event.target.value;
     setCurrency2(key.name);
-
     setCurrency2APIKey(key.id);
-    
   };
 
   const handleChange3 = event => {
@@ -222,8 +220,6 @@ export default function BasketForm(props) {
     </React.Fragment>
   );
 
-
-   //Ternary operator at the fron of the rendering logic: if handleSubmit has NOT fired then show the basket form,  else show the basket card.
   return (
     (handleSubmitFired === false) ? (
     <Container component="main" maxWidth="xs">
