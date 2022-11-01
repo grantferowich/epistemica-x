@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CryptoStickyTableContainer from "../containers/CryptoStickyTableContainer";
 import CreateBasketContainer from "../containers/CreateBasketContainer";
-
+import Leaderboard from "./Leaderboard.js"
 
 export default function NavTabs(props) {
 //State
@@ -77,6 +77,7 @@ export default function NavTabs(props) {
       </AppBar>
     </Box>
         <CryptoStickyTableContainer/>
+        <Leaderboard/>
         <CreateBasketContainer/>
     </div>
   );

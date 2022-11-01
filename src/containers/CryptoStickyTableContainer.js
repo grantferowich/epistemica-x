@@ -14,7 +14,6 @@ export default class CryptoStickyTableContainer extends Component {
     .then( (data) => this.generateDataTable(data.data))
     .catch((err) =>console.log(err))
   }
-
   
   generateDataTable(all) {
     all.forEach(coin => {
