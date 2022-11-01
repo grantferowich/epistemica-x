@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,18 +7,25 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-// read the rows from the program id 
-const rows = [
-    { user: "0x34567", score: 14.7},
-    { user: "0x456", score: 75.1},
-    { user: "0x111", score: -0.2}
-]
-
-const rowsObj = rows.sort((a,b) => {
-    return b.score - a.score
-})
 
 export default function Leaderboard() {
+    const [ rows, setRows ] = useState([]);
+    
+
+    const DUMMY_ROWS = [
+        { user: "0x34567", score: 14.7},
+        { user: "0x456", score: 75.1},
+        { user: "0x111", score: -0.2}
+    ]
+
+    const rowsObj = rows.sort((a,b) => {
+        return b.score - a.score
+    })
+
+    useEffect(() => {
+        setRows(DUMMY_ROWS)
+    }, [])
+
   return (
     <div>
     <h3>Leaderboard</h3>
