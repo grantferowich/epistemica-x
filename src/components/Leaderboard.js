@@ -7,14 +7,21 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-
+// read the rows from the program id 
 const rows = [
     { user: "0x34567", score: 14.7},
     { user: "0x456", score: 75.1},
     { user: "0x111", score: -0.2}
 ]
+
+const rowsObj = rows.sort((a,b) => {
+    return b.score - a.score
+})
+
 export default function Leaderboard() {
   return (
+    <div>
+    <h3>Leaderboard</h3>
     <TableContainer component={Paper}>
     <Table sx={{ minWidth: 650 }} aria-label="simple table">
       <TableHead>
@@ -24,7 +31,7 @@ export default function Leaderboard() {
         </TableRow>
       </TableHead>
       <TableBody>
-        {rows.map((row, index) => (
+        {rowsObj.map((row, index) => (
           <TableRow
             key={index}
             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -38,5 +45,6 @@ export default function Leaderboard() {
       </TableBody>
     </Table>
   </TableContainer>
+  </div>
   )
 }
