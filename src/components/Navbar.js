@@ -20,10 +20,11 @@ const network = clusterApiUrl('devnet')
 const opts = {
   preflightCommitment: "processed"
 }
-
-
-
-
+const DUMMY_SCORES = [
+  { user: "0x34567", score: 14.7},
+  { user: "0x456", score: 75.1},
+  { user: "0x111", score: -0.2}
+]
 export default function NavTabs(props) {
 //State
   const [walletAddress, setWalletAddress] = useState(null)
@@ -61,6 +62,10 @@ export default function NavTabs(props) {
     
   };
 
+  // const sendScore = () => {
+
+  // }
+
   useEffect(() => {
     const onLoad = async () => {
       await checkIfWalletIsConnected();
@@ -70,12 +75,14 @@ export default function NavTabs(props) {
   },[])
 
   const renderNotConnectedContainer = () => (
+    <div className="not-connected-container">
     <Button
     className="cta-button connect-wallet-button"
     onClick={connectWallet}
     >
     Connect to Wallet
     </Button>
+    </div>
   );  
 
   const getProvider = () => {
@@ -96,7 +103,8 @@ const getScoresList = async() => {
       const program = await getProgram();
       const account = await program.account.baseAccount.fetch(baseAccount.publicKey);
       console.log("Accessed the account ", account)
-      setScoresList(account.vecScoresList)
+      setScoresList(DUMMY_SCORES)
+      // setScoresList(account.vecScoresList)
 
   } catch (error) {
       console.log("Error in getScoreList: ", error)
@@ -104,9 +112,9 @@ const getScoresList = async() => {
   }
 }
 
-
 const createScoreAccount = async () => {
   try {
+
      const provider = getProvider();
      const program = await getProgram();
      console.log("ping")
@@ -119,20 +127,21 @@ const createScoreAccount = async () => {
       signers: [baseAccount]
      });
      console.log("Created a new baseAccount w/address: ", baseAccount.publicKey.toString())
+     await getScoresList()
   } catch (error) {
       console.log("Error creating baseAccount: ", error)
   }
 }
 
- const renderConnectedContainer = () => {
-
+const renderConnectedContainer = () => {
+  console.log("connected with wallet ", walletAddress)
   if (scoresList == null) {
     return (
       <div className="connected-container">
          <button
           className="cta-button connect-wallet-button"
           onClick={createScoreAccount}>
-         Initialize Gif Account!
+         Initialize Score Account!
         </button>
       </div>
     )
@@ -141,20 +150,16 @@ const createScoreAccount = async () => {
     <Typography variant="h6" color="inherit" align="right">
     {walletAddress} is connected!
     </Typography>
-    <Leaderboard/>
+    <Leaderboard scoresList={scoresList}/>
     </div>
     )
   }
  }
 
-
-
 useEffect( () => {
   console.log("Fetching scores list...")
   getScoresList();
 },[])
-
-
 
   return (
     <div sx={{ display: 'flex' }}>
