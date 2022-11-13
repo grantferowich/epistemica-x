@@ -8,24 +8,11 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 
-export default function Leaderboard() {
-    const [ rows, setRows ] = useState([]);
-    
-
-    const DUMMY_ROWS = [
-        { user: "0x34567", score: 14.7},
-        { user: "0x456", score: 75.1},
-        { user: "0x111", score: -0.2}
-    ]
-
-    const rowsObj = rows.sort((a,b) => {
+export default function Leaderboard({scoresList}) {
+    const rowsObj = scoresList.sort((a,b) => {
         return b.score - a.score
     })
-
-    useEffect(() => {
-        setRows(DUMMY_ROWS)
-    }, [])
-
+    
   return (
     <div>
     <h3>Leaderboard</h3>
