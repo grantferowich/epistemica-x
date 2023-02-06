@@ -4,6 +4,9 @@ import { FormControl, FormHelperText, MenuItem, CssBaseline, Grid, Box, Containe
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Copyright from "./Copyright";
+import { Switch } from '@mui/material';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 export default function BasketForm(props) {
 
@@ -29,26 +32,31 @@ export default function BasketForm(props) {
   const [currency1, setCurrency1] = useState('');
   const [currency1Weight, setCurrency1Weight] = useState('');
   const [currency1APIKey, setCurrency1APIKey] = useState('');
+  const [ c1LongOrShort, setc1LongOrShort ] = useState('long'); 
   const currency1Q = 0;
 
   const [currency2, setCurrency2] = useState('');
   const [currency2Weight, setCurrency2Weight] = useState('');
   const [currency2APIKey, setCurrency2APIKey] = useState('');
+  const [ c2LongOrShort, setc2LongOrShort ] = useState('long'); 
   const currency2Q = 0;
 
   const [currency3, setCurrency3] = useState('');
   const [currency3Weight, setCurrency3Weight] = useState('');
   const [currency3APIKey, setCurrency3APIKey] = useState('');
+  const [ c3LongOrShort, setc3LongOrShort ] = useState('long'); 
   const currency3Q = 0;
 
   const [currency4, setCurrency4] = useState('');
   const [currency4Weight, setCurrency4Weight] = useState('');
   const [currency4APIKey, setCurrency4APIKey] = useState('');
+  const [ c4LongOrShort, setc4LongOrShort ] = useState('long'); 
   const currency4Q = 0;
 
   const [currency5, setCurrency5] = useState('');
   const [currency5Weight, setCurrency5Weight] = useState('');
   const [currency5APIKey, setCurrency5APIKey] = useState('');
+  const [ c5LongOrShort, setc5LongOrShort ] = useState('long'); 
   const currency5Q = 0;
 
 
@@ -56,8 +64,6 @@ export default function BasketForm(props) {
   // All the basket data fields are from user inputs except the quantity values, which are calculated in state. 
   // Present basket value will be calculated by multiplying the historically derived quantity by the present price. 
  
-
-
   const handleNameChange = event => {
     setName(event.target.value);
   };
@@ -75,25 +81,55 @@ export default function BasketForm(props) {
     console.log('currency1weight', currency1Weight)
   };
 
+  const handleLongOrShort1 = event => {
+    if (event.target.defaultChecked === true)
+    {setc1LongOrShort('short')}
+    console.log('c1LongOrShort', c1LongOrShort)
+  }
+
   const handleWeight2 = event => {
     setCurrency2Weight(event.target.value);
     console.log('currency2weight', currency2Weight)
   };
+
+  const handleLongOrShort2 = event => {
+    if (event.target.defaultChecked === true)
+    {setc2LongOrShort('short')}
+    console.log('c1LongOrShort', c1LongOrShort)
+  }
 
   const handleWeight3 = event => {
     setCurrency3Weight(event.target.value);
     console.log('currency3weight', currency3Weight)
   };
 
+  const handleLongOrShort3 = event => {
+    if (event.target.defaultChecked === true)
+    {setc3LongOrShort('short')}
+    console.log('c1LongOrShort', c1LongOrShort)
+  }
+
   const handleWeight4 = event => {
     setCurrency4Weight(event.target.value);
     console.log('currency4weight', currency4Weight)
   };
 
+  const handleLongOrShort4 = event => {
+    if (event.target.defaultChecked === true)
+    {setc4LongOrShort('short')}
+    console.log('c1LongOrShort', c1LongOrShort)
+  }
+
   const handleWeight5 = event => {
     setCurrency5Weight(event.target.value);
     console.log('currency5weight', currency5Weight)
   };
+
+  const handleLongOrShort5 = event => {
+    if (event.target.defaultChecked === true)
+    {setc5LongOrShort('short')}
+    console.log('c1LongOrShort', c1LongOrShort)
+  }
 
   const handleChange1 = event => {
     const key = event.target.value;
@@ -196,11 +232,7 @@ export default function BasketForm(props) {
     //calculateQuantityX sets the currency1Q, currency2Q, currency3Q, currency4Q, currency5Q state
     //calculateQuantityX runs after handleSubmit AND after there is a determination of a currency value being discovered
     //calculatePercentReturn will return a string of the XX.YY% return for the basket
-   
-
-
   };
-  
 
   const card = (
     <React.Fragment>
@@ -238,7 +270,7 @@ export default function BasketForm(props) {
             autoComplete="off"
             onSubmit={event => handleSubmit(event)}
           >
-            <Grid container spacing={3}>
+            <Grid container spacing={1}>
               <Grid item xs={12}>
                 <TextField
                   id="name"
@@ -304,6 +336,12 @@ export default function BasketForm(props) {
                 ))}
                 </Select>
                 <FormHelperText>Select basket token 1</FormHelperText>
+                <FormGroup>
+                   <FormControlLabel
+                   control={<Switch sx={{ m: 1 }} defaultChecked />}
+                   onChange={handleLongOrShort1}
+                  label="Direction" />
+                </FormGroup>
               </FormControl>
               </Grid>
               <Grid item xs={6}> 
@@ -335,6 +373,12 @@ export default function BasketForm(props) {
                 ))}
                 </Select>
                 <FormHelperText>Select basket token 2</FormHelperText>
+                <FormGroup>
+                   <FormControlLabel
+                   control={<Switch sx={{ m: 1 }} defaultChecked />}
+                   onChange={handleLongOrShort2}
+                  label="Direction" />
+                </FormGroup>
               </FormControl>
               </Grid>
               <Grid item xs={6}>
@@ -369,6 +413,12 @@ export default function BasketForm(props) {
                 </Select>
                 <FormHelperText>Select basket token 3</FormHelperText>
               </FormControl>
+              <FormGroup>
+                   <FormControlLabel
+                   control={<Switch sx={{ m: 1 }} defaultChecked />}
+                   onChange={handleLongOrShort3}
+                  label="Direction" />
+                </FormGroup>
               </div>
               </Grid>
               <Grid item xs={6}><TextField
@@ -400,6 +450,12 @@ export default function BasketForm(props) {
                 </Select>
                 <FormHelperText>Select basket token 4</FormHelperText>
               </FormControl>
+              <FormGroup>
+                   <FormControlLabel
+                   control={<Switch sx={{ m: 1 }} defaultChecked />}
+                   onChange={handleLongOrShort4}
+                  label="Direction" />
+                </FormGroup>
               </div>
               </Grid>
               <Grid item xs={6}>
@@ -433,6 +489,12 @@ export default function BasketForm(props) {
                 </Select>
                 <FormHelperText>Select basket token 5</FormHelperText>
                 </FormControl>
+                <FormGroup>
+                   <FormControlLabel
+                   control={<Switch sx={{ m: 1 }} defaultChecked />}
+                   onChange={handleLongOrShort5}
+                  label="Direction" />
+                </FormGroup>
               </Grid>
               <Grid item xs={12}>
                 <Button
