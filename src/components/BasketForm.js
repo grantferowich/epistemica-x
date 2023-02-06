@@ -336,12 +336,12 @@ export default function BasketForm(props) {
                 ))}
                 </Select>
                 <FormHelperText>Select basket token 1</FormHelperText>
-                <FormGroup>
+                {/* <FormGroup>
                    <FormControlLabel
                    control={<Switch sx={{ m: 1 }} defaultChecked />}
                    onChange={handleLongOrShort1}
                   label="Direction" />
-                </FormGroup>
+                </FormGroup> */}
               </FormControl>
               </Grid>
               <Grid item xs={6}> 
@@ -373,12 +373,12 @@ export default function BasketForm(props) {
                 ))}
                 </Select>
                 <FormHelperText>Select basket token 2</FormHelperText>
-                <FormGroup>
+                {/* <FormGroup>
                    <FormControlLabel
                    control={<Switch sx={{ m: 1 }} defaultChecked />}
                    onChange={handleLongOrShort2}
                   label="Direction" />
-                </FormGroup>
+                </FormGroup> */}
               </FormControl>
               </Grid>
               <Grid item xs={6}>
@@ -413,12 +413,12 @@ export default function BasketForm(props) {
                 </Select>
                 <FormHelperText>Select basket token 3</FormHelperText>
               </FormControl>
-              <FormGroup>
+              {/* <FormGroup>
                    <FormControlLabel
                    control={<Switch sx={{ m: 1 }} defaultChecked />}
                    onChange={handleLongOrShort3}
                   label="Direction" />
-                </FormGroup>
+                </FormGroup> */}
               </div>
               </Grid>
               <Grid item xs={6}><TextField
@@ -450,12 +450,12 @@ export default function BasketForm(props) {
                 </Select>
                 <FormHelperText>Select basket token 4</FormHelperText>
               </FormControl>
-              <FormGroup>
+              {/* <FormGroup>
                    <FormControlLabel
                    control={<Switch sx={{ m: 1 }} defaultChecked />}
                    onChange={handleLongOrShort4}
                   label="Direction" />
-                </FormGroup>
+                </FormGroup> */}
               </div>
               </Grid>
               <Grid item xs={6}>
@@ -489,12 +489,12 @@ export default function BasketForm(props) {
                 </Select>
                 <FormHelperText>Select basket token 5</FormHelperText>
                 </FormControl>
-                <FormGroup>
+                {/* <FormGroup>
                    <FormControlLabel
                    control={<Switch sx={{ m: 1 }} defaultChecked />}
                    onChange={handleLongOrShort5}
                   label="Direction" />
-                </FormGroup>
+                </FormGroup> */}
               </Grid>
               <Grid item xs={12}>
                 <Button
