@@ -81,55 +81,25 @@ export default function BasketForm(props) {
     console.log('currency1weight', currency1Weight)
   };
 
-  const handleLongOrShort1 = event => {
-    if (event.target.defaultChecked === true)
-    {setc1LongOrShort('short')}
-    console.log('c1LongOrShort', c1LongOrShort)
-  }
-
   const handleWeight2 = event => {
     setCurrency2Weight(event.target.value);
     console.log('currency2weight', currency2Weight)
   };
-
-  const handleLongOrShort2 = event => {
-    if (event.target.defaultChecked === true)
-    {setc2LongOrShort('short')}
-    console.log('c1LongOrShort', c1LongOrShort)
-  }
 
   const handleWeight3 = event => {
     setCurrency3Weight(event.target.value);
     console.log('currency3weight', currency3Weight)
   };
 
-  const handleLongOrShort3 = event => {
-    if (event.target.defaultChecked === true)
-    {setc3LongOrShort('short')}
-    console.log('c1LongOrShort', c1LongOrShort)
-  }
-
   const handleWeight4 = event => {
     setCurrency4Weight(event.target.value);
     console.log('currency4weight', currency4Weight)
   };
 
-  const handleLongOrShort4 = event => {
-    if (event.target.defaultChecked === true)
-    {setc4LongOrShort('short')}
-    console.log('c1LongOrShort', c1LongOrShort)
-  }
-
   const handleWeight5 = event => {
     setCurrency5Weight(event.target.value);
     console.log('currency5weight', currency5Weight)
   };
-
-  const handleLongOrShort5 = event => {
-    if (event.target.defaultChecked === true)
-    {setc5LongOrShort('short')}
-    console.log('c1LongOrShort', c1LongOrShort)
-  }
 
   const handleChange1 = event => {
     const key = event.target.value;
@@ -336,12 +306,6 @@ export default function BasketForm(props) {
                 ))}
                 </Select>
                 <FormHelperText>Select basket token 1</FormHelperText>
-                <FormGroup>
-                   <FormControlLabel
-                   control={<Switch sx={{ m: 1 }} defaultChecked />}
-                   onChange={handleLongOrShort1}
-                  label="Direction" />
-                </FormGroup>
               </FormControl>
               </Grid>
               <Grid item xs={6}> 
@@ -373,12 +337,6 @@ export default function BasketForm(props) {
                 ))}
                 </Select>
                 <FormHelperText>Select basket token 2</FormHelperText>
-                <FormGroup>
-                   <FormControlLabel
-                   control={<Switch sx={{ m: 1 }} defaultChecked />}
-                   onChange={handleLongOrShort2}
-                  label="Direction" />
-                </FormGroup>
               </FormControl>
               </Grid>
               <Grid item xs={6}>
@@ -413,12 +371,6 @@ export default function BasketForm(props) {
                 </Select>
                 <FormHelperText>Select basket token 3</FormHelperText>
               </FormControl>
-              <FormGroup>
-                   <FormControlLabel
-                   control={<Switch sx={{ m: 1 }} defaultChecked />}
-                   onChange={handleLongOrShort3}
-                  label="Direction" />
-                </FormGroup>
               </div>
               </Grid>
               <Grid item xs={6}><TextField
@@ -450,12 +402,6 @@ export default function BasketForm(props) {
                 </Select>
                 <FormHelperText>Select basket token 4</FormHelperText>
               </FormControl>
-              <FormGroup>
-                   <FormControlLabel
-                   control={<Switch sx={{ m: 1 }} defaultChecked />}
-                   onChange={handleLongOrShort4}
-                  label="Direction" />
-                </FormGroup>
               </div>
               </Grid>
               <Grid item xs={6}>
@@ -489,12 +435,6 @@ export default function BasketForm(props) {
                 </Select>
                 <FormHelperText>Select basket token 5</FormHelperText>
                 </FormControl>
-                <FormGroup>
-                   <FormControlLabel
-                   control={<Switch sx={{ m: 1 }} defaultChecked />}
-                   onChange={handleLongOrShort5}
-                  label="Direction" />
-                </FormGroup>
               </Grid>
               <Grid item xs={12}>
                 <Button
