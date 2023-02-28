@@ -14,16 +14,9 @@ BTC Quantity [value calculated in state] * present BTC price [value from API]
 
 Total return [value calculated in state] = (Present Basket Value [value calculated in state] - Initial Basket Value [user input]) / Initial Basket Value [user input]
 -------
-
-
-## Demo
-TBD
-
 ## Technologies
 Epistemica-X is a single page application built with React.js, React Hooks, Material UI, and JavaScript. CoinTiger uses CoinGecko's API for getting market data. The application makes calls directly to public endpoints. Solana wallet functionality is provided. 
 
-## Link to Web App
-TBD
 
 ## Contributions
 Some features that would be really cool that I haven't gotten to yet but wouldn't mind getting around to at some point:
