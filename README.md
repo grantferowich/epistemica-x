@@ -1,7 +1,7 @@
 ## About
-Epistemica-X is a web application for managing investment thesis ideas. Evidence-based reaasoning helps managers determine how different mixtures of crypto tokens perform. Epistemica-X incorporates a Solana wallet interface as well.
+Epistemica-X is a web application for managing investment theses. Evidence-based reasoning helps managers determine how different mixtures of crypto tokens perform. Epistemica-X incorporates a Solana wallet interface as well.
 
-Suppose a basket with an initial value of \$10,000.00. Assume the aim is to determine the basket's return since the start of the year, January 1st, 2022. Then say the basket whose performance is to be measured is comprised of equal parts Bitcoin and Ether. Next solve for the quantity of Bitcoin and Ether $10,000.00 is good for at the historical prices. 
+Suppose a basket with an initial value of $10,000.00. Assume the aim is to determine the basket's return since the start of the year, January 1st, 2022. Then say the basket whose performance is to be measured is comprised of equal parts Bitcoin and Ether. Next solve for the quantity of Bitcoin and Ether $10,000.00 would have purchased at the historical prices. 
 
 The core business logic to be performed in state is this: 
 
@@ -16,7 +16,6 @@ Total return [value calculated in state] = (Present Basket Value [value calculat
 -------
 ## Technologies
 Epistemica-X is a single page application built with React.js, React Hooks, Material UI, and JavaScript. CoinTiger uses CoinGecko's API for getting market data. The application makes calls directly to public endpoints. Solana wallet functionality is provided. 
-
 
 ## Contributions
 Some features that would be really cool that I haven't gotten to yet but wouldn't mind getting around to at some point:
