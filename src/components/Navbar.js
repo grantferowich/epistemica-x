@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import CryptoStickyTableContainer from "../containers/CryptoStickyTableContainer";
 import CreateBasketContainer from "../containers/CreateBasketContainer";
+import { Link } from 'react-router-dom';
+
 export default function NavTabs(props) {
 
   return (
@@ -13,13 +15,15 @@ export default function NavTabs(props) {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Epistemica-X
+            <Link to='/'>Epistemica-X</Link>
+          </Typography>
+          {/* <Typography>Home</Typography> */}
+          <Typography>
+            <Link to="/login">Login</Link>
           </Typography>
         </Toolbar>
       </AppBar>
     </Box>
-        <CryptoStickyTableContainer/>
-        <CreateBasketContainer/>
     </div>
   );
 }
