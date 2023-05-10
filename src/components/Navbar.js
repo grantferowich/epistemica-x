@@ -8,7 +8,6 @@ import CreateBasketContainer from "../containers/CreateBasketContainer";
 import { Link } from 'react-router-dom';
 
 export default function NavTabs(props) {
-
   return (
     <div sx={{ display: 'flex' }}>
        <Box sx={{ flexGrow: 1 }}>
@@ -17,7 +16,6 @@ export default function NavTabs(props) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to='/'>Epistemica-X</Link>
           </Typography>
-          {/* <Typography>Home</Typography> */}
           <Typography>
             <Link to="/login">Login</Link>
           </Typography>
