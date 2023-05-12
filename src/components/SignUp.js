@@ -18,31 +18,24 @@ const theme = createTheme();
 const postURLStr = 'https://epistemica-x-db.vercel.app/api/post'
 // const postDevURLStr = 'http://localhost:3000/api/post'
 // const postURL = 'mongodb+srv://grantjferowich:legend-alpha23@cluster1.cszxxm9.mongodb.net/api/post'
+
 export default function SignUp() {
   const handleSubmit = (event) => {
+
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-   
-    // console.log(data.get('firstName'))
-    // console.log({
-    //   let name = 
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
     const firstName = data.get('firstName');
     const lastName = data.get('lastName');
     const name = firstName + " " + lastName
     const email = data.get('email');
     const password = data.get('password');
 
-    // console.log(name)
     const dataX = { 
       "name": name,
       "email": email, 
       "password": password
     }
-    console.log(dataX)
-    // console.log(data.get('firstName'))
+
     axios.post(postURLStr, JSON.stringify(dataX), {
       withCredentials: true,
       headers: {

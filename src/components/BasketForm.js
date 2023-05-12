@@ -104,8 +104,8 @@ export default function BasketForm(props) {
   const handleChange1 = event => {
     const key = event.target.value;
     setCurrency1(key.name);
-    console.log("key is", key);
-    console.log("key.id is", key.id);
+    // console.log("key is", key);
+    // console.log("key.id is", key.id);
     setCurrency1APIKey(key.id);
   };
 
@@ -136,14 +136,14 @@ export default function BasketForm(props) {
   const handleSubmit = async event => {
 
     event.preventDefault();
-    console.log('handleSubmit completed.')
+    // console.log('handleSubmit completed.')
     const currencyQs = [currency1Q, currency2Q, currency3Q, currency4Q, currency5Q]
     const apiKeys = [currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey];
     const currencies = [currency1, currency2, currency3, currency4, currency5]
     const weights = [currency1Weight, currency2Weight, currency3Weight, currency4Weight, currency5Weight];
     
     const calculateQuantityX = async (currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate) => {
-      console.log('calculateQuantityX function started.')
+      // console.log('calculateQuantityX function started.')
       
       for (let z=0; z <apiKeys.length; z++) {
         if (apiKeys[z] !== ""){
@@ -280,7 +280,7 @@ export default function BasketForm(props) {
               <Grid item xs={6} >
                    <TextField
                   id="weight1"
-                  label="Weight (%) 1"
+                  label="Weight (%)"
                   variant="filled"
                   type="number"
                   onChange={event => {
