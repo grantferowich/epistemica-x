@@ -12,30 +12,50 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import axios from 'axios';
 
 const theme = createTheme();
-
+const postURLStr = 'https://epistemica-x-db.vercel.app/api/post'
+// const postDevURLStr = 'http://localhost:3000/api/post'
+// const postURL = 'mongodb+srv://grantjferowich:legend-alpha23@cluster1.cszxxm9.mongodb.net/api/post'
 export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+   
+    // console.log(data.get('firstName'))
+    // console.log({
+    //   let name = 
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
+    const firstName = data.get('firstName');
+    const lastName = data.get('lastName');
+    const name = firstName + " " + lastName
+    const email = data.get('email');
+    const password = data.get('password');
+
+    // console.log(name)
+    const dataX = { 
+      "name": name,
+      "email": email, 
+      "password": password
+    }
+    console.log(dataX)
+    // console.log(data.get('firstName'))
+    axios.post(postURLStr, JSON.stringify(dataX), {
+      withCredentials: true,
+      headers: {
+        "Content-Type":"application/json",
+      }
+    })
+    .then(responseHM => {
+      console.log(responseHM.data)
+    })
+    .catch(errorHM => {
+      console.log(errorHM)
+    })
+
   };
 
   return (
@@ -100,12 +120,6 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -124,7 +138,6 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
