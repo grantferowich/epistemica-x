@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -20,6 +20,7 @@ const postURLStr = 'https://epistemica-x-db.vercel.app/api/post'
 // const postURL = 'mongodb+srv://grantjferowich:legend-alpha23@cluster1.cszxxm9.mongodb.net/api/post'
 
 export default function SignUp() {
+  const [isSignUpSuccessful, setIsSignUpSuccessful] = useState(false)
   const handleSubmit = (event) => {
 
     event.preventDefault();
@@ -43,13 +44,22 @@ export default function SignUp() {
       }
     })
     .then(responseHM => {
+
       console.log(responseHM.data)
+      setIsSignUpSuccessful(true)
     })
     .catch(errorHM => {
       console.log(errorHM)
     })
-
   };
+
+  if (isSignUpSuccessful){
+    return (
+      <div>
+        <h2>Welcome to Epistemica-X!</h2>
+      </div>
+    )
+  }
 
   return (
     <ThemeProvider theme={theme}>
