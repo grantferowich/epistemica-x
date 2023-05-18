@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,8 +20,10 @@ const postURLStr = 'https://epistemica-x-db.vercel.app/api/post'
 // const postDevURLStr = 'http://localhost:3000/api/post'
 // const postURL = 'mongodb+srv://grantjferowich:legend-alpha23@cluster1.cszxxm9.mongodb.net/api/post'
 
+
+
 export default function SignUp() {
-  const [isSignUpSuccessful, setIsSignUpSuccessful] = useState(false)
+  const navigateFn = useNavigate();
   const handleSubmit = (event) => {
 
     event.preventDefault();
@@ -30,6 +33,7 @@ export default function SignUp() {
     const name = firstName + " " + lastName
     const email = data.get('email');
     const password = data.get('password');
+   
 
     const dataX = { 
       "name": name,
@@ -44,22 +48,13 @@ export default function SignUp() {
       }
     })
     .then(responseHM => {
-
-      console.log(responseHM.data)
-      setIsSignUpSuccessful(true)
+      console.log(responseHM.data);
+      navigateFn('/user-home');
     })
     .catch(errorHM => {
       console.log(errorHM)
     })
   };
-
-  if (isSignUpSuccessful){
-    return (
-      <div>
-        <h2>Welcome to Epistemica-X!</h2>
-      </div>
-    )
-  }
 
   return (
     <ThemeProvider theme={theme}>
