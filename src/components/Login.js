@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,7 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import axios from 'axios';
 // function Copyright(props) {
 //   return (
 //     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -25,15 +26,33 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // }
 
 const theme = createTheme();
+const loginURLStr = 'https://epistemica-x-db.vercel.app/api/login';
 
 export default function Login() {
+
+  const navigateFn = useNavigate();
+
   const handleSubmit = (event) => {
+    
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const email = data.get('email');
+    const password = data.get('password');
+    const dataX = {
+      "email": email, 
+      "password": password
+    }
+    axios.post(loginURLStr, JSON.stringify(dataX), {
+      withCredentials: true,
+      headers: {
+        "Content-Type":"application/json"
+      }
+    }).then(responseHM => {
+      console.log('200: Success');
+      navigateFn('/user-home')
+    }).catch(errorHM => {
+      console.log(errorHM);
+    })
   };
 
   return (
