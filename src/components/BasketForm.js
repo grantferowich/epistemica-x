@@ -27,43 +27,43 @@ export default function BasketForm(props) {
   const [indexDate, setIndexDate] = useState('');
   const [initialBasketValue, setInitialBasketValue] = useState('');
   const [presentBasketValue, setPresentBasketValue] = useState('');
-  const [ percentReturn, setPercentReturn ] = useState('');
+  const [percentReturn, setPercentReturn ] = useState('');
 
   const [currency1, setCurrency1] = useState('');
   const [currency1Weight, setCurrency1Weight] = useState('');
   const [currency1APIKey, setCurrency1APIKey] = useState('');
-  const [ c1LongOrShort, setc1LongOrShort ] = useState('long'); 
+  // const [c1LongOrShort, setc1LongOrShort ] = useState('long'); 
   const currency1Q = 0;
 
   const [currency2, setCurrency2] = useState('');
   const [currency2Weight, setCurrency2Weight] = useState('');
   const [currency2APIKey, setCurrency2APIKey] = useState('');
-  const [ c2LongOrShort, setc2LongOrShort ] = useState('long'); 
+  // const [ c2LongOrShort, setc2LongOrShort ] = useState('long'); 
   const currency2Q = 0;
 
   const [currency3, setCurrency3] = useState('');
   const [currency3Weight, setCurrency3Weight] = useState('');
   const [currency3APIKey, setCurrency3APIKey] = useState('');
-  const [ c3LongOrShort, setc3LongOrShort ] = useState('long'); 
+  // const [ c3LongOrShort, setc3LongOrShort ] = useState('long'); 
   const currency3Q = 0;
 
   const [currency4, setCurrency4] = useState('');
   const [currency4Weight, setCurrency4Weight] = useState('');
   const [currency4APIKey, setCurrency4APIKey] = useState('');
-  const [ c4LongOrShort, setc4LongOrShort ] = useState('long'); 
+  // const [ c4LongOrShort, setc4LongOrShort ] = useState('long'); 
   const currency4Q = 0;
 
   const [currency5, setCurrency5] = useState('');
   const [currency5Weight, setCurrency5Weight] = useState('');
   const [currency5APIKey, setCurrency5APIKey] = useState('');
-  const [ c5LongOrShort, setc5LongOrShort ] = useState('long'); 
+  // const [ c5LongOrShort, setc5LongOrShort ] = useState('long'); 
   const currency5Q = 0;
-
 
   // The basket object contains the crypto token names, initial basket value, historical date and quantity of crypto tokens.
   // All the basket data fields are from user inputs except the quantity values, which are calculated in state. 
   // Present basket value will be calculated by multiplying the historically derived quantity by the present price. 
  
+
   const handleNameChange = event => {
     setName(event.target.value);
   };
@@ -142,6 +142,65 @@ export default function BasketForm(props) {
     const currencies = [currency1, currency2, currency3, currency4, currency5]
     const weights = [currency1Weight, currency2Weight, currency3Weight, currency4Weight, currency5Weight];
     
+    // basket data schema
+    //   basketDataHM = {
+    //   user_IdInt = ,
+    //   basketNameStr = ,
+    //   indexDateStr = ,
+    //   initialBasketValueInt = ,
+    //   Asset1..5: {
+            // asset1..5NameStr: 
+            // asset1...5WeightInt: 
+            // asset1...5APIKeyStr: 
+            // asset1...5IndexPriceInt: 
+            // asset1...5QuantityInt: 
+          }
+    }
+      
+    const basketDataHM = {
+       user_idInt: "",
+       basketNameStr: name, 
+       indexDateStr: indexDate, 
+       initialBasketValueInt: initialBasketValue,
+       asset1HM: {
+        asset1NameStr: currency1,
+        asset1IndexPriceInt: 0,
+        asset1QuantityInt: currency1Q,
+        asset1WeightInt: currency1Weight,
+        asset1APIKeyStr: currency1APIKey,
+       },
+       asset2HM: {
+        asset2NameStr: currency2,
+        asset2IndexPriceInt: 0,
+        asset2QuantityInt: currency2Q,
+        asset2WeightInt: currency2Weight,
+        asset2APIKeyStr: currency2APIKey,
+       },
+       asset3HM: {
+        asset3NameStr: currency3,
+        asset3IndexPriceInt: 0,
+        asset3QuantityInt: currency3Q,
+        asset3WeightInt: currency3Weight,
+        asset3APIKeyStr: currency3APIKey,
+       },
+       asset4HM: {
+        asset4NameStr: currency4,
+        asset4IndexPriceInt: 0,
+        asset4QuantityInt: currency4Q,
+        asset4WeightInt: currency4Weight,
+        asset4APIKeyStr: currency4APIKey,
+       },
+       asset5HM: {
+        asset5NameStr: currency5,
+        asset5IndexPriceInt: 0,
+        asset5QuantityInt: currency5Q,
+        asset5WeightInt: currency5Weight,
+        asset5APIKeyStr: currency5APIKey,
+       },
+
+    }
+
+
     const calculateQuantityX = async (currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate) => {
       // console.log('calculateQuantityX function started.')
       
@@ -195,10 +254,18 @@ export default function BasketForm(props) {
         calculatePercentReturn(presentBasketValue, currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey, currency1Q, currency2Q, currency3Q, currency4Q, currency5Q)
       }
    }
+
    discoverCurencies(); 
    setHandleSubmitFired(true);
 
-   console.log("handleSubmitFired truth value =", handleSubmitFired === true)
+   
+
+   // 
+   // 
+  //  const basketDataHM = {
+    
+  //  }
+  //  console.log("handleSubmitFired truth value =", handleSubmitFired === true)
     //calculateQuantityX sets the currency1Q, currency2Q, currency3Q, currency4Q, currency5Q state
     //calculateQuantityX runs after handleSubmit AND after there is a determination of a currency value being discovered
     //calculatePercentReturn will return a string of the XX.YY% return for the basket
