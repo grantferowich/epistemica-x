@@ -23,7 +23,7 @@ export default function BasketForm(props) {
     fetchData();
   }, [query]);
 
-  const [name, setName] = useState('');
+  const [basketName, setBasketName] = useState('');
   const [indexDate, setIndexDate] = useState('');
   const [initialBasketValue, setInitialBasketValue] = useState('');
   const [presentBasketValue, setPresentBasketValue] = useState('');
@@ -65,7 +65,7 @@ export default function BasketForm(props) {
  
 
   const handleNameChange = event => {
-    setName(event.target.value);
+    setBasketName(event.target.value);
   };
 
   const handleDateChange = event => {
@@ -154,12 +154,12 @@ export default function BasketForm(props) {
             // asset1...5APIKeyStr: 
             // asset1...5IndexPriceInt: 
             // asset1...5QuantityInt: 
-          }
-    }
+         //  }
+    // }
       
     const basketDataHM = {
        user_idInt: "",
-       basketNameStr: name, 
+       basketNameStr: basketName, 
        indexDateStr: indexDate, 
        initialBasketValueInt: initialBasketValue,
        asset1HM: {
@@ -196,8 +196,7 @@ export default function BasketForm(props) {
         asset5QuantityInt: currency5Q,
         asset5WeightInt: currency5Weight,
         asset5APIKeyStr: currency5APIKey,
-       },
-
+       }
     }
 
 
@@ -275,7 +274,7 @@ export default function BasketForm(props) {
     <React.Fragment>
        <><CardContent>
          <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-           {name}
+           {basketName}
          </Typography>
          <Typography variant="h5" component="div">
            Return: {percentReturn.toString().slice(0,5)}%
@@ -315,7 +314,7 @@ export default function BasketForm(props) {
                   fullWidth
                   required
                   onChange={event => {
-                    handleNameChange(event);
+                    handleBasketNameChange(event);
                   }}
                 />
               </Grid>
@@ -528,5 +527,4 @@ export default function BasketForm(props) {
      <Copyright/>
     </div>)
   );
-  
 }
