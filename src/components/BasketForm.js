@@ -64,7 +64,7 @@ export default function BasketForm(props) {
   // Present basket value will be calculated by multiplying the historically derived quantity by the present price. 
  
 
-  const handleNameChange = event => {
+  const handleBasketNameChange = event => {
     setBasketName(event.target.value);
   };
 
