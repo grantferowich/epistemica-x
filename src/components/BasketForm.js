@@ -256,7 +256,9 @@ export default function BasketForm(props) {
 
    discoverCurencies(); 
    setHandleSubmitFired(true);
-
+   const basketData = new FormData(event.currentTarget);
+  //  const 
+   
    
    
 
