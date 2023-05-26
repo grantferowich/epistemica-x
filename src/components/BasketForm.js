@@ -156,48 +156,48 @@ export default function BasketForm(props) {
             // asset1...5QuantityInt: 
          //  }
     // }
-      
-    const basketDataHM = {
-       user_idInt: "",
-       basketNameStr: basketName, 
-       indexDateStr: indexDate, 
-       initialBasketValueInt: initialBasketValue,
-       asset1HM: {
-        asset1NameStr: currency1,
-        asset1IndexPriceInt: 0,
-        asset1QuantityInt: currency1Q,
-        asset1WeightInt: currency1Weight,
-        asset1APIKeyStr: currency1APIKey,
-       },
-       asset2HM: {
-        asset2NameStr: currency2,
-        asset2IndexPriceInt: 0,
-        asset2QuantityInt: currency2Q,
-        asset2WeightInt: currency2Weight,
-        asset2APIKeyStr: currency2APIKey,
-       },
-       asset3HM: {
-        asset3NameStr: currency3,
-        asset3IndexPriceInt: 0,
-        asset3QuantityInt: currency3Q,
-        asset3WeightInt: currency3Weight,
-        asset3APIKeyStr: currency3APIKey,
-       },
-       asset4HM: {
-        asset4NameStr: currency4,
-        asset4IndexPriceInt: 0,
-        asset4QuantityInt: currency4Q,
-        asset4WeightInt: currency4Weight,
-        asset4APIKeyStr: currency4APIKey,
-       },
-       asset5HM: {
-        asset5NameStr: currency5,
-        asset5IndexPriceInt: 0,
-        asset5QuantityInt: currency5Q,
-        asset5WeightInt: currency5Weight,
-        asset5APIKeyStr: currency5APIKey,
-       }
-    }
+
+    // const basketDataHM = {
+    //    user_idInt: "",
+    //    basketNameStr: basketName, 
+    //    indexDateStr: indexDate, 
+    //    initialBasketValueInt: initialBasketValue,
+    //    asset1HM: {
+    //     asset1NameStr: currency1,
+    //     asset1IndexPriceInt: 0,
+    //     asset1QuantityInt: currency1Q,
+    //     asset1WeightInt: currency1Weight,
+    //     asset1APIKeyStr: currency1APIKey,
+    //    },
+    //    asset2HM: {
+    //     asset2NameStr: currency2,
+    //     asset2IndexPriceInt: 0,
+    //     asset2QuantityInt: currency2Q,
+    //     asset2WeightInt: currency2Weight,
+    //     asset2APIKeyStr: currency2APIKey,
+    //    },
+    //    asset3HM: {
+    //     asset3NameStr: currency3,
+    //     asset3IndexPriceInt: 0,
+    //     asset3QuantityInt: currency3Q,
+    //     asset3WeightInt: currency3Weight,
+    //     asset3APIKeyStr: currency3APIKey,
+    //    },
+    //    asset4HM: {
+    //     asset4NameStr: currency4,
+    //     asset4IndexPriceInt: 0,
+    //     asset4QuantityInt: currency4Q,
+    //     asset4WeightInt: currency4Weight,
+    //     asset4APIKeyStr: currency4APIKey,
+    //    },
+    //    asset5HM: {
+    //     asset5NameStr: currency5,
+    //     asset5IndexPriceInt: 0,
+    //     asset5QuantityInt: currency5Q,
+    //     asset5WeightInt: currency5Weight,
+    //     asset5APIKeyStr: currency5APIKey,
+    //    }
+    // }
 
 
     const calculateQuantityX = async (currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate) => {
@@ -254,10 +254,16 @@ export default function BasketForm(props) {
       }
    }
 
+
+
    discoverCurencies(); 
    setHandleSubmitFired(true);
-   const basketData = new FormData(event.currentTarget);
-  //  const 
+  //  const basketData = new FormData(event.currentTarget);
+  //  console.log(basketData)
+
+  ///  stopped here on May 26, 2023: 12:57pm
+   const basketNameStr = basketName
+   console.log('basketNameStr', basketNameStr)
    
    
    
@@ -312,7 +318,7 @@ export default function BasketForm(props) {
             <Grid container spacing={1}>
               <Grid item xs={12}>
                 <TextField
-                  id="name"
+                  id="basketName"
                   label="Basket Name"
                   fullWidth
                   required
