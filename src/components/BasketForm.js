@@ -262,8 +262,10 @@ export default function BasketForm(props) {
   //  console.log(basketData)
 
   ///  stopped here on May 26, 2023: 12:57pm
-   const basketNameStr = basketName
-   console.log('basketNameStr', basketNameStr)
+   const basketNameStr = basketName;
+   const user_IdInt = 0;
+  //  console.log('basketNameStr', basketNameStr)
+
    
    
    

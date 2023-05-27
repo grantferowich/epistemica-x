@@ -30,7 +30,15 @@ const loginURLStr = 'https://epistemica-x-db.vercel.app/api/login';
 
 export default function Login() {
 
+  
   const navigateFn = useNavigate();
+
+  const updateStore = (userObj) => {
+    console.log('updateStore fired')
+    // console.log(userObj)
+    let dataHM = userObj.data
+    console.log(dataHM)
+  }
 
   const handleSubmit = (event) => {
     
@@ -49,6 +57,7 @@ export default function Login() {
       }
     }).then(responseHM => {
       console.log('200: Success');
+      updateStore(responseHM)
       console.log(responseHM)
       // responseHM is the userObj: next let's send this stuff to
       // the redux store for accessing throughout the app
