@@ -12,18 +12,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-// function Copyright(props) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
+import { useDispatch } from 'react-redux';
+import { setUserEmail, setUserId, setUserName } from '../actions/userActions';
 
 const theme = createTheme();
 const loginURLStr = 'https://epistemica-x-db.vercel.app/api/login';
@@ -36,8 +26,11 @@ export default function Login() {
   const updateStore = (userObj) => {
     console.log('updateStore fired')
     // console.log(userObj)
-    let dataHM = userObj.data
-    console.log(dataHM)
+    let dataHM = userObj.data.userObj
+    console.log('dataHM', dataHM)
+    console.log('dataHM name', dataHM.name)
+    console.log('dataHM email', dataHM.email)
+    console.log('dataHM id', dataHM._id)
   }
 
   const handleSubmit = (event) => {
