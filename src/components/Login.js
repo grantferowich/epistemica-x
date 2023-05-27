@@ -49,6 +49,9 @@ export default function Login() {
       }
     }).then(responseHM => {
       console.log('200: Success');
+      console.log(responseHM)
+      // responseHM is the userObj: next let's send this stuff to
+      // the redux store for accessing throughout the app
       navigateFn('/user-home')
     }).catch(errorHM => {
       console.log(errorHM);

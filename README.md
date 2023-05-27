@@ -25,3 +25,10 @@ Some features that would be really cool that I haven't gotten to yet but wouldn'
 1. Chart.js to with basic ROI curves for each basket. Ideally you can click on the card, it flips over, then you see the chart of it's performance since the indexing date.
 2. Covarience and correlation calculations for different baskets or correlation between a basket and the Nasdaq or S&P 500 index.
 
+## Dependencies
+1. redux
+2. react-redux
+3. axios
+4. react
+5. react-router-dom
+
