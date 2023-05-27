@@ -23,6 +23,8 @@ export default function Login() {
   
   const navigateFn = useNavigate();
 
+  // engineered updateStore(userObj) on Sat May 27, 2023
+  // at 9:07am
   const updateStore = (userObj) => {
     console.log('updateStore fired')
     // console.log(userObj)
