@@ -23,6 +23,9 @@ export default function BasketForm(props) {
     fetchData();
   }, [query]);
 
+
+  // successfully read the user id from the redux store
+  // on May 28, 2023
   const user_IdStr = useSelector(state => state.user.id)
   // const idStr = useSelector((stateHM) => stateHM.user.id)
   console.log('//// HI!!!!!!')
