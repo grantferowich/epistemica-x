@@ -23,9 +23,10 @@ export default function BasketForm(props) {
     fetchData();
   }, [query]);
 
+  const user_IdStr = useSelector(state => state.user.id)
   // const idStr = useSelector((stateHM) => stateHM.user.id)
-  // console.log('//// HI!!!!!!')
-  // console.log('basket form id var', idStr)
+  console.log('//// HI!!!!!!')
+  console.log('basket form id var', user_IdStr)
   const [basketName, setBasketName] = useState('');
   const [indexDate, setIndexDate] = useState('');
   const [initialBasketValue, setInitialBasketValue] = useState('');
@@ -265,8 +266,9 @@ export default function BasketForm(props) {
   
   // console.log('ID Str in Basket form', idStr)
   ///  stopped here on May 26, 2023: 12:57pm
+  
    const basketNameStr = basketName;
-   const user_IdStr = 0;
+   
 
   //  console.log('basketNameStr', basketNameStr)
 

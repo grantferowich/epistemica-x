@@ -8,22 +8,22 @@ const initialStateHM = {
 };
 
 // define the user reducer
-const userReducer = ( stateHM = initialStateHM, actionObj) => {
-    switch (actionObj.type) {
+const userReducer = ( stateHM = initialStateHM, action) => {
+    switch (action.type) {
         case SET_USER_NAME:
             return {
                 ...stateHM,
-                name: actionObj.payload
+                name: action.payload
             };
         case SET_USER_EMAIL: 
             return {
                 ...stateHM,
-                email: actionObj.payload
+                email: action.payload
             };
         case SET_USER_ID:
             return {
                 ...stateHM,
-                id: actionObj.payload
+                id: action.payload
             }
         default: 
             return stateHM

@@ -6,12 +6,11 @@ import HomePage from "./components/HomePage";
 import SignUp from "./components/SignUp";
 import UserHome from "./components/UserHome";
 import { Provider } from "react-redux";
-
-import storeHM from './store/store';
+import store from './store/store';
 
 function App() {
   return (
-  <Provider storeHM={storeHM}>
+  <Provider store={store}>
       <Router>
         <div>
           <NavBar/>
