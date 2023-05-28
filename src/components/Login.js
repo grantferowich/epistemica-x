@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux';
 import { setUserEmail, setUserId, setUserName } from '../actions/userActions';
 
 const theme = createTheme();
-const loginURLStr = 'https://epistemica-x-db.vercel.app/api/login';
+const loginURLStr = 'https://epistemica-x-db.vercel.app/api/user/login';
 
 export default function Login() {
 
