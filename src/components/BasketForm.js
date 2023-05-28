@@ -30,7 +30,7 @@ export default function BasketForm(props) {
   const user_IdStr = useSelector(state => state.user.id)
   // const idStr = useSelector((stateHM) => stateHM.user.id)
   console.log('//// HI!!!!!!')
-  console.log('basket form id', user_IdStr)
+  console.log('basket form id', user_IdStr);
 
   const postBasketURLString = 'https://epistemica-x-db.vercel.app/api/basket/post';
 
@@ -209,8 +209,8 @@ export default function BasketForm(props) {
           // console.log('/// debug assetZNameStr', assetZNameStr)
           // console.log('/// debug assetZPriceStr', assetZPriceStr)
           let iInt = z + 1
-
-          basketData[`asset${iInt}NameStr`][`asset${iInt}IndexPriceInt`] = historicalPrice;
+          console.log('basketData inside calcQuantityX', basketData)
+          basketData[`asset${iInt}HM`][`asset${iInt}NameStr`][`asset${iInt}IndexPriceInt`] = historicalPrice;
 
           console.log('// DEBUG BASKET DATA UPDATE');
           console.log('basketData.assetZNameStr.assetZPriceStr: ', basketData[`asset${z}NameStr`][`asset${z}IndexPriceInt`]);
