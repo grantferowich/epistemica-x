@@ -7,7 +7,7 @@ import Copyright from "./Copyright";
 import { Switch } from '@mui/material';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
+import { useSelector } from "react-redux";
 export default function BasketForm(props) {
 
   const [data, setData] = useState([]);
@@ -23,6 +23,9 @@ export default function BasketForm(props) {
     fetchData();
   }, [query]);
 
+  // const idStr = useSelector((stateHM) => stateHM.user.id)
+  // console.log('//// HI!!!!!!')
+  // console.log('basket form id var', idStr)
   const [basketName, setBasketName] = useState('');
   const [indexDate, setIndexDate] = useState('');
   const [initialBasketValue, setInitialBasketValue] = useState('');
@@ -254,16 +257,17 @@ export default function BasketForm(props) {
       }
    }
 
-
-
    discoverCurencies(); 
    setHandleSubmitFired(true);
   //  const basketData = new FormData(event.currentTarget);
   //  console.log(basketData)
 
+  
+  // console.log('ID Str in Basket form', idStr)
   ///  stopped here on May 26, 2023: 12:57pm
    const basketNameStr = basketName;
-   const user_IdInt = 0;
+   const user_IdStr = 0;
+
   //  console.log('basketNameStr', basketNameStr)
 
    
