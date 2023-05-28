@@ -8,6 +8,7 @@ import { Switch } from '@mui/material';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useSelector } from "react-redux";
+
 export default function BasketForm(props) {
 
   const [data, setData] = useState([]);
@@ -30,6 +31,9 @@ export default function BasketForm(props) {
   // const idStr = useSelector((stateHM) => stateHM.user.id)
   console.log('//// HI!!!!!!')
   console.log('basket form id', user_IdStr)
+
+  const postBasketURLString = 'https://epistemica-x-db.vercel.app/api/basket/post';
+
   const [basketName, setBasketName] = useState('');
   const [indexDate, setIndexDate] = useState('');
   const [initialBasketValue, setInitialBasketValue] = useState('');
@@ -65,11 +69,10 @@ export default function BasketForm(props) {
   const [currency5APIKey, setCurrency5APIKey] = useState('');
   // const [ c5LongOrShort, setc5LongOrShort ] = useState('long'); 
   const currency5Q = 0;
-
+  
   // The basket object contains the crypto token names, initial basket value, historical date and quantity of crypto tokens.
   // All the basket data fields are from user inputs except the quantity values, which are calculated in state. 
   // Present basket value will be calculated by multiplying the historically derived quantity by the present price. 
- 
 
   const handleBasketNameChange = event => {
     setBasketName(event.target.value);
@@ -148,78 +151,84 @@ export default function BasketForm(props) {
     const apiKeys = [currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey];
     const currencies = [currency1, currency2, currency3, currency4, currency5]
     const weights = [currency1Weight, currency2Weight, currency3Weight, currency4Weight, currency5Weight];
-    
-    // basket data schema
-    //   basketDataHM = {
-    //   user_IdInt = ,
-    //   basketNameStr = ,
-    //   indexDateStr = ,
-    //   initialBasketValueInt = ,
-    //   Asset1..5: {
-            // asset1..5NameStr: 
-            // asset1...5WeightInt: 
-            // asset1...5APIKeyStr: 
-            // asset1...5IndexPriceInt: 
-            // asset1...5QuantityInt: 
-         //  }
-    // }
-
-    // const basketDataHM = {
-    //    user_idInt: "",
-    //    basketNameStr: basketName, 
-    //    indexDateStr: indexDate, 
-    //    initialBasketValueInt: initialBasketValue,
-    //    asset1HM: {
-    //     asset1NameStr: currency1,
-    //     asset1IndexPriceInt: 0,
-    //     asset1QuantityInt: currency1Q,
-    //     asset1WeightInt: currency1Weight,
-    //     asset1APIKeyStr: currency1APIKey,
-    //    },
-    //    asset2HM: {
-    //     asset2NameStr: currency2,
-    //     asset2IndexPriceInt: 0,
-    //     asset2QuantityInt: currency2Q,
-    //     asset2WeightInt: currency2Weight,
-    //     asset2APIKeyStr: currency2APIKey,
-    //    },
-    //    asset3HM: {
-    //     asset3NameStr: currency3,
-    //     asset3IndexPriceInt: 0,
-    //     asset3QuantityInt: currency3Q,
-    //     asset3WeightInt: currency3Weight,
-    //     asset3APIKeyStr: currency3APIKey,
-    //    },
-    //    asset4HM: {
-    //     asset4NameStr: currency4,
-    //     asset4IndexPriceInt: 0,
-    //     asset4QuantityInt: currency4Q,
-    //     asset4WeightInt: currency4Weight,
-    //     asset4APIKeyStr: currency4APIKey,
-    //    },
-    //    asset5HM: {
-    //     asset5NameStr: currency5,
-    //     asset5IndexPriceInt: 0,
-    //     asset5QuantityInt: currency5Q,
-    //     asset5WeightInt: currency5Weight,
-    //     asset5APIKeyStr: currency5APIKey,
-    //    }
-    // }
-
+    const basketData = {
+      basketNameStr: basketName,
+      user_IDStr: user_IdStr,
+      indexDateStr: indexDate,
+      initialBasketValueInt: initialBasketValue,
+      asset1HM: {
+          asset1NameStr: currency1,
+          asset1IndexPriceInt: 0,
+          asset1QuantityInt: currency1Q,
+          asset1WeightInt: currency1Weight,
+          asset1APIKeyStr: currency1APIKey
+      },
+      asset2HM: {
+          asset2NameStr: currency2,
+          asset2IndexPriceInt: 0, 
+          asset2QuantityInt: currency2Q,
+          asset2WeightInt: currency2Weight,
+          asset2APIKeyStr: currency2APIKey
+      },
+      asset3HM: {
+          asset3NameStr: currency3,
+          asset3IndexPriceInt: 0,
+          asset3QuantityInt: currency3Q,
+          asset3WeightInt: currency3Weight,
+          asset3APIKeyStr: currency3APIKey
+      },
+      asset4HM: {
+          asset4NameStr: currency4,
+          asset4IndexPriceInt: 0,
+          asset4QuantityInt: currency4Q,
+          asset4WeightInt: currency4Weight,
+          asset4APIKeyStr: currency4APIKey
+      },
+      asset5HM: {
+          asset5NameStr: currency5,
+          asset5IndexPriceInt: 0, 
+          asset5QuantityInt: currency5Q,
+          asset5WeightInt: currency5Weight,
+          asset5APIKeyStr: currency5APIKey
+      }
+    }
 
     const calculateQuantityX = async (currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate) => {
       // console.log('calculateQuantityX function started.')
       
-      for (let z=0; z <apiKeys.length; z++) {
+      for (let z=0; z < apiKeys.length; z++) {
         if (apiKeys[z] !== ""){
+
           let historicalPriceAPI = "https://api.coingecko.com/api/v3/coins/"+apiKeys[z]+"/history?date="+indexDate+"&localization=false";
           let historicalPrice = await axios.get(historicalPriceAPI).then((response) => response.data.market_data.current_price.usd);
+          
+          // let assetZNameStr = 'asset' + z + 'NameStr';
+          // let assetZPriceStr = 'asset' + z + 'IndexPriceInt';
+          // assetZNameStr.toString()
+          // assetZPriceStr.toString()
+          // console.log('/// debug assetZNameStr', assetZNameStr)
+          // console.log('/// debug assetZPriceStr', assetZPriceStr)
+          let iInt = z + 1
+
+          basketData[`asset${iInt}NameStr`][`asset${iInt}IndexPriceInt`] = historicalPrice;
+
+          console.log('// DEBUG BASKET DATA UPDATE');
+          console.log('basketData.assetZNameStr.assetZPriceStr: ', basketData[`asset${z}NameStr`][`asset${z}IndexPriceInt`]);
+          console.log('basketData.... should equal historicalPrice');
           console.log('historicalPrice is', historicalPrice);
 
           let quantity = ((weights[z]/100) * initialBasketValue) / historicalPrice;
-          //this sets currencyXQ where x is 1,2,3,4,5
+          basketData[`asset${iInt}NameStr`][`asset${iInt}QuantityInt`] = quantity;
+
+          console.log('// DEBUG BASKET DATA UPDATE')
+          console.log(`basketData.assset${iInt}NameStr.asset${iInt}QuantityInt:`)
+          console.log(basketData[`asset${iInt}NameStr`][`asset${iInt}IndexPriceInt`])
+          console.log('basketData.... should equal quantity');
+
+          //this sets currencyXQ where x is 0,1,2,3,4
           console.log('quantity is', quantity)
           currencyQs[z] = quantity;
+
           console.log('currencyQs[z]', currencyQs[z]) 
         }
       }     
@@ -229,7 +238,7 @@ export default function BasketForm(props) {
       console.log('calculatePercentReturn function started.');
 
       // eslint-disable-next-line
-      const result = await calculateQuantityX(currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate)
+      const result = await calculateQuantityX(currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate, basketData)
       
       
       for (let x = 0; x <= apiKeys.length; x++) {
@@ -263,67 +272,16 @@ export default function BasketForm(props) {
 
    discoverCurencies(); 
    setHandleSubmitFired(true);
-  //  const basketData = new FormData(event.currentTarget);
-  //  console.log(basketData)
 
-  
-  // console.log('ID Str in Basket form', idStr)
-  ///  stopped here on May 26, 2023: 12:57pm
-   
-   const basketNameStr = basketName;
-   
-
-  //  console.log('basketNameStr', basketNameStr)
-
-   
-   
-   
-
-   // 
-   // 
-   const basketData = {
-    basketNameStr: basketName,
-    user_IDStr: user_IdStr,
-    indexDateStr: indexDate,
-    initialBasketValueInt: initialBasketValue,
-    asset1HM: {
-        asset1NameStr: currency1,
-        // asset1IndexPriceInt: //0, // to be set after fn call 
-        asset1QuantityInt: currency1Q,
-        asset1WeightInt: currency1Weight,
-        asset1APIKeyStr: currency1APIKey
-    },
-    asset2HM: {
-        asset2NameStr: currency2,
-        // asset2IndexPriceInt: 0, // set after fn call
-        asset2QuantityInt: currency2Q,
-        asset2WeightInt: currency2Weight,
-        asset2APIKeyStr: currency2APIKey
-    },
-    asset3HM: {
-        asset3NameStr: currency3,
-        // asset3IndexPriceInt: 0, // set after fn cal
-        asset3QuantityInt: currency3Q,
-        asset3WeightInt: currency3Weight,
-        asset3APIKeyStr: currency3APIKey
-    },
-    asset4HM: {
-        asset4NameStr: currency4,
-        // asset4IndexPriceInt: , set after fn call
-        asset4QuantityInt: currency4Q,
-        asset4WeightInt: currency4Weight,
-        asset4APIKeyStr: currency4APIKey
-    },
-    asset5HM: {
-        asset5NameStr: currency5,
-        // asset5IndexPriceInt: 0, // set aftter fn cal
-        asset5QuantityInt: currency5Q,
-        asset5WeightInt: currency5Weight,
-        asset5APIKeyStr: currency5APIKey
-    }
-
-    axios.post()
-}
+  // paused here at 11:59 am on May 28, 2023
+  // axios.post(postBasketURLString, JSON.stringify(basketData), {
+  //   withCredentials: true,
+  //   headers: {
+  //     "Content-Type":"application/json"
+  //   }
+  // })
+  // .then(responseHM => console.log(responseHM))
+  // .catch(errorHM => console.log(errorHM.message))
   //  console.log("handleSubmitFired truth value =", handleSubmitFired === true)
     //calculateQuantityX sets the currency1Q, currency2Q, currency3Q, currency4Q, currency5Q state
     //calculateQuantityX runs after handleSubmit AND after there is a determination of a currency value being discovered
