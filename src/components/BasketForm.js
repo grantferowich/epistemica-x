@@ -148,9 +148,10 @@ export default function BasketForm(props) {
     event.preventDefault();
     // console.log('handleSubmit completed.')
     const currencyQs = [currency1Q, currency2Q, currency3Q, currency4Q, currency5Q]
-    const apiKeys = [currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey];
+    const apiKeysArr = [currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey];
     const currencies = [currency1, currency2, currency3, currency4, currency5]
     const weights = [currency1Weight, currency2Weight, currency3Weight, currency4Weight, currency5Weight];
+    
     const basketData = {
       basketNameStr: basketName,
       user_IDStr: user_IdStr,
@@ -194,13 +195,13 @@ export default function BasketForm(props) {
     }
 
     const calculateQuantityX = async (currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate) => {
-      // console.log('calculateQuantityX function started.')
+      console.log('calculateQuantityX function started.')
       
-      for (let z=0; z < apiKeys.length; z++) {
-        if (apiKeys[z] !== ""){
+      for (let z=0; z < apiKeysArr.length; z++) {
+        if (apiKeysArr[z] !== ""){
 
-          let historicalPriceAPI = "https://api.coingecko.com/api/v3/coins/"+apiKeys[z]+"/history?date="+indexDate+"&localization=false";
-          let historicalPrice = await axios.get(historicalPriceAPI).then((response) => response.data.market_data.current_price.usd);
+          let historicalPriceAPIStr = "https://api.coingecko.com/api/v3/coins/"+apiKeysArr[z]+"/history?date="+indexDate+"&localization=false";
+          let historicalPriceInt = await axios.get(historicalPriceAPIStr).then((response) => response.data.market_data.current_price.usd);
           
           // let assetZNameStr = 'asset' + z + 'NameStr';
           // let assetZPriceStr = 'asset' + z + 'IndexPriceInt';
@@ -209,27 +210,28 @@ export default function BasketForm(props) {
           // console.log('/// debug assetZNameStr', assetZNameStr)
           // console.log('/// debug assetZPriceStr', assetZPriceStr)
           let iInt = z + 1
-          console.log('basketData inside calcQuantityX', basketData)
-          basketData[`asset${iInt}HM`][`asset${iInt}NameStr`][`asset${iInt}IndexPriceInt`] = historicalPrice;
+          basketData[`asset${iInt}HM`][`asset${iInt}IndexPriceInt`] = historicalPriceInt;
+          // console.log('basketData inside calcQuantityX', basketData);
+          // console.log('log after iInt', basketData[`asset${iInt}HM`][`asset${iInt}IndexPriceInt`] )
+          
+          // console.log('// DEBUG BASKET DATA UPDATE');
+          // console.log('basketData.assetZNameStr.assetZPriceStr: ', basketData[`asset${z}NameStr`][`asset${z}IndexPriceInt`]);
+          // console.log('basketData.... should equal historicalPrice');
+          // console.log('historicalPrice is', historicalPrice);
 
-          console.log('// DEBUG BASKET DATA UPDATE');
-          console.log('basketData.assetZNameStr.assetZPriceStr: ', basketData[`asset${z}NameStr`][`asset${z}IndexPriceInt`]);
-          console.log('basketData.... should equal historicalPrice');
-          console.log('historicalPrice is', historicalPrice);
+          let quantityInt = ((weights[z]/100) * initialBasketValue) / historicalPriceInt;
+          // basketData[`asset${iInt}HM`][`asset${iInt}QuantityInt`] = quantityInt;
 
-          let quantity = ((weights[z]/100) * initialBasketValue) / historicalPrice;
-          basketData[`asset${iInt}NameStr`][`asset${iInt}QuantityInt`] = quantity;
-
-          console.log('// DEBUG BASKET DATA UPDATE')
-          console.log(`basketData.assset${iInt}NameStr.asset${iInt}QuantityInt:`)
-          console.log(basketData[`asset${iInt}NameStr`][`asset${iInt}IndexPriceInt`])
-          console.log('basketData.... should equal quantity');
+          // console.log('// DEBUG BASKET DATA UPDATE')
+          // console.log(`basketData.assset${iInt}NameStr.asset${iInt}QuantityInt:`)
+          // console.log(basketData[`asset${iInt}HM`][`asset${iInt}IndexPriceInt`])
+          // console.log('basketData.... should equal quantity');
 
           //this sets currencyXQ where x is 0,1,2,3,4
-          console.log('quantity is', quantity)
-          currencyQs[z] = quantity;
+          // console.log('quantity is', quantityInt)
+          currencyQs[z] = quantityInt;
 
-          console.log('currencyQs[z]', currencyQs[z]) 
+          // console.log('currencyQs[z]', currencyQs[z]) 
         }
       }     
     }
@@ -241,25 +243,25 @@ export default function BasketForm(props) {
       const result = await calculateQuantityX(currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate, basketData)
       
       
-      for (let x = 0; x <= apiKeys.length; x++) {
-        const apiID = apiKeys[x]
-        if ((apiKeys[x] !== "") && !(apiKeys[x] === undefined)) {
-          console.log("apiID is", apiID)
-          const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeys[x]+"&vs_currencies=usd";
-          console.log("presentPriceAPI", presentPriceAPI)
-          const presentPrice = await axios.get(presentPriceAPI).then((response) => response.data[apiKeys[x]].usd); 
-          console.log("presentPrice", presentPrice);
-          console.log('quantities', currencyQs[x]);
+      for (let x = 0; x <= apiKeysArr.length; x++) {
+        // const apiID = apiKeysArr[x];
+        if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined)) {
+          // console.log("apiID is", apiID);
+          const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
+          // console.log("presentPriceAPI", presentPriceAPI);
+          const presentPrice = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
+          // console.log("presentPrice", presentPrice);
+          // console.log('quantities', currencyQs[x]);
           let value = parseFloat(presentPrice * currencyQs[x]);
           presentBasketValue = parseFloat(presentBasketValue+value) 
           setPresentBasketValue(presentBasketValue);
         } 
       }      
-      console.log('presentBasketvalue is', presentBasketValue)
-      console.log('initial Basket value', initialBasketValue)
+      // console.log('presentBasketvalue is', presentBasketValue)
+      // console.log('initial Basket value', initialBasketValue)
       const pctReturn = (100 * (presentBasketValue - initialBasketValue) / initialBasketValue);
       setPercentReturn(pctReturn)
-      console.log('percent return', pctReturn)
+      // console.log('percent return', pctReturn)
     });
     
     const discoverCurencies = () => {
@@ -270,9 +272,16 @@ export default function BasketForm(props) {
       }
    }
 
+   const sendPostRequestToAPI = (basketData, postBasketURLString) => {
+    console.log('sendPostRequestToAPI fired.')
+    axios.post(postBasketURLString, JSON.stringify(basketData))
+    .then((responseHM) => console.log('responseHM', responseHM))
+    .catch((errorHM) => console.log('Error', errorHM.message))
+   }  
+
    discoverCurencies(); 
    setHandleSubmitFired(true);
-
+   sendPostRequestToAPI(basketData, postBasketURLString);
   // paused here at 11:59 am on May 28, 2023
   // axios.post(postBasketURLString, JSON.stringify(basketData), {
   //   withCredentials: true,
