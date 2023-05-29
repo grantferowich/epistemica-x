@@ -274,9 +274,17 @@ export default function BasketForm(props) {
 
    const sendPostRequestToAPI = (basketData, postBasketURLString) => {
     console.log('sendPostRequestToAPI fired.')
-    axios.post(postBasketURLString, JSON.stringify(basketData))
-    .then((responseHM) => console.log('responseHM', responseHM))
-    .catch((errorHM) => console.log('Error', errorHM.message))
+    axios.post(postBasketURLString, JSON.stringify(basketData), {
+      withCredentials: true,
+      headers: {
+        "Content-Type":"application/json"
+      }
+    })
+    .then((responseHM) => {
+      console.log(responseHM.data)
+    })
+    .catch((errorHM) => {
+      console.log('Error', errorHM.message)})
    }  
 
    discoverCurencies(); 
