@@ -1,10 +1,11 @@
-import { SET_USER_EMAIL, SET_USER_ID, SET_USER_NAME } from "../actions/userActions";
+import { SET_USER_BASKETS_ARR, SET_USER_EMAIL, SET_USER_ID, SET_USER_NAME } from "../actions/userActions";
 
 // Define initial state
 const initialStateHM = {
     name: '',
     email: '',
-    id: ''
+    id: '', 
+    basketsArr: ''
 };
 
 // define the user reducer
@@ -24,7 +25,12 @@ const userReducer = ( stateHM = initialStateHM, action) => {
             return {
                 ...stateHM,
                 id: action.payload
-            }
+            };
+        case SET_USER_BASKETS_ARR:
+            return {
+                ...stateHM,
+                basketsArr: action.payload
+            };
         default: 
             return stateHM
     }

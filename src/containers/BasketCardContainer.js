@@ -3,7 +3,7 @@ import BasketCard from "../components/BasketCard";
 import Grid from "@mui/material/Grid";
 
 export default function BasketCardContainer(props) {
-    console.log("BasketContainer props", props.children[1]);
+    console.log("BasketContainer props", props);
     const [data, setData] = useState([]);
     
     useEffect( () => {

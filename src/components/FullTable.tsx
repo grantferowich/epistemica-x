@@ -35,7 +35,7 @@ columns = [ { id: 'Name', label: 'Name', minWidth: 170 },
   },
 ];
 
-export default function StickyHeadTable(props) {
+export default function FullTable(props) {
   
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(50);
@@ -48,8 +48,6 @@ export default function StickyHeadTable(props) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  
 
   return (
     <div>

@@ -22,16 +22,16 @@ export default function Login() {
 
   
   const navigateFn = useNavigate();
-  const dispatchfn = useDispatch();
+  const dispatchFn = useDispatch();
 
   // engineered updateStore(userObj) on Sat May 27, 2023
   // at 9:07am
   const updateStore = (userObj) => {
     console.log('updateStore fired')
     let dataHM = userObj.data.userObj
-    dispatchfn(setUserName(dataHM.name))
-    dispatchfn(setUserEmail(dataHM.email))
-    dispatchfn(setUserId(dataHM._id))
+    dispatchFn(setUserName(dataHM.name))
+    dispatchFn(setUserEmail(dataHM.email))
+    dispatchFn(setUserId(dataHM._id))
   }
   
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import BasketForm from './BasketForm';
-import CryptoStickyTableContainer from '../containers/CryptoStickyTableContainer';
+import FullTableContainer from '../containers/FullTableContainer';
 
 export default function HomePage() {
   return (
     <div>
-        <CryptoStickyTableContainer></CryptoStickyTableContainer>
+        <FullTableContainer/>
         <BasketForm/>
     </div>
   )

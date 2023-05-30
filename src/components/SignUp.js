@@ -22,7 +22,6 @@ const postURLStr = 'https://epistemica-x-db.vercel.app/api/user/post'
 export default function SignUp() {
   const navigateFn = useNavigate();
   const handleSubmit = (event) => {
-
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const firstName = data.get('firstName');
@@ -31,7 +30,6 @@ export default function SignUp() {
     const email = data.get('email');
     const password = data.get('password');
    
-
     const dataX = { 
       "name": name,
       "email": email, 
