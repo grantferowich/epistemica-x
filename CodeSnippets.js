@@ -36,11 +36,11 @@
 
    // setWatchList(...watchList, Array.from(namesMap.keys));
 
-   {data.map((option) => (
-    <option key={option.id} value={option}>
-      {option.name}
-    </option>
-  ))}
+  //  {data.map((option) => (
+  //   <option key={option.id} value={option}>
+  //     {option.name}
+  //   </option>
+  // ))}
 
   // //BasketCardsContainer class component before the rfc re-write
   // import React, { Component } from "react";

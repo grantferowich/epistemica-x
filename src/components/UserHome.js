@@ -26,23 +26,18 @@ export default function UserHome() {
   let currentUserBasketsArr = []
  
   // engineered at 11:44am on May 30, 2023
+  // store is successfully updated 2:20 pm on May 30, 2023
   const updateStore = (currentUserBasketsArr) => {
     console.log('update baskets arr store fired.')
     dispatchFn(setUserBasketsArr(currentUserBasketsArr))
   }
 
   const setCurrentUserBasketsArr = (arr) => {
-    for ( const hm of arr){
-      // console.log('hm', hm)
-      // console.log('hm_id', hm._id)
-      // console.log('user_IdStr', user_IdStr)
-    
+    for (const hm of arr){
       if (hm.user_IDStr === user_IDStr){
-        console.log('appending a basket to basketsArr')
         currentUserBasketsArr.push(hm)
       }
     }
-    console.log('currentUserBasketsArr', currentUserBasketsArr)
     updateStore(currentUserBasketsArr)
   }
   
