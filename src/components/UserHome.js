@@ -11,7 +11,7 @@ import { setUserBasketsArr } from '../actions/userActions'
 // render basket data via cards
 
 export default function UserHome() {
-  const user_IdStr = useSelector(state => state.user.id)
+  const user_IDStr = useSelector(state => state.user.id)
   let user_firstNameStr = useSelector(state =>state.user.name)
   const dispatchFn = useDispatch();
   
@@ -19,22 +19,30 @@ export default function UserHome() {
   if (user_firstNameStr.split(' ').length > 1){
     user_firstNameStr = user_firstNameStr.split(' ')[0]
   }
-  console.log('userIdStr', user_IdStr)
+  console.log('userIdStr', user_IDStr)
   console.log('user_firstName', user_firstNameStr)
   let getBasketsAPIStr = 'https://epistemica-x-db.vercel.app/api/basket/getAll'
   let basketsArr = []
   let currentUserBasketsArr = []
  
+  // engineered at 11:44am on May 30, 2023
   const updateStore = (currentUserBasketsArr) => {
+    console.log('update baskets arr store fired.')
     dispatchFn(setUserBasketsArr(currentUserBasketsArr))
   }
 
   const setCurrentUserBasketsArr = (arr) => {
     for ( const hm of arr){
-      if (hm._id === user_IdStr){
+      // console.log('hm', hm)
+      // console.log('hm_id', hm._id)
+      // console.log('user_IdStr', user_IdStr)
+    
+      if (hm.user_IDStr === user_IDStr){
+        console.log('appending a basket to basketsArr')
         currentUserBasketsArr.push(hm)
       }
     }
+    console.log('currentUserBasketsArr', currentUserBasketsArr)
     updateStore(currentUserBasketsArr)
   }
   
@@ -52,7 +60,7 @@ export default function UserHome() {
   return (
     <div>
         <h2>Welcome home to Epistemica-X, {user_firstNameStr}!</h2>
-        <BasketCardContainer currentUserBasketsArr={currentUserBasketsArr}/>
+        <BasketCardContainer/>
     </div>
   )
 }

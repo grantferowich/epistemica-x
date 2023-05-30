@@ -66,7 +66,7 @@ export default function BasketForm(props) {
   const [currency5, setCurrency5] = useState('');
   const [currency5Weight, setCurrency5Weight] = useState('');
   const [currency5APIKey, setCurrency5APIKey] = useState('');
-  const [ c5LongOrShort, setc5LongOrShort ] = useState('long'); 
+  const [c5LongOrShort, setc5LongOrShort] = useState('long'); 
   const currency5Q = 0;
   
   // The basket object contains the crypto token names, initial basket value, historical date and quantity of crypto tokens.
@@ -259,6 +259,7 @@ export default function BasketForm(props) {
 
    discoverCurencies(); 
    setHandleSubmitFired(true);
+   console.log('basketForm data ', basketData)
    sendPostRequestToAPI(basketData, postBasketURLString);
   // paused here at 11:59 am on May 28, 2023
   // axios.post(postBasketURLString, JSON.stringify(basketData), {

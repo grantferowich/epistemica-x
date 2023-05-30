@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import BasketCard from "../components/BasketCard";
 import Grid from "@mui/material/Grid";
+import { useSelector } from 'react-redux';
 
-export default function BasketCardContainer(props) {
-    console.log("BasketContainer props", props);
-    const [data, setData] = useState([]);
+export default function BasketCardContainer() {
     
-    useEffect( () => {
-      const object = props.children[1];
+    // const [data, setData] = useState([]);
+    const basketsArr = useSelector(state => state.user.basketsArr)
+    // useEffect( () => {
+    //   const object = props.children[1];
 
-      setData(object);
-    },[]);
+    //   setData(object);
+    // },[]);
 
-    console.log("Basketdata", data);
-
-
+    // console.log("Baskets arr", basketsArr);
 
 
-    return ( data.coin_1_q !== 0 ?
+
+
+    return ( basketsArr.length !== 0 ?
     (<div>BasketCardContainer
          <div>
         <div> 
           <h3>My Basket</h3>
           <Grid container="true" display="flex" flexWrap="wrap" xs={12}>
-            {data.map(basket => (
+            {basketsArr.map(basket => (
               <Grid item xs={12} sm={6}>
                 <BasketCard key={basket.id} basket={basket}/>
               </Grid>
