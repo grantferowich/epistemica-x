@@ -28,12 +28,11 @@ export default function BasketForm(props) {
   // successfully read the user id from the redux store
   // on May 28, 2023
   const user_IdStr = useSelector(state => state.user.id)
-  // const idStr = useSelector((stateHM) => stateHM.user.id)
-  console.log('//// HI!!!!!!')
-  console.log('basket form id', user_IdStr);
 
+  // URL endpoint for posting new baskets
   const postBasketURLString = 'https://epistemica-x-db.vercel.app/api/basket/post';
 
+  // state variables set by user
   const [basketName, setBasketName] = useState('');
   const [indexDate, setIndexDate] = useState('');
   const [initialBasketValue, setInitialBasketValue] = useState('');
@@ -43,31 +42,31 @@ export default function BasketForm(props) {
   const [currency1, setCurrency1] = useState('');
   const [currency1Weight, setCurrency1Weight] = useState('');
   const [currency1APIKey, setCurrency1APIKey] = useState('');
-  // const [c1LongOrShort, setc1LongOrShort ] = useState('long'); 
+  const [c1LongOrShort, setc1LongOrShort ] = useState('long'); 
   const currency1Q = 0;
 
   const [currency2, setCurrency2] = useState('');
   const [currency2Weight, setCurrency2Weight] = useState('');
   const [currency2APIKey, setCurrency2APIKey] = useState('');
-  // const [ c2LongOrShort, setc2LongOrShort ] = useState('long'); 
+  const [ c2LongOrShort, setc2LongOrShort ] = useState('long'); 
   const currency2Q = 0;
 
   const [currency3, setCurrency3] = useState('');
   const [currency3Weight, setCurrency3Weight] = useState('');
   const [currency3APIKey, setCurrency3APIKey] = useState('');
-  // const [ c3LongOrShort, setc3LongOrShort ] = useState('long'); 
+  const [ c3LongOrShort, setc3LongOrShort ] = useState('long'); 
   const currency3Q = 0;
 
   const [currency4, setCurrency4] = useState('');
   const [currency4Weight, setCurrency4Weight] = useState('');
   const [currency4APIKey, setCurrency4APIKey] = useState('');
-  // const [ c4LongOrShort, setc4LongOrShort ] = useState('long'); 
+  const [ c4LongOrShort, setc4LongOrShort ] = useState('long'); 
   const currency4Q = 0;
 
   const [currency5, setCurrency5] = useState('');
   const [currency5Weight, setCurrency5Weight] = useState('');
   const [currency5APIKey, setCurrency5APIKey] = useState('');
-  // const [ c5LongOrShort, setc5LongOrShort ] = useState('long'); 
+  const [ c5LongOrShort, setc5LongOrShort ] = useState('long'); 
   const currency5Q = 0;
   
   // The basket object contains the crypto token names, initial basket value, historical date and quantity of crypto tokens.
@@ -199,39 +198,12 @@ export default function BasketForm(props) {
       
       for (let z=0; z < apiKeysArr.length; z++) {
         if (apiKeysArr[z] !== ""){
-
           let historicalPriceAPIStr = "https://api.coingecko.com/api/v3/coins/"+apiKeysArr[z]+"/history?date="+indexDate+"&localization=false";
           let historicalPriceInt = await axios.get(historicalPriceAPIStr).then((response) => response.data.market_data.current_price.usd);
-          
-          // let assetZNameStr = 'asset' + z + 'NameStr';
-          // let assetZPriceStr = 'asset' + z + 'IndexPriceInt';
-          // assetZNameStr.toString()
-          // assetZPriceStr.toString()
-          // console.log('/// debug assetZNameStr', assetZNameStr)
-          // console.log('/// debug assetZPriceStr', assetZPriceStr)
           let iInt = z + 1
           basketData[`asset${iInt}HM`][`asset${iInt}IndexPriceInt`] = historicalPriceInt;
-          // console.log('basketData inside calcQuantityX', basketData);
-          // console.log('log after iInt', basketData[`asset${iInt}HM`][`asset${iInt}IndexPriceInt`] )
-          
-          // console.log('// DEBUG BASKET DATA UPDATE');
-          // console.log('basketData.assetZNameStr.assetZPriceStr: ', basketData[`asset${z}NameStr`][`asset${z}IndexPriceInt`]);
-          // console.log('basketData.... should equal historicalPrice');
-          // console.log('historicalPrice is', historicalPrice);
-
           let quantityInt = ((weights[z]/100) * initialBasketValue) / historicalPriceInt;
-          // basketData[`asset${iInt}HM`][`asset${iInt}QuantityInt`] = quantityInt;
-
-          // console.log('// DEBUG BASKET DATA UPDATE')
-          // console.log(`basketData.assset${iInt}NameStr.asset${iInt}QuantityInt:`)
-          // console.log(basketData[`asset${iInt}HM`][`asset${iInt}IndexPriceInt`])
-          // console.log('basketData.... should equal quantity');
-
-          //this sets currencyXQ where x is 0,1,2,3,4
-          // console.log('quantity is', quantityInt)
           currencyQs[z] = quantityInt;
-
-          // console.log('currencyQs[z]', currencyQs[z]) 
         }
       }     
     }
@@ -241,8 +213,6 @@ export default function BasketForm(props) {
 
       // eslint-disable-next-line
       const result = await calculateQuantityX(currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate, basketData)
-      
-      
       for (let x = 0; x <= apiKeysArr.length; x++) {
         // const apiID = apiKeysArr[x];
         if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined)) {
