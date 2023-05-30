@@ -17,9 +17,6 @@ import axios from 'axios';
 
 const theme = createTheme();
 const postURLStr = 'https://epistemica-x-db.vercel.app/api/user/post'
-// const postDevURLStr = 'http://localhost:3000/api/post'
-// const postURL = 'mongodb+srv://grantjferowich:legend-alpha23@cluster1.cszxxm9.mongodb.net/api/post'
-
 
 
 export default function SignUp() {

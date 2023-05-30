@@ -1,11 +1,20 @@
 import React from 'react'
 import axios from 'axios';
 
+
+// greet this particular user by name
+// render basket data via cards
+
 export default function UserHome() {
-  let getBasketsAPIStr = 'https://epistemica-x-db.vercel.app/api/basket/getAll'
   
+  let getBasketsAPIStr = 'https://epistemica-x-db.vercel.app/api/basket/getAll'
+  let basketsArr = []
+  const consumeAPI = (data) => {
+      basketsArr = data;
+      console.log('Baskets Arr', basketsArr)
+  }
   axios.get(getBasketsAPIStr)
-  .then((responseHM) => {console.log(responseHM)})
+  .then((responseHM) => {consumeAPI(responseHM.data)})
   .catch((errorHM) => {console.log(errorHM)})
 
   return (
