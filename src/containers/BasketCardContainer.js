@@ -26,9 +26,11 @@ export default function BasketCardContainer() {
             {basketsArr.map(basket => {
               console.log(basket)
               console.log(basket.basket_IDInt);
-              <Grid item xs={12} sm={6}>
+              return (
+                <Grid item xs={12} sm={6}>
                 <BasketCard key={basket.basket_IdInt} basket={basket}/>
               </Grid>
+              )
             })} :
           </Grid>
         </div>

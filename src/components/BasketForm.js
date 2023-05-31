@@ -245,7 +245,7 @@ export default function BasketForm(props) {
    const sendPostRequestToAPI = (basketData, postBasketURLString) => {
     console.log('sendPostRequestToAPI fired.')
     axios.post(postBasketURLString, JSON.stringify(basketData), {
-      withCredentials: true,
+      // withCredentials: true,
       headers: {
         "Content-Type":"application/json"
       }

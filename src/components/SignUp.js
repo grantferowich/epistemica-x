@@ -37,7 +37,7 @@ export default function SignUp() {
     }
 
     axios.post(postURLStr, JSON.stringify(dataX), {
-      withCredentials: true,
+      withCredentials: false,
       headers: {
         "Content-Type":"application/json",
       }

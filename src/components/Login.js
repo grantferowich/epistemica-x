@@ -43,7 +43,7 @@ export default function Login() {
       "password": password
     }
     axios.post(loginURLStr, JSON.stringify(dataX), {
-      withCredentials: true,
+      withCredentials: false,
       headers: {
         "Content-Type":"application/json"
       }

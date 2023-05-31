@@ -12,12 +12,12 @@
 
 // console.log('basketForm props', props.children[1]);
   // console.log('basketForm keys', props.children[1].keys)
-  const [namesMap, setNamesMap] = useState(props.children[1]);
+  // const [namesMap, setNamesMap] = useState(props.children[1]);
   // console.log('namesMap', namesMap);
   // namesMap looks ok 
   // console.log('namesMapK', Array.from(namesMap.keys()));
   // what worked was deleting NamesKeys var, setting watchlist as Array.from(namesMap.keys())
-  const watchList = Array.from(namesMap.keys());
+  // const watchList = Array.from(namesMap.keys());
   // console.log('watchlist', watchList);
  // watchList is pulling properly
 

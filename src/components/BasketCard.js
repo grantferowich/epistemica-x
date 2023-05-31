@@ -10,10 +10,11 @@ import Typography from "@mui/material/Typography";
  @ 2:10 pm on Tuesday, May 30.
 */
 
-
 /* 
+
 Percent return for each basket ... needs to be handled with Redux
 Present value for each basket  .... needs to be handled with Redux
+
 */
 
 const card = (props) => {
