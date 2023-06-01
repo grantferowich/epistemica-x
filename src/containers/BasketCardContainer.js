@@ -4,20 +4,46 @@ import Grid from "@mui/material/Grid";
 import { useSelector } from 'react-redux';
 
 
+
+
 export default function BasketCardContainer() {
   const basketsArr = useSelector(state => state.user.basketsArr);
-    
-  useEffect(() =>{
-      let xInt = 0;
-      while (xInt < basketsArr){
-        let basket = basketsArr[xInt]
-        xInt++
-      }
-    }, [basketsArr])
+  let uniqueAssetsArr = [] ;
+
+
+  const generateUniqueAssetArray = (basketsArr) => {
+    let xInt = 0
+    while (xInt < basketsArr.length) {
+      let basketHM = basketsArr[xInt]
+      let asset1HM = basketHM.asset1HM;
+      let asset2HM = basketHM.asset2HM;
+      let asset3HM = basketHM.asset3HM;
+      let asset4HM = basketHM.asset4HM;
+      let asset5HM = basketHM.asset5HM;
+      let originalAssetsArr = [asset1HM, asset2HM, asset3HM, asset4HM, asset5HM];
+      const newAssetsArr = originalAssetsArr
+      .flatMap(assetObj => {
+        let assetsArr = [];
+        let iInt = 1;
+        while (iInt <= 5){
+          let assetName = assetObj[`asset${iInt}NameStr`];
+          let apiKey = assetObj[`asset${iInt}APIKeyStr`];
+          if (assetName && !assetsArr.some(a => a.assetNameStr === assetName)){
+            assetsArr.push({assetNameStr: assetName, apiKeyStr: apiKey})
+          }
+          iInt++
+        }
+        return assetsArr
+      })
+    console.log('uniqueAssetsArray', newAssetsArr);
+    }
+  }
+
+  generateUniqueAssetArray(basketsArr);
+
    
     return ( basketsArr.length !== 0 ?
     (<div>
-         <div>
         <div> 
           <Grid container="true" display="flex" flexWrap="wrap" xs={12}>
             {basketsArr.map(basket => {
@@ -29,7 +55,6 @@ export default function BasketCardContainer() {
             })} 
           </Grid>
         </div>
-      </div>
     </div>)
     : (
       <div>

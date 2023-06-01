@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import { Link } from 'react-router-dom';
 import '../components/styles.css'
 import { useSelector } from "react-redux";
+
 export default function NavTabs(props) {
   let userLoggedInToF = false
   const userNameStr = useSelector(state => state.user.name);

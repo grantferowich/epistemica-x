@@ -19,7 +19,6 @@ Present value for each basket  .... needs to be handled with Redux
 */
 
 export default function BasketCard({basketHM}) {
-  console.log('BasketCard', basketHM);
 
   return (
     <div>
