@@ -11,22 +11,16 @@ export default function BasketCardContainer() {
       let xInt = 0;
       while (xInt < basketsArr){
         let basket = basketsArr[xInt]
-        // console.log('xInt is...', xInt)
-        // console.log('basket._id', basket._id)
         xInt++
       }
     }, [basketsArr])
    
-
-
     return ( basketsArr.length !== 0 ?
     (<div>
          <div>
         <div> 
           <Grid container="true" display="flex" flexWrap="wrap" xs={12}>
             {basketsArr.map(basket => {
-              console.log('/BasketCardContainer: basketsArr.length', basketsArr.length)
-              console.log('/BasketCardContainer: basket._id',basket._id);
               return (
                 <Grid item xs={12} sm={6} key={basket._id}>
                 <BasketCard basketHM={basket}/>
