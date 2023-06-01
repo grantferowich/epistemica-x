@@ -15,6 +15,7 @@ import Typography from "@mui/material/Typography";
 Percent return for each basket ... needs to be handled with Redux
 Present value for each basket  .... needs to be handled with Redux
 
+
 */
 
 export default function BasketCard({basketHM}) {
@@ -22,7 +23,7 @@ export default function BasketCard({basketHM}) {
 
   return (
     <div>
-      <Box sx={{ minWidth: 275 }}>
+      <Box className='basket-card'>
              <Card variant="outlined">
               <div><CardContent>
              <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
@@ -44,25 +45,5 @@ export default function BasketCard({basketHM}) {
     
   );
 }
-  // let basketHM = props[0];
-  // return (
-   
-     
-  // )
-  
-// };
 
-// export default function OutlinedCard() {
-//   return (
-//     <div>
-//       <Box sx={{ minWidth: 275 }}>
-//          <Card variant="outlined">
-//             <BasketCard>
-              
-//             </BasketCard>{card}
-//           </Card>
-//       </Box>
-//     </div>
-    
-//   );
-// }
+
