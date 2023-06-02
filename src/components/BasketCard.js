@@ -11,11 +11,8 @@ import Typography from "@mui/material/Typography";
 */
 
 /* 
-
 Percent return for each basket ... needs to be handled with Redux
 Present value for each basket  .... needs to be handled with Redux
-
-
 */
 
 export default function BasketCard({basketHM}) {

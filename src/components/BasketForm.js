@@ -92,27 +92,22 @@ export default function BasketForm(props) {
 
   const handleWeight1 = event => {
     setCurrency1Weight(parseInt(event.target.value));
-    console.log('currency1weight', currency1Weight)
   };
 
   const handleWeight2 = event => {
-    setCurrency2Weight(event.target.value);
-    console.log('currency2weight', currency2Weight)
+    setCurrency2Weight(parseInt(event.target.value));
   };
 
   const handleWeight3 = event => {
-    setCurrency3Weight(event.target.value);
-    console.log('currency3weight', currency3Weight)
+    setCurrency3Weight(parseInt(event.target.value));
   };
 
   const handleWeight4 = event => {
-    setCurrency4Weight(event.target.value);
-    console.log('currency4weight', currency4Weight)
+    setCurrency4Weight(parseInt(event.target.value));
   };
 
   const handleWeight5 = event => {
-    setCurrency5Weight(event.target.value);
-    console.log('currency5weight', currency5Weight)
+    setCurrency5Weight(parseInt(event.target.value));
   };
 
   const handleChange1 = event => {
@@ -222,26 +217,24 @@ export default function BasketForm(props) {
       const result = await calculateQuantityX(currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate, basketData)
       
       for (let x = 0; x <= apiKeysArr.length; x++) {
-        // const apiID = apiKeysArr[x];
         if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined)) {
-          // console.log("apiID is", apiID);
           const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
-          // console.log("presentPriceAPI", presentPriceAPI);
           const presentPrice = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
-          // console.log("presentPrice", presentPrice);
-          // console.log('quantities', currencyQs[x]);
           let value = parseFloat(presentPrice * currencyQs[x]);
           presentBasketValue = parseFloat(presentBasketValue+value) 
           setPresentBasketValue(presentBasketValue);
-          basketData.presentBasketValueInt = presentBasketValue
         } 
       }      
-      // console.log('presentBasketvalue is', presentBasketValue)
-      // console.log('initial Basket value', initialBasketValue)
+      basketData['presentBasketValueInt'] = presentBasketValue;
+      console.log('present basketValue...', presentBasketValue)
+      console.log('[[basket data]] present basket value...', basketData['presentBasketValueInt'])
+      console.log('Equal?', basketData['presentBasketValueInt']  === presentBasketValue)
       const pctReturn = (100 * (presentBasketValue - initialBasketValue) / initialBasketValue);
       setPercentReturn(pctReturn)
-      basketData.percentReturnInt = pctReturn;
-      // console.log('percent return', pctReturn)
+      basketData['percentReturnInt'] = pctReturn;
+      console.log('percent return....', pctReturn);
+      console.log('[[basket data]] percent return...', basketData['percentReturnInt'])
+      console.log('Equal?', pctReturn === basketData['percentReturnInt'])
     });
 
     const discoverCurencies = () => {
@@ -260,6 +253,7 @@ export default function BasketForm(props) {
     }
 
     const sendPostRequestToAPI = (basketData, postBasketURLString) => {
+    console.log('basket data ', basketData)
     console.log('sendPostRequestToAPI fired.')
     axios.post(postBasketURLString, JSON.stringify(basketData), {
       headers: {
@@ -275,7 +269,7 @@ export default function BasketForm(props) {
 
    discoverCurencies(); 
    setHandleSubmitFired(true);
-   console.log('basketForm data ', basketData)
+   
    sendPostRequestToAPI(basketData, postBasketURLString);
   // paused here at 11:59 am on May 28, 2023
   // axios.post(postBasketURLString, JSON.stringify(basketData), {

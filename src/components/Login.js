@@ -25,7 +25,6 @@ export default function Login() {
   // engineered updateStore(userObj) on Sat May 27, 2023
   // at 9:07am
   const updateStore = (userObj) => {
-    console.log('updateStore fired')
     let dataHM = userObj.data.userObj
     dispatchFn(setUserName(dataHM.name))
     dispatchFn(setUserEmail(dataHM.email))
@@ -50,9 +49,6 @@ export default function Login() {
     }).then(responseHM => {
       console.log('200: Success');
       updateStore(responseHM)
-      console.log(responseHM)
-      // responseHM is the userObj: next let's send this stuff to
-      // the redux store for accessing throughout the app
       navigateFn('/user-home')
     }).catch(errorHM => {
       console.log(errorHM);
