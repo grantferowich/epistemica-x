@@ -36,7 +36,12 @@ columns = [ { id: 'Name', label: 'Name', minWidth: 170 },
 ];
 
 export default function FullTable(props) {
-  
+  // the props here refer to the data set accessed for rendering the table
+  // limit the # of api calls per day by 
+  // making one api call per day
+  // storing the info from the api call in a local file
+  // passing that info to the redux store
+  // then read that information in the FullTable component
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(50);
 
