@@ -156,6 +156,8 @@ export default function BasketForm(props) {
       user_IDStr: user_IdStr,
       indexDateStr: indexDate,
       initialBasketValueInt: initialBasketValue,
+      presentBasketValueInt: presentBasketValue,
+      percentReturnInt: percentReturn,
       asset1HM: {
           asset1NameStr: currency1,
           asset1IndexPriceInt: 0,
@@ -193,7 +195,7 @@ export default function BasketForm(props) {
       }
     }
 
-    const calculateQuantityX = async (currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate) => {
+    const calculateQuantityX = async (currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate, basketData) => {
       console.log('calculateQuantityX function started.')
       
       for (let z=0; z < apiKeysArr.length; z++) {
@@ -203,16 +205,18 @@ export default function BasketForm(props) {
           let iInt = z + 1
           basketData[`asset${iInt}HM`][`asset${iInt}IndexPriceInt`] = historicalPriceInt;
           let quantityInt = ((weights[z]/100) * initialBasketValue) / historicalPriceInt;
+          basketData[`asset${iInt}HM`][`asset${iInt}QuantityInt`] = quantityInt
           currencyQs[z] = quantityInt;
         }
       }     
     }
   
-    const calculatePercentReturn = ( async (presentBasketValue, currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey, currency1Q, currency2Q, currency3Q, currency4Q, currency5Q) => {
+    const calculatePercentReturn = ( async (presentBasketValue, currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey, currency1Q, currency2Q, currency3Q, currency4Q, currency5Q, basketData) => {
       console.log('calculatePercentReturn function started.');
 
       // eslint-disable-next-line
       const result = await calculateQuantityX(currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate, basketData)
+      
       for (let x = 0; x <= apiKeysArr.length; x++) {
         // const apiID = apiKeysArr[x];
         if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined)) {
@@ -225,27 +229,35 @@ export default function BasketForm(props) {
           let value = parseFloat(presentPrice * currencyQs[x]);
           presentBasketValue = parseFloat(presentBasketValue+value) 
           setPresentBasketValue(presentBasketValue);
+          basketData.presentBasketValueInt = presentBasketValue
         } 
       }      
       // console.log('presentBasketvalue is', presentBasketValue)
       // console.log('initial Basket value', initialBasketValue)
       const pctReturn = (100 * (presentBasketValue - initialBasketValue) / initialBasketValue);
       setPercentReturn(pctReturn)
+      basketData.percentReturnInt = pctReturn;
       // console.log('percent return', pctReturn)
     });
     
     const discoverCurencies = () => {
       console.log("discoverCurrencies function started.")
-      
       if (currencies[0] !=="") {
-        calculatePercentReturn(presentBasketValue, currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey, currency1Q, currency2Q, currency3Q, currency4Q, currency5Q)
+        const runCalculation = async () => {
+          await calculatePercentReturn(presentBasketValue, 
+            currency1APIKey, currency2APIKey, 
+            currency3APIKey, currency4APIKey, 
+            currency5APIKey, currency1Q, 
+            currency2Q, currency3Q, 
+            currency4Q, currency5Q, basketData)
+          }
+        runCalculation()
       }
    }
 
    const sendPostRequestToAPI = (basketData, postBasketURLString) => {
     console.log('sendPostRequestToAPI fired.')
     axios.post(postBasketURLString, JSON.stringify(basketData), {
-      // withCredentials: true,
       headers: {
         "Content-Type":"application/json"
       }
