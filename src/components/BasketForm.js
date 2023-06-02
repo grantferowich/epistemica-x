@@ -20,6 +20,11 @@ export default function BasketForm(props) {
       const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h" + query);
       const apiData = (response.data);
       setData(apiData);
+
+      // IDEA!!!! store all info from response
+      // as a local file
+      // load data from file to populate drop down menus
+      
     }
     fetchData();
   }, [query]);
@@ -86,7 +91,7 @@ export default function BasketForm(props) {
   }
 
   const handleWeight1 = event => {
-    setCurrency1Weight(event.target.value);
+    setCurrency1Weight(parseInt(event.target.value));
     console.log('currency1weight', currency1Weight)
   };
 
@@ -210,7 +215,6 @@ export default function BasketForm(props) {
         }
       }     
     }
-  
     const calculatePercentReturn = ( async (presentBasketValue, currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey, currency1Q, currency2Q, currency3Q, currency4Q, currency5Q, basketData) => {
       console.log('calculatePercentReturn function started.');
 
@@ -239,7 +243,7 @@ export default function BasketForm(props) {
       basketData.percentReturnInt = pctReturn;
       // console.log('percent return', pctReturn)
     });
-    
+
     const discoverCurencies = () => {
       console.log("discoverCurrencies function started.")
       if (currencies[0] !=="") {
@@ -253,9 +257,9 @@ export default function BasketForm(props) {
           }
         runCalculation()
       }
-   }
+    }
 
-   const sendPostRequestToAPI = (basketData, postBasketURLString) => {
+    const sendPostRequestToAPI = (basketData, postBasketURLString) => {
     console.log('sendPostRequestToAPI fired.')
     axios.post(postBasketURLString, JSON.stringify(basketData), {
       headers: {
@@ -267,7 +271,7 @@ export default function BasketForm(props) {
     })
     .catch((errorHM) => {
       console.log('Error', errorHM.message)})
-   }  
+    }  
 
    discoverCurencies(); 
    setHandleSubmitFired(true);
