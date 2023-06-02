@@ -142,16 +142,12 @@ export default function BasketForm(props) {
     setCurrency5APIKey(key.id)
   };
 
-  const handleSubmit = async event => {
-
-    event.preventDefault();
-    // console.log('handleSubmit completed.')
-    const currencyQs = [currency1Q, currency2Q, currency3Q, currency4Q, currency5Q]
-    const apiKeysArr = [currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey];
-    const currencies = [currency1, currency2, currency3, currency4, currency5]
-    const weights = [currency1Weight, currency2Weight, currency3Weight, currency4Weight, currency5Weight];
+  const currencyQs = [currency1Q, currency2Q, currency3Q, currency4Q, currency5Q]
+  const apiKeysArr = [currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey];
+  const currencies = [currency1, currency2, currency3, currency4, currency5]
+  const weights = [currency1Weight, currency2Weight, currency3Weight, currency4Weight, currency5Weight];
     
-    const basketData = {
+  const basketData = {
       basketNameStr: basketName,
       user_IDStr: user_IdStr,
       indexDateStr: indexDate,
@@ -195,10 +191,9 @@ export default function BasketForm(props) {
       }
     }
 
-    const calculateQuantityX = async (currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate, basketData) => {
-      console.log('calculateQuantityX function started.')
+  const calculateQuantityX = async (currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate) => {     
       
-      for (let z=0; z < apiKeysArr.length; z++) {
+    for (let z=0; z < apiKeysArr.length; z++) {
         if (apiKeysArr[z] !== ""){
           let historicalPriceAPIStr = "https://api.coingecko.com/api/v3/coins/"+apiKeysArr[z]+"/history?date="+indexDate+"&localization=false";
           let historicalPriceInt = await axios.get(historicalPriceAPIStr).then((response) => response.data.market_data.current_price.usd);
@@ -211,12 +206,11 @@ export default function BasketForm(props) {
       }     
     }
 
-    const calculatePercentReturn = ( async (presentBasketValue, currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey, currency1Q, currency2Q, currency3Q, currency4Q, currency5Q, basketData) => {
+  const calculatePercentReturn = ( async (presentBasketValue, currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey, currency1Q, currency2Q, currency3Q, currency4Q, currency5Q) => {
       console.log('calculatePercentReturn function started.');
 
       // eslint-disable-next-line
       const result = await calculateQuantityX(currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate, basketData)
-      
       for (let x = 0; x <= apiKeysArr.length; x++) {
         if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined)) {
           const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
@@ -226,19 +220,22 @@ export default function BasketForm(props) {
           setPresentBasketValue(presentBasketValue);
         } 
       }      
-      basketData['presentBasketValueInt'] = presentBasketValue;
+      basketData.presentBasketValueInt = presentBasketValue;
       // console.log('present basketValue...', presentBasketValue)
       // console.log('[[basket data]] present basket value...', basketData['presentBasketValueInt'])
       // console.log('Equal?', basketData['presentBasketValueInt']  === presentBasketValue)
       const pctReturn = (100 * (presentBasketValue - initialBasketValue) / initialBasketValue);
       setPercentReturn(pctReturn)
-      basketData['percentReturnInt'] = pctReturn;
+      basketData.percentReturnInt = pctReturn;
+      console.log('basketData after updates to percent return and present basketvalue', basketData)
       // console.log('percent return....', pctReturn);
       // console.log('[[basket data]] percent return...', basketData['percentReturnInt'])
       // console.log('Equal?', pctReturn === basketData['percentReturnInt'])
+      setHandleSubmitFired(true);
+      sendPostRequestToAPI();
     });
 
-    const discoverCurencies = async (basketData) => {
+  const discoverCurencies = async () => {
       console.log("discoverCurrencies function started.")
       if (currencies[0] !=="") {
         const runCalculation = async () => {
@@ -247,13 +244,13 @@ export default function BasketForm(props) {
             currency3APIKey, currency4APIKey, 
             currency5APIKey, currency1Q, 
             currency2Q, currency3Q, 
-            currency4Q, currency5Q, basketData)
+            currency4Q, currency5Q)
           }
         runCalculation()
       }
     }
 
-    const sendPostRequestToAPI = (basketData, postBasketURLString) => {
+  const sendPostRequestToAPI = () => {
     console.log('basket data ', basketData)
     console.log('sendPostRequestToAPI fired.')
     axios.post(postBasketURLString, JSON.stringify(basketData), {
@@ -266,13 +263,15 @@ export default function BasketForm(props) {
     })
     .catch((errorHM) => {
       console.log('Error', errorHM.message)})
-    }  
 
-   await discoverCurencies(basketData); 
-   setHandleSubmitFired(true);
-   let postDataHM = basketData
-   console.log('postData', postDataHM)
-   sendPostRequestToAPI(basketData, postBasketURLString);
+    }  
+  
+  const handleSubmit = async event => {
+    event.preventDefault();
+    // console.log('handleSubmit completed.')
+    await discoverCurencies(basketData); 
+    //  let postDataHM = basketData;
+    //  console.log('postData', postDataHM);
   }
 
   const card = (
@@ -282,7 +281,7 @@ export default function BasketForm(props) {
            {basketName}
          </Typography>
          <Typography variant="h5" component="div">
-           Return: {percentReturn.toString().slice(0,5)}%
+           Return: {basketData.percentReturnInt.toString().slice(0,5)}%
          </Typography>
          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
            Present basket value = ${presentBasketValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
