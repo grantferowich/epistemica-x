@@ -8,9 +8,6 @@ import { useSelector } from 'react-redux';
 
 export default function BasketCardContainer() {
   const basketsArr = useSelector(state => state.user.basketsArr);
-  
-  console.log(basketsArr)
-
   const generateUniqueAssetArray = (basketsArr) => {
     let uniqueAssetsArr = [];
     let xInt = 0
@@ -42,6 +39,10 @@ export default function BasketCardContainer() {
     return uniqueAssetsArr;
   }
 
+  // TO DO
+  // Friday June 2, 2023
+  // 11:05am
+  // write the assetsArray to the redux store
   const assetsArray = generateUniqueAssetArray(basketsArr);
   console.log('assetsArray', assetsArray)
    
