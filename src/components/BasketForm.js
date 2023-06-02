@@ -41,35 +41,35 @@ export default function BasketForm(props) {
   const [basketName, setBasketName] = useState('');
   const [indexDate, setIndexDate] = useState('');
   const [initialBasketValue, setInitialBasketValue] = useState('');
-  const [presentBasketValue, setPresentBasketValue] = useState('');
-  const [percentReturn, setPercentReturn ] = useState('');
+  const [presentBasketValue, setPresentBasketValue] = useState(0);
+  const [percentReturn, setPercentReturn ] = useState(0);
 
   const [currency1, setCurrency1] = useState('');
-  const [currency1Weight, setCurrency1Weight] = useState('');
+  const [currency1Weight, setCurrency1Weight] = useState(0);
   const [currency1APIKey, setCurrency1APIKey] = useState('');
   const [c1LongOrShort, setc1LongOrShort ] = useState('long'); 
   const currency1Q = 0;
 
   const [currency2, setCurrency2] = useState('');
-  const [currency2Weight, setCurrency2Weight] = useState('');
+  const [currency2Weight, setCurrency2Weight] = useState(0);
   const [currency2APIKey, setCurrency2APIKey] = useState('');
   const [ c2LongOrShort, setc2LongOrShort ] = useState('long'); 
   const currency2Q = 0;
 
   const [currency3, setCurrency3] = useState('');
-  const [currency3Weight, setCurrency3Weight] = useState('');
+  const [currency3Weight, setCurrency3Weight] = useState(0);
   const [currency3APIKey, setCurrency3APIKey] = useState('');
   const [ c3LongOrShort, setc3LongOrShort ] = useState('long'); 
   const currency3Q = 0;
 
   const [currency4, setCurrency4] = useState('');
-  const [currency4Weight, setCurrency4Weight] = useState('');
+  const [currency4Weight, setCurrency4Weight] = useState(0);
   const [currency4APIKey, setCurrency4APIKey] = useState('');
   const [ c4LongOrShort, setc4LongOrShort ] = useState('long'); 
   const currency4Q = 0;
 
   const [currency5, setCurrency5] = useState('');
-  const [currency5Weight, setCurrency5Weight] = useState('');
+  const [currency5Weight, setCurrency5Weight] = useState(0);
   const [currency5APIKey, setCurrency5APIKey] = useState('');
   const [c5LongOrShort, setc5LongOrShort] = useState('long'); 
   const currency5Q = 0;
@@ -156,8 +156,8 @@ export default function BasketForm(props) {
       user_IDStr: user_IdStr,
       indexDateStr: indexDate,
       initialBasketValueInt: initialBasketValue,
-      presentBasketValueInt: presentBasketValue,
-      percentReturnInt: percentReturn,
+      presentBasketValueInt: 0,
+      percentReturnInt: 0,
       asset1HM: {
           asset1NameStr: currency1,
           asset1IndexPriceInt: 0,
@@ -210,6 +210,7 @@ export default function BasketForm(props) {
         }
       }     
     }
+
     const calculatePercentReturn = ( async (presentBasketValue, currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey, currency1Q, currency2Q, currency3Q, currency4Q, currency5Q, basketData) => {
       console.log('calculatePercentReturn function started.');
 
@@ -226,18 +227,18 @@ export default function BasketForm(props) {
         } 
       }      
       basketData['presentBasketValueInt'] = presentBasketValue;
-      console.log('present basketValue...', presentBasketValue)
-      console.log('[[basket data]] present basket value...', basketData['presentBasketValueInt'])
-      console.log('Equal?', basketData['presentBasketValueInt']  === presentBasketValue)
+      // console.log('present basketValue...', presentBasketValue)
+      // console.log('[[basket data]] present basket value...', basketData['presentBasketValueInt'])
+      // console.log('Equal?', basketData['presentBasketValueInt']  === presentBasketValue)
       const pctReturn = (100 * (presentBasketValue - initialBasketValue) / initialBasketValue);
       setPercentReturn(pctReturn)
       basketData['percentReturnInt'] = pctReturn;
-      console.log('percent return....', pctReturn);
-      console.log('[[basket data]] percent return...', basketData['percentReturnInt'])
-      console.log('Equal?', pctReturn === basketData['percentReturnInt'])
+      // console.log('percent return....', pctReturn);
+      // console.log('[[basket data]] percent return...', basketData['percentReturnInt'])
+      // console.log('Equal?', pctReturn === basketData['percentReturnInt'])
     });
 
-    const discoverCurencies = () => {
+    const discoverCurencies = async (basketData) => {
       console.log("discoverCurrencies function started.")
       if (currencies[0] !=="") {
         const runCalculation = async () => {
@@ -267,24 +268,12 @@ export default function BasketForm(props) {
       console.log('Error', errorHM.message)})
     }  
 
-   discoverCurencies(); 
+   await discoverCurencies(basketData); 
    setHandleSubmitFired(true);
-   
+   let postDataHM = basketData
+   console.log('postData', postDataHM)
    sendPostRequestToAPI(basketData, postBasketURLString);
-  // paused here at 11:59 am on May 28, 2023
-  // axios.post(postBasketURLString, JSON.stringify(basketData), {
-  //   withCredentials: true,
-  //   headers: {
-  //     "Content-Type":"application/json"
-  //   }
-  // })
-  // .then(responseHM => console.log(responseHM))
-  // .catch(errorHM => console.log(errorHM.message))
-  //  console.log("handleSubmitFired truth value =", handleSubmitFired === true)
-    //calculateQuantityX sets the currency1Q, currency2Q, currency3Q, currency4Q, currency5Q state
-    //calculateQuantityX runs after handleSubmit AND after there is a determination of a currency value being discovered
-    //calculatePercentReturn will return a string of the XX.YY% return for the basket
-  };
+  }
 
   const card = (
     <React.Fragment>
