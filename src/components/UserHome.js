@@ -4,11 +4,6 @@ import { useSelector } from "react-redux";
 import BasketCardContainer from '../containers/BasketCardContainer';
 import { useDispatch } from 'react-redux';
 import { setUserBasketsArr } from '../actions/userActions'
-// TO-DO as of 10:00 am
-// get current user id
-// get current user name
-// greet this particular user by name
-// render basket data via cards
 
 export default function UserHome() {
   const user_IDStr = useSelector(state => state.user.id)
@@ -27,7 +22,6 @@ export default function UserHome() {
   // engineered at 11:44am on May 30, 2023
   // store is successfully updated 2:20 pm on May 30, 2023
   const updateStore = (currentUserBasketsArr) => {
-    console.log('update baskets arr store fired.')
     dispatchFn(setUserBasketsArr(currentUserBasketsArr))
   }
 
