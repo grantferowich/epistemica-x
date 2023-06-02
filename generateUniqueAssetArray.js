@@ -1,4 +1,9 @@
-/* basketNameStr:"CowboyCoins 2023"
+/* 
+Successfully tested the function Friday, June 2, 2023.
+
+
+
+basketNameStr:"CowboyCoins 2023"
 indexDateStr: "01-01-2023"
 initialBasketValueInt: 1000
 user_IDStr: "646678e5024aad67cf201bfb".  */
