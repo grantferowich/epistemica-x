@@ -15,36 +15,47 @@ export default function BasketForm(props) {
   const [query] = useState('react');
   const [handleSubmitFired, setHandleSubmitFired] = useState(false);
   const dispatchFn = useDispatch();
-  // read lastAPICallTime from state
-  const lastAPICallTime = useSelector(state => state.lastAPICallTime)
 
+  // read lastAPICallTime from state
+
+  // const lastAPICallTime = useSelector(state => state.lastAPICallTime)
+  let lastAPICallTimeInt;
+  const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/get';
+
+  const configureTime = (time) => {
+    lastAPICallTimeInt = time;
+  }
   useEffect( () => {
-   
+    
     const fetchData = async () => {
       const currentTimeInt = Date.now()
-      const timeDifferenceInt = currentTimeInt - lastAPICallTime;
+      axios.get(getLastUpdatedAPIStr).then(time => configureTime(time))
+      const timeDifferenceInt = currentTimeInt - lastAPICallTimeInt; 
       // miliseconds to seconds, seconds to minutes, minutes to hours
       const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60)
 
       // for the developer environment
-      const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h" + query);
-      const apiDataHM = (response.data);
-      console.log('apiDataHM', apiDataHM)
-      dispatchFn({type: 'SET_LAST_API_CALL_TIME', payload: currentTimeInt});
-
+      // const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h" + query);
+      // const apiDataHM = (response.data);
+      // console.log('apiDataHM', apiDataHM)
+      // dispatchFn({type: 'SET_LAST_API_CALL_TIME', payload: currentTimeInt});
+      
       // for the production environment
-      // if (hoursDifferenceInt >= 24)
-      // try {
-      //   const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h" + query);
-      //   const apiDataHM = (response.data);
-      //   dispatchFn({type: 'SET_LAST_API_CALL_TIME', payload: currentTimeInt});
-      //   fs.writeFileSync('../data/FullTable.json', JSON.stringify(apiDataHM));
+      if (hoursDifferenceInt >= 24) {
+        try {
+          const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h" + query);
+          const apiDataHM = (response.data);
 
-      //   setData(apiDataHM);
-      // } catch (error){
-      //   console.log('Error running fetchData. Check BasketForm.js.')
-      //   console.log(error)
-      // }
+          // dispatchFn({type: 'SET_LAST_API_CALL_TIME', payload: currentTimeInt});
+          // fs.writeFileSync('../data/FullTable.json', JSON.stringify(apiDataHM));
+          dispatchFn({type: 'SET_COIN_LIST', payload: apiDataHM})
+          setData(apiDataHM);
+        } catch (error){
+          console.log('Error running fetchData. Check BasketForm.js.')
+          console.log(error)
+        }
+      }
+      
       
       
 
