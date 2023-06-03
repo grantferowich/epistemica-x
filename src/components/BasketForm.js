@@ -8,6 +8,7 @@ import { Switch } from '@mui/material';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useSelector } from "react-redux";
+import fs from 'fs'
 
 export default function BasketForm(props) {
 
@@ -221,16 +222,10 @@ export default function BasketForm(props) {
         } 
       }      
       basketData.presentBasketValueInt = presentBasketValue;
-      // console.log('present basketValue...', presentBasketValue)
-      // console.log('[[basket data]] present basket value...', basketData['presentBasketValueInt'])
-      // console.log('Equal?', basketData['presentBasketValueInt']  === presentBasketValue)
       const pctReturn = (100 * (presentBasketValue - initialBasketValue) / initialBasketValue);
       setPercentReturn(pctReturn)
       basketData.percentReturnInt = pctReturn;
       console.log('basketData after updates to percent return and present basketvalue', basketData)
-      // console.log('percent return....', pctReturn);
-      // console.log('[[basket data]] percent return...', basketData['percentReturnInt'])
-      // console.log('Equal?', pctReturn === basketData['percentReturnInt'])
       setHandleSubmitFired(true);
       sendPostRequestToAPI();
     });
@@ -278,13 +273,14 @@ export default function BasketForm(props) {
     <React.Fragment>
        <><CardContent>
          <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-           {basketName}
+           {basketData.basketNameStr}
          </Typography>
          <Typography variant="h5" component="div">
+           {/* Return: {basketData.percentReturnInt.toString().slice(0,5)}% */}
            Return: {basketData.percentReturnInt.toString().slice(0,5)}%
          </Typography>
          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-           Present basket value = ${presentBasketValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+           Present basket value = ${basketData.presentBasketValueInt.toLocaleString(undefined, { maximumFractionDigits: 2 })}
            <br></br>
            Basket value on {indexDate} = ${initialBasketValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
          </Typography>
