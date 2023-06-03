@@ -7,7 +7,7 @@ import Copyright from "./Copyright";
 import { Switch } from '@mui/material';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import fs from 'fs'
 
 export default function BasketForm(props) {
@@ -15,9 +15,17 @@ export default function BasketForm(props) {
   const [data, setData] = useState([]);
   const [query] = useState('react');
   const [handleSubmitFired, setHandleSubmitFired] = useState(false);
+  const dispatchFn = useDispatch();
+  // read lastAPICallTime from state
+  const lastAPICallTime = useSelector(state => state.lastAPICallTime)
+
   useEffect( () => {
    
-    async function fetchData() {
+    const fetchData = async () => {
+      const currentTimeInt = Date.now()
+      const timeDifferenceInt = currentTimeInt - lastAPICallTime;
+      // miliseconds to seconds, seconds to minutes, minutes to hours
+      const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60)
       const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h" + query);
       const apiData = (response.data);
       setData(apiData);
