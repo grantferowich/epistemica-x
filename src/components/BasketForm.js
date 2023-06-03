@@ -4,11 +4,10 @@ import { FormControl, FormHelperText, MenuItem, CssBaseline, Grid, Box, Containe
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Copyright from "./Copyright";
-import { Switch } from '@mui/material';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
+// import { Switch } from '@mui/material';
+// import FormGroup from '@mui/material/FormGroup';
+// import FormControlLabel from '@mui/material/FormControlLabel';
 import { useDispatch, useSelector } from "react-redux";
-import fs from 'fs'
 
 export default function BasketForm(props) {
 
@@ -26,9 +25,28 @@ export default function BasketForm(props) {
       const timeDifferenceInt = currentTimeInt - lastAPICallTime;
       // miliseconds to seconds, seconds to minutes, minutes to hours
       const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60)
-      const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h" + query);
-      const apiData = (response.data);
-      setData(apiData);
+
+      // for the developer environment
+      const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h" + query);
+      const apiDataHM = (response.data);
+      console.log('apiDataHM', apiDataHM)
+      dispatchFn({type: 'SET_LAST_API_CALL_TIME', payload: currentTimeInt});
+
+      // for the production environment
+      // if (hoursDifferenceInt >= 24)
+      // try {
+      //   const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h" + query);
+      //   const apiDataHM = (response.data);
+      //   dispatchFn({type: 'SET_LAST_API_CALL_TIME', payload: currentTimeInt});
+      //   fs.writeFileSync('../data/FullTable.json', JSON.stringify(apiDataHM));
+
+      //   setData(apiDataHM);
+      // } catch (error){
+      //   console.log('Error running fetchData. Check BasketForm.js.')
+      //   console.log(error)
+      // }
+      
+      
 
       // IDEA!!!! store all info from response
       // as a local file
@@ -36,7 +54,7 @@ export default function BasketForm(props) {
       
     }
     fetchData();
-  }, [query]);
+  }, [query, dispatchFn, lastAPICallTime]);
 
 
   // successfully read the user id from the redux store
