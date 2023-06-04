@@ -5,6 +5,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Copyright from "./Copyright";
 import { useDispatch, useSelector } from "react-redux";
+import Switch from '@mui/material/Switch';
 
 export default function BasketForm(props) {
 
@@ -180,6 +181,27 @@ export default function BasketForm(props) {
     setCurrency5APIKey(key.id)
   };
 
+  const handleLoSChange1 = event => {
+    const newState = event.target.checked ? 'long' : 'short';
+    setc1LongOrShort(newState)
+  }
+  const handleLoSChange2 = event => {
+    const newState = event.target.checked ? 'long' : 'short';
+    setc2LongOrShort(newState)
+  }
+  const handleLoSChange3 = event => {
+    const newState = event.target.checked ? 'long' : 'short';
+    setc3LongOrShort(newState)
+  }
+  const handleLoSChange4 = event => {
+    const newState = event.target.checked ? 'long' : 'short';
+    setc4LongOrShort(newState)
+  }
+  const handleLoSChange5 = event => {
+    const newState = event.target.checked ? 'long' : 'short';
+    setc5LongOrShort(newState)
+  }
+
   const currencyQs = [currency1Q, currency2Q, currency3Q, currency4Q, currency5Q]
   const apiKeysArr = [currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey];
   const currencies = [currency1, currency2, currency3, currency4, currency5]
@@ -327,16 +349,16 @@ export default function BasketForm(props) {
 
   return (
     (handleSubmitFired === false) ? (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="md">
       <CssBaseline />
-      <div >
+      <div style={{ width: '100%', maxWidth: '1000px', margin: '0 auto'}}>
         <Typography component="h1" variant="h5">
           Build Your Basket
         </Typography>
-        <Typography variant="p">
-          INSTRUCTIONS: Calculate the historical performance of a basket by selecting up to 5 crypto tokens and a weighting for each crypto token. Try 50% Bitcoin and 50% Ether with a start date of 01-01-2022 to see how the calculator works for yourself! 
+        <Typography variant="p" style={{width: '100%'}}>
+          INSTRUCTIONS: Calculate the historical performance of a basket by selecting up to 5 crypto tokens and a weight for each crypto token. For example, try 50% Bitcoin and 50% Ether, and an initial basket value of your choice, with a start date of 01-01-2022 to see how the calculator works for yourself! 
         </Typography>
-        <Box mx="auto">
+        <Box mx="auto"  sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
           <form
             
             noValidate
@@ -380,166 +402,236 @@ export default function BasketForm(props) {
                   }}
                 />
               </Grid>
-              <Grid item xs={6} >
-                   <TextField
-                  id="weight1"
+
+              {/* {// asset 1} */}
+              <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
+              <Grid container spacing={3}>
+                  <Grid item xs={4} >
+                      <TextField
+                      id="weight1"
+                      label="Weight (%)"
+                      variant="filled"
+                      type="number"
+                      onChange={event => {
+                      handleWeight1(event);
+                      }}
+                      InputLabelProps={{
+                      shrink: true
+                      }}
+                      />
+                  </Grid>
+                  <Grid item xs={4}>
+                  <FormControl>
+                    <Select 
+                      displayEmpty
+                      onChange={handleChange1}
+                      inputProps={{ 'aria-label': 'Without label' }}
+                      >
+                      <MenuItem value=""><em>None</em></MenuItem>
+                        {data.map((option) => (
+                      <MenuItem key={option.id} value={option}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                    </Select>
+                    <FormHelperText>Select basket token 1</FormHelperText>
+                  </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <Typography>Short</Typography>
+                      <Switch 
+                          checked={c1LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
+                          onChange={handleLoSChange1}
+                          inputProps={{ 'aria-label': 'controlled' }}
+                      />
+                      <Typography>Long</Typography>
+                  </Grid>
+              </Grid>
+              </Box>
+
+              {/* {// asset 2} */}
+              <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
+                  <Grid item xs={6}> 
+                            <TextField
+                            id="weight2"
+                            label="Weight (%)"
+                            variant="filled"
+                            type="number"
+                            onChange={event => {
+                              handleWeight2(event);
+                            }}
+                            InputLabelProps={{
+                              shrink: true
+                            }}
+                            />
+                  </Grid>
+                  <Grid item xs={6}>
+                  <FormControl>
+                    <Select 
+                      displayEmpty
+                      onChange={handleChange2}
+                      inputProps={{ 'aria-label': 'Without label' }}
+                      >
+                      <MenuItem value=""><em>None</em></MenuItem>
+                        {data.map((option) => (
+                      <MenuItem key={option.id} value={option}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                    </Select>
+                    <FormHelperText>Select basket token 2</FormHelperText>
+                  </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                          <Typography>Short</Typography>
+                          <Switch 
+                              checked={c2LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
+                              onChange={handleLoSChange2}
+                              inputProps={{ 'aria-label': 'controlled' }}
+                          />
+                          <Typography>Long</Typography>
+                  </Grid>
+              </Box>
+
+              {/* {// asset 3} */}
+              <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
+                  <Grid item xs={6}>
+                    <TextField
+                    id="weight3"
+                    label="Weight (%)"
+                    variant="filled"
+                    type="number"
+                    onChange={event => {
+                    handleWeight3(event);
+                    }}
+                    InputLabelProps={{
+                    shrink: true
+                    }}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                  <div >
+                  <FormControl>
+                    <Select 
+                      displayEmpty
+                      onChange={handleChange3}
+                      inputProps={{ 'aria-label': 'Without label' }}
+                      >
+                      <MenuItem value=""><em>None</em></MenuItem>
+                        {data.map((option) => (
+                      <MenuItem key={option.id} value={option}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+
+                    </Select>
+                    <FormHelperText>Select basket token 3</FormHelperText>
+                  </FormControl>
+                  </div>
+                  </Grid>
+                  <Grid item xs={4}>
+                          <Typography>Short</Typography>
+                          <Switch 
+                              checked={c3LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
+                              onChange={handleLoSChange3}
+                              inputProps={{ 'aria-label': 'controlled' }}
+                          />
+                          <Typography>Long</Typography>
+                  </Grid>
+              </Box>
+
+
+              {/* {// asset 4} */}
+              <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
+                  <Grid item xs={6}>
+                  <TextField
+                  id="weight4"
                   label="Weight (%)"
                   variant="filled"
                   type="number"
                   onChange={event => {
-                  handleWeight1(event);
+                    handleWeight4(event);
                   }}
                   InputLabelProps={{
-                  shrink: true
+                    shrink: true
                   }}
                   />
-              </Grid>
-              <Grid item xs={6}>
-              <FormControl>
-                <Select 
-                  displayEmpty
-                  onChange={handleChange1}
-                  inputProps={{ 'aria-label': 'Without label' }}
-                  >
-                  <MenuItem value=""><em>None</em></MenuItem>
-                    {data.map((option) => (
-                  <MenuItem key={option.id} value={option}>
-                    {option.name}
-                  </MenuItem>
-                ))}
-                </Select>
-                <FormHelperText>Select basket token 1</FormHelperText>
-              </FormControl>
-              </Grid>
-              <Grid item xs={6}> 
-              <TextField
-              id="weight2"
-              label="Weight (%)"
-              variant="filled"
-              type="number"
-              onChange={event => {
-                handleWeight2(event);
-              }}
-              InputLabelProps={{
-                shrink: true
-              }}
-              />
-              </Grid>
-              <Grid item xs={6}>
-              <FormControl>
-                <Select 
-                  displayEmpty
-                  onChange={handleChange2}
-                  inputProps={{ 'aria-label': 'Without label' }}
-                  >
-                  <MenuItem value=""><em>None</em></MenuItem>
-                    {data.map((option) => (
-                  <MenuItem key={option.id} value={option}>
-                    {option.name}
-                  </MenuItem>
-                ))}
-                </Select>
-                <FormHelperText>Select basket token 2</FormHelperText>
-              </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                id="weight3"
-                label="Weight (%)"
-                variant="filled"
-                type="number"
-                onChange={event => {
-                handleWeight3(event);
-                }}
-                InputLabelProps={{
-                shrink: true
-                }}
-                />
-              </Grid>
-              <Grid item xs={6}>
-              <div >
-              <FormControl>
-                <Select 
-                  displayEmpty
-                  onChange={handleChange3}
-                  inputProps={{ 'aria-label': 'Without label' }}
-                  >
-                  <MenuItem value=""><em>None</em></MenuItem>
-                    {data.map((option) => (
-                  <MenuItem key={option.id} value={option}>
-                    {option.name}
-                  </MenuItem>
-                ))}
+                  </Grid>
+                  <Grid item xs={6}> 
+                  <div>
+                  <FormControl>
+                    <Select 
+                      displayEmpty
+                      onChange={handleChange4}
+                      inputProps={{ 'aria-label': 'Without label' }}
+                      >
+                      <MenuItem value=""><em>None</em></MenuItem>
+                        {data.map((option) => (
+                      <MenuItem key={option.id} value={option}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                    </Select>
+                    <FormHelperText>Select basket token 4</FormHelperText>
+                  </FormControl>
+                  </div>
+                  </Grid>
+                  <Grid item xs={4}>
+                          <Typography>Short</Typography>
+                          <Switch 
+                              checked={c4LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
+                              onChange={handleLoSChange4}
+                              inputProps={{ 'aria-label': 'controlled' }}
+                          />
+                          <Typography>Long</Typography>
+                  </Grid>
+              </Box>
 
-                </Select>
-                <FormHelperText>Select basket token 3</FormHelperText>
-              </FormControl>
-              </div>
-              </Grid>
-              <Grid item xs={6}><TextField
-              id="weight4"
-              label="Weight (%)"
-              variant="filled"
-              type="number"
-              onChange={event => {
-                handleWeight4(event);
-              }}
-              InputLabelProps={{
-                shrink: true
-              }}
-              /></Grid>
-              <Grid item xs={6}> 
-              <div>
-              <FormControl>
-                <Select 
-                  displayEmpty
-                  onChange={handleChange4}
-                  inputProps={{ 'aria-label': 'Without label' }}
-                  >
-                  <MenuItem value=""><em>None</em></MenuItem>
-                    {data.map((option) => (
-                  <MenuItem key={option.id} value={option}>
-                    {option.name}
-                  </MenuItem>
-                ))}
-                </Select>
-                <FormHelperText>Select basket token 4</FormHelperText>
-              </FormControl>
-              </div>
-              </Grid>
-              <Grid item xs={6}>
-              <TextField
-              id="weight5"
-              label="Weight (%)"
-              variant="filled"
-              type="number"
-              onChange={event => {
-                handleWeight5(event);
-              }}
-              InputLabelProps={{
-                shrink: true
-              }}
-              /> 
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl>
-                <Select 
-                  displayEmpty
-                  onChange={handleChange5}
-                  inputProps={{ 'aria-label': 'Without label' }}
-                  >
-                  <MenuItem value=""><em>None</em></MenuItem>
-                    {data.map((option) => (
-                  <MenuItem key={option.id} value={option}>
-                    {option.name}
-                  </MenuItem>
-                ))}
 
-                </Select>
-                <FormHelperText>Select basket token 5</FormHelperText>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
+              {/* {// asset 5} */}
+              <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
+                  <Grid item xs={6}>
+                  <TextField
+                  id="weight5"
+                  label="Weight (%)"
+                  variant="filled"
+                  type="number"
+                  onChange={event => {
+                    handleWeight5(event);
+                  }}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  /> 
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormControl>
+                    <Select 
+                      displayEmpty
+                      onChange={handleChange5}
+                      inputProps={{ 'aria-label': 'Without label' }}
+                      >
+                      <MenuItem value=""><em>None</em></MenuItem>
+                        {data.map((option) => (
+                      <MenuItem key={option.id} value={option}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                    </Select>
+                    <FormHelperText>Select basket token 5</FormHelperText>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                          <Typography>Short</Typography>
+                          <Switch 
+                              checked={c5LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
+                              onChange={handleLoSChange5}
+                              inputProps={{ 'aria-label': 'controlled' }}
+                          />
+                          <Typography>Long</Typography>
+                  </Grid>
+              </Box>
+              <Grid item maxWidth='md'>
                 <Button
                 type="submit"
                 color="primary"
@@ -556,7 +648,7 @@ export default function BasketForm(props) {
 
     </Container>): (
       <div>
-        <Box sx={{ minWidth: 275}}>
+        <Box sx={{ minWidth: 275, width: '100%', maxWidth: '1000px', margin: '0 auto' }}>
           <Card>
              {card}
           </Card>
