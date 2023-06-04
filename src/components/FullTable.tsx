@@ -42,8 +42,6 @@ export default function FullTable(props) {
   useEffect(()=>{
     const viewportHeightInt = window.innerHeight
     setMaxHeightInt(viewportHeightInt)
-
-
   }, [])
 
   const [page, setPage] = useState(0);
@@ -57,8 +55,6 @@ export default function FullTable(props) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  
 
   return (
     <div>

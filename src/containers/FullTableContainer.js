@@ -11,7 +11,6 @@ export default function FullTableContainer() {
   const fullTableDataArr = useSelector(state => state.coinList)
   console.log('fullTableDataArr', fullTableDataArr)
   
-  
   useEffect(() => {
     const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250'
     const generateDataTable = (dataArr) => {
