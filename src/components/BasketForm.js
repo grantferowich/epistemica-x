@@ -15,24 +15,12 @@ export default function BasketForm(props) {
   const [query] = useState('react');
   const [handleSubmitFired, setHandleSubmitFired] = useState(false);
   const dispatchFn = useDispatch();
-  // const [lastAPICallDate, setLastAPICallDate] = useState(null);
-  // read lastAPICallTime from state
-
-  // const lastAPICallTime = useSelector(state => state.lastAPICallTime)
-  
+  // constants
   const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/get';
+  const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250'
   
 
   useEffect(() => {
-    let lastAPICallTimeInt;
-    const configureTime = async (time) => {
-      console.log('configure time fired.')
-      console.log('time.data.lastUpdatedDate', time.data.lastUpdatedDate)
-      // lastAPICallTimeDate = time.data;
-      const lastUpdatedDate = time.data.lastUpdatedDate;
-      // await setLastAPICallDate(lastUpdatedDate);
-      console.log('Last API Call Time Int: ', lastAPICallTimeInt)
-    }
     const fetchData = async () => {
       const currentTimeInt = Date.now();
       console.log('currentTimeInt', currentTimeInt);
@@ -47,7 +35,7 @@ export default function BasketForm(props) {
 
       // miliseconds to seconds, seconds to minutes, minutes to hours
       const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60);
-      
+      dispatchFn({type: 'SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL', payload: hoursDifferenceInt})
       console.log('Hours Different Int', hoursDifferenceInt)
       
       // for the developer environment
@@ -68,9 +56,10 @@ export default function BasketForm(props) {
           console.log(error)
         }   
       } else {
-        // get the most recent 250 coins from the api
-        // persist the coins with SET_COIN_List
-        // get the most recent 
+        const get250CoinsHM = await axios.get(get250CoinsAPIStr)
+        const coinsListArr = get250CoinsHM.data;
+        dispatchFn({type: 'SET_COIN_LIST', payload: coinsListArr})
+        setData(coinsListArr)
       }
 
       
