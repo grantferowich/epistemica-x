@@ -540,7 +540,6 @@ export default function BasketForm(props) {
                   </Grid>
               </Box>
 
-
               {/* {// asset 4} */}
               <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
                   <Grid item xs={6}>
@@ -631,6 +630,7 @@ export default function BasketForm(props) {
                           <Typography>Long</Typography>
                   </Grid>
               </Box>
+
               <Grid item maxWidth='md'>
                 <Button
                 type="submit"
