@@ -29,33 +29,6 @@ export default function BasketForm(props) {
       const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60);
       console.log('Hours difference', hoursDifferenceInt)
       dispatchFn({type: 'SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL', payload: hoursDifferenceInt})
-    
-
-      // DEVELOPMENT ENV CODE
-      // try {
-      //   const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h' + query);
-      //   console.log('external api call made in Basket Form...')
-      //   const apiDataArr = (response.data);
-      //   console.log('isArray?', Array.isArray(apiDataArr))
-      //   console.log('external apiData...', apiDataArr)
-        // await axios.post(postCoinsAPIStr, JSON.stringify(apiDataArr), {
-        //   withCredentials: false,
-        //   headers: {
-        //     'Content-Type': 'application/json'
-        //   }
-        // }).then(responseHM => {
-        //   console.log('200: Successfully posted to the coin/post API.')
-        //   dispatchFn({type: 'SET_COIN_LIST', payload: apiDataArr})
-        //   setData(apiDataArr);
-        // }).catch(errorHM => {
-        //   console.log('Error running fetchData() inside BasketForm.js.')
-        //   console.error(errorHM)
-        // })
-         
-      // } catch (error){
-      //   console.log('Error running fetchData. Check BasketForm.js.')
-      //   console.log(error)
-      // }
 
       // PRODUCTION ENVIRONMENT CODE
       if (hoursDifferenceInt >= 24) {
