@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -36,6 +36,15 @@ columns = [ { id: 'Name', label: 'Name', minWidth: 170 },
 ];
 
 export default function FullTable(props) {
+
+  const [maxHeightInt, setMaxHeightInt] = useState(500) 
+
+  useEffect(()=>{
+    const viewportHeightInt = window.innerHeight
+    setMaxHeightInt(viewportHeightInt)
+
+
+  }, [])
   // the props here refer to the data set accessed for rendering the table
   // limit the # of api calls per day by 
   // making one api call per day
@@ -54,10 +63,12 @@ export default function FullTable(props) {
     setPage(0);
   };
 
+  
+
   return (
     <div>
       <Paper  sx={{ width: '100%', overflow: 'hidden' }}>
-        <TableContainer sx={{ maxHeight: 440 }}>
+        <TableContainer sx={{ maxHeight: maxHeightInt }}>
           <Table
             stickyHeader 
             aria-label="sticky table"
