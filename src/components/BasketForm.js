@@ -15,36 +15,85 @@ export default function BasketForm(props) {
   // constants
   const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/get';
   const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250'
+  const postCoinsAPIStr = 'https://epistemica-x-db.vercel.app/api/coin/post'
   useEffect(() => {
     const fetchData = async () => {
       const currentTimeInt = Date.now();
       // retrieve the date string of the last time the external api call was made
       const responseHM = await axios.get(getLastUpdatedAPIStr)
+      console.log('/BasketForm.js: line 24: ResponseHM', responseHM)
       const lastUpdatedDateStr = responseHM.data.lastUpdatedDate
       const lastUpdatedInt = Date.parse(lastUpdatedDateStr)
       const timeDifferenceInt = currentTimeInt - lastUpdatedInt;
       // miliseconds to seconds, seconds to minutes, minutes to hours
       const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60);
+      console.log('Hours difference', hoursDifferenceInt)
       dispatchFn({type: 'SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL', payload: hoursDifferenceInt})
-      
+    
+
+      // DEVELOPMENT ENV CODE
+      // try {
+      //   const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h' + query);
+      //   console.log('external api call made in Basket Form...')
+      //   const apiDataArr = (response.data);
+      //   console.log('isArray?', Array.isArray(apiDataArr))
+      //   console.log('external apiData...', apiDataArr)
+        // await axios.post(postCoinsAPIStr, JSON.stringify(apiDataArr), {
+        //   withCredentials: false,
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   }
+        // }).then(responseHM => {
+        //   console.log('200: Successfully posted to the coin/post API.')
+        //   dispatchFn({type: 'SET_COIN_LIST', payload: apiDataArr})
+        //   setData(apiDataArr);
+        // }).catch(errorHM => {
+        //   console.log('Error running fetchData() inside BasketForm.js.')
+        //   console.error(errorHM)
+        // })
+         
+      // } catch (error){
+      //   console.log('Error running fetchData. Check BasketForm.js.')
+      //   console.log(error)
+      // }
+
+      // PRODUCTION ENVIRONMENT CODE
       if (hoursDifferenceInt >= 24) {
         try {
           const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h" + query);
-          const apiDataHM = (response.data);
-          dispatchFn({type: 'SET_COIN_LIST', payload: apiDataHM})
-          setData(apiDataHM);
+          const apiDataArr = (response.data);
+          await axios.post(postCoinsAPIStr, JSON.stringify(apiDataArr), {
+            withCredentials: false,
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }).then(responseHM => {
+            console.log('200: Successfully posted to the coin/post API.')
+            dispatchFn({type: 'SET_COIN_LIST', payload: apiDataArr})
+            setData(apiDataArr);
+          }).catch(errorHM => {
+            console.log('Error running fetchData() inside BasketForm.js.')
+            console.error(errorHM)
+          })
+          dispatchFn({type: 'SET_COIN_LIST', payload: apiDataArr})
+          setData(apiDataArr);
         } catch (error){
           console.log('Error running fetchData. Check BasketForm.js.')
           console.log(error)
         }   
       } else {
+        console.log('Hours different < 24.')
+        console.log('Retrieving 250 Coings from EPX API.')
         const get250CoinsHM = await axios.get(get250CoinsAPIStr)
-        const coinsListArr = get250CoinsHM.data;
-        dispatchFn({type: 'SET_COIN_LIST', payload: coinsListArr})
-        setData(coinsListArr)
+        console.log('BasketForm.js. Line 71. Variable check: get250CoinsHM', get250CoinsHM)
+        const coinListArr = get250CoinsHM.data;
+        console.log('BasketForm.js. Line 71. Variable check: coinsListArr', coinListArr)
+        console.log('Coin List Arr: ', coinListArr)
+        dispatchFn({type: 'SET_COIN_LIST', payload: coinListArr})
+        setData(coinListArr)
       }
     }
-    fetchData();
+  fetchData();
   }, [query, dispatchFn]);
   // successfully read the user id from the redux store
   // on May 28, 2023

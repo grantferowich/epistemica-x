@@ -8,25 +8,35 @@ export default function FullTableContainer() {
   
   const [rows, setRows] = useState([]);
   const [pageUpToF, setPageUpToF] = useState(false)
-  const fullTableDataArr = useSelector(state => state.coinsList)
+  const fullTableDataArr = useSelector(state => state.coinList)
   console.log('fullTableDataArr', fullTableDataArr)
-  const generateDataTable = (dataArr) => {
-    dataArr.forEach(coin => {
-      rows.push([
-        coin.name,
-        coin.symbol.toUpperCase(),
-        Number.parseFloat(coin.current_price),
-        Number.parseFloat(coin.price_change_percentage_24h),
-        Number.parseInt(coin.market_cap),
-        coin.id
-      ]);
-      setPageUpToF({ pageUpToF: true });
-    });
-  }
-  useEffect((fullTableDataHM) => {
-    generateDataTable(fullTableDataArr)
-  });
+  
+  
+  useEffect(() => {
+    const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250'
+    const generateDataTable = (dataArr) => {
+        const rows = dataArr.map(coin => 
+        [ coin.name,
+          coin.symbol.toUpperCase(),
+          Number.parseFloat(coin.current_price),
+          Number.parseFloat(coin.price_change_percentage_24h),
+          Number.parseInt(coin.market_cap),
+          coin.id
+        ]);
+        setRows(rows)
+        setPageUpToF(true);
+        console.log('FullTableContainer.js. Line 28. Variable check. newRows.', rows)
+    };
 
+    const getCoinList = async () => {
+      const get250CoinsHM = await axios.get(get250CoinsAPIStr)
+      const coinListArr = get250CoinsHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank)
+      console.log('FullTableContainer: Coins list', coinListArr)
+      generateDataTable(coinListArr)
+    }
+    getCoinList();
+    
+  }, []);
   return (
     <div>
       <div>
