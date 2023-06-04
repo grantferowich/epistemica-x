@@ -15,25 +15,36 @@ export default function BasketForm(props) {
   const [query] = useState('react');
   const [handleSubmitFired, setHandleSubmitFired] = useState(false);
   const dispatchFn = useDispatch();
-
+  // const [lastAPICallDate, setLastAPICallDate] = useState(null);
   // read lastAPICallTime from state
 
   // const lastAPICallTime = useSelector(state => state.lastAPICallTime)
-  let lastAPICallTimeInt;
+  
   const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/get';
   
 
   useEffect(() => {
-    const configureTime = (time) => {
+    let lastAPICallTimeInt;
+    const configureTime = async (time) => {
       console.log('configure time fired.')
-      lastAPICallTimeInt = time.data
+      console.log('time.data.lastUpdatedDate', time.data.lastUpdatedDate)
+      // lastAPICallTimeDate = time.data;
+      const lastUpdatedDate = time.data.lastUpdatedDate;
+      // await setLastAPICallDate(lastUpdatedDate);
       console.log('Last API Call Time Int: ', lastAPICallTimeInt)
-      
     }
     const fetchData = async () => {
       const currentTimeInt = Date.now();
-      axios.get(getLastUpdatedAPIStr).then(time => configureTime(time));
-      const timeDifferenceInt = currentTimeInt - lastAPICallTimeInt; 
+      console.log('currentTimeInt', currentTimeInt);
+      // console.log('lastAPICallDate', lastUpdatedDate)
+      const responseHM = await axios.get(getLastUpdatedAPIStr)
+      const lastUpdatedDateStr = responseHM.data.lastUpdatedDate
+      
+      const lastUpdatedInt = Date.parse(lastUpdatedDateStr)
+      console.log('lastUpdatedInt', lastUpdatedInt)
+      const timeDifferenceInt = currentTimeInt - lastUpdatedInt;
+      console.log('timeDifferenceInt', timeDifferenceInt);
+
       // miliseconds to seconds, seconds to minutes, minutes to hours
       const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60);
       
@@ -72,7 +83,7 @@ export default function BasketForm(props) {
       
     }
     fetchData();
-  }, [query, dispatchFn, lastAPICallTimeInt]);
+  }, [query, dispatchFn]);
 
 
   // successfully read the user id from the redux store
