@@ -21,19 +21,24 @@ export default function BasketForm(props) {
   // const lastAPICallTime = useSelector(state => state.lastAPICallTime)
   let lastAPICallTimeInt;
   const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/get';
+  
 
-  const configureTime = (time) => {
-    lastAPICallTimeInt = time;
-  }
-  useEffect( () => {
-    
+  useEffect(() => {
+    const configureTime = (time) => {
+      console.log('configure time fired.')
+      lastAPICallTimeInt = time.data
+      console.log('Last API Call Time Int: ', lastAPICallTimeInt)
+      
+    }
     const fetchData = async () => {
-      const currentTimeInt = Date.now()
-      axios.get(getLastUpdatedAPIStr).then(time => configureTime(time))
+      const currentTimeInt = Date.now();
+      axios.get(getLastUpdatedAPIStr).then(time => configureTime(time));
       const timeDifferenceInt = currentTimeInt - lastAPICallTimeInt; 
       // miliseconds to seconds, seconds to minutes, minutes to hours
-      const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60)
-
+      const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60);
+      
+      console.log('Hours Different Int', hoursDifferenceInt)
+      
       // for the developer environment
       // const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h" + query);
       // const apiDataHM = (response.data);
@@ -45,16 +50,18 @@ export default function BasketForm(props) {
         try {
           const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h" + query);
           const apiDataHM = (response.data);
-
-          // dispatchFn({type: 'SET_LAST_API_CALL_TIME', payload: currentTimeInt});
-          // fs.writeFileSync('../data/FullTable.json', JSON.stringify(apiDataHM));
           dispatchFn({type: 'SET_COIN_LIST', payload: apiDataHM})
           setData(apiDataHM);
         } catch (error){
           console.log('Error running fetchData. Check BasketForm.js.')
           console.log(error)
-        }
+        }   
+      } else {
+        // get the most recent 250 coins from the api
+        // persist the coins with SET_COIN_List
+        // get the most recent 
       }
+
       
       
       
@@ -65,7 +72,7 @@ export default function BasketForm(props) {
       
     }
     fetchData();
-  }, [query, dispatchFn, lastAPICallTime]);
+  }, [query, dispatchFn, lastAPICallTimeInt]);
 
 
   // successfully read the user id from the redux store
