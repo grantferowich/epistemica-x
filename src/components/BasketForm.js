@@ -4,9 +4,6 @@ import { FormControl, FormHelperText, MenuItem, CssBaseline, Grid, Box, Containe
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Copyright from "./Copyright";
-// import { Switch } from '@mui/material';
-// import FormGroup from '@mui/material/FormGroup';
-// import FormControlLabel from '@mui/material/FormControlLabel';
 import { useDispatch, useSelector } from "react-redux";
 
 export default function BasketForm(props) {
@@ -18,33 +15,18 @@ export default function BasketForm(props) {
   // constants
   const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/get';
   const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250'
-  
-
   useEffect(() => {
     const fetchData = async () => {
       const currentTimeInt = Date.now();
-      console.log('currentTimeInt', currentTimeInt);
-      // console.log('lastAPICallDate', lastUpdatedDate)
+      // retrieve the date string of the last time the external api call was made
       const responseHM = await axios.get(getLastUpdatedAPIStr)
       const lastUpdatedDateStr = responseHM.data.lastUpdatedDate
-      
       const lastUpdatedInt = Date.parse(lastUpdatedDateStr)
-      console.log('lastUpdatedInt', lastUpdatedInt)
       const timeDifferenceInt = currentTimeInt - lastUpdatedInt;
-      console.log('timeDifferenceInt', timeDifferenceInt);
-
       // miliseconds to seconds, seconds to minutes, minutes to hours
       const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60);
       dispatchFn({type: 'SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL', payload: hoursDifferenceInt})
-      console.log('Hours Different Int', hoursDifferenceInt)
       
-      // for the developer environment
-      // const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h" + query);
-      // const apiDataHM = (response.data);
-      // console.log('apiDataHM', apiDataHM)
-      // dispatchFn({type: 'SET_LAST_API_CALL_TIME', payload: currentTimeInt});
-      
-      // for the production environment
       if (hoursDifferenceInt >= 24) {
         try {
           const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h" + query);
@@ -61,20 +43,9 @@ export default function BasketForm(props) {
         dispatchFn({type: 'SET_COIN_LIST', payload: coinsListArr})
         setData(coinsListArr)
       }
-
-      
-      
-      
-
-      // IDEA!!!! store all info from response
-      // as a local file
-      // load data from file to populate drop down menus
-      
     }
     fetchData();
   }, [query, dispatchFn]);
-
-
   // successfully read the user id from the redux store
   // on May 28, 2023
   const user_IdStr = useSelector(state => state.user.id)
