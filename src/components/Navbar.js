@@ -22,6 +22,9 @@ export default function NavTabs(props) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to="/" className="nav-link">Epistemica-X</Link>
           </Typography>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Link to="/create-basket" className="nav-link">Create basket</Link>
+          </Typography>
           <div>
               {userLoggedInToF ? 
               (<div><Typography sx={{ml: 2}}>

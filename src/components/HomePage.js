@@ -6,7 +6,6 @@ export default function HomePage() {
   return (
     <div>
         <FullTableContainer/>
-        <BasketForm/>
     </div>
   )
 }
