@@ -437,15 +437,25 @@ export default function BasketForm(props) {
                     <FormHelperText>Select basket token 1</FormHelperText>
                   </FormControl>
                   </Grid>
-                  <Grid item xs={4}>
-                      <Typography>Short</Typography>
-                      <Switch 
+                  <Grid container alignItems='center'>
+                      <Grid item>
+                          <Typography>Short</Typography>
+                      </Grid>
+                      <Grid item> 
+                          <Switch 
                           checked={c1LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
                           onChange={handleLoSChange1}
                           inputProps={{ 'aria-label': 'controlled' }}
-                      />
-                      <Typography>Long</Typography>
+                          />
+                      </Grid>
+                      <Grid item>
+                          <Typography>Long</Typography>
+                      </Grid>
                   </Grid>
+                  
+                   
+    
+                  
               </Grid>
               </Box>
 
