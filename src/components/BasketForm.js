@@ -17,6 +17,7 @@ export default function BasketForm(props) {
   const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/get';
   const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250'
   const postCoinsAPIStr = 'https://epistemica-x-db.vercel.app/api/coin/post'
+  const postNewTimeAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/time/post'
   useEffect(() => {
     const fetchData = async () => {
       const currentTimeInt = Date.now();
@@ -29,7 +30,7 @@ export default function BasketForm(props) {
       // miliseconds to seconds, seconds to minutes, minutes to hours
       const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60);
       console.log('Hours difference', hoursDifferenceInt)
-      dispatchFn({type: 'SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL', payload: hoursDifferenceInt})
+     
 
       // PRODUCTION ENVIRONMENT CODE
       if (hoursDifferenceInt >= 24) {
@@ -42,19 +43,24 @@ export default function BasketForm(props) {
               'Content-Type': 'application/json'
             }
           }).then(responseHM => {
-            console.log('200: Successfully posted to the coin/post API.')
-            dispatchFn({type: 'SET_COIN_LIST', payload: apiDataArr})
+            console.log('200: Successfully posted to the coin/post API.');
+            dispatchFn({type: 'SET_COIN_LIST', payload: apiDataArr});
+            dispatchFn({type: 'SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL', payload: 0});
+
             setData(apiDataArr);
           }).catch(errorHM => {
             console.log('Error running fetchData() inside BasketForm.js.')
             console.error(errorHM)
           })
-          dispatchFn({type: 'SET_COIN_LIST', payload: apiDataArr})
-          setData(apiDataArr);
         } catch (error){
           console.log('Error running fetchData. Check BasketForm.js.')
           console.log(error)
         }   
+        await axios.post(postNewTimeAPIStr)
+        .then(response => {
+          console.log('200: Successfully posted to the time/post API.')
+        })
+        .catch ( error => { console.log('Error with posting to the time post api,', error)})
       } else {
         console.log('Hours different < 24.')
         console.log('Retrieving 250 Coings from EPX API.')
@@ -206,7 +212,8 @@ export default function BasketForm(props) {
   const apiKeysArr = [currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey];
   const currencies = [currency1, currency2, currency3, currency4, currency5]
   const weights = [currency1Weight, currency2Weight, currency3Weight, currency4Weight, currency5Weight];
-    
+  const directionsArr = [c1LongOrShort, c2LongOrShort, c3LongOrShort, c4LongOrShort, c5LongOrShort]
+  
   const basketData = {
       basketNameStr: basketName,
       user_IDStr: user_IdStr,
@@ -260,6 +267,7 @@ export default function BasketForm(props) {
           let iInt = z + 1
           basketData[`asset${iInt}HM`][`asset${iInt}IndexPriceInt`] = historicalPriceInt;
           let quantityInt = ((weights[z]/100) * initialBasketValue) / historicalPriceInt;
+          console.log('line 263: Quantity Int:', quantityInt);
           basketData[`asset${iInt}HM`][`asset${iInt}QuantityInt`] = quantityInt
           currencyQs[z] = quantityInt;
         }
@@ -272,14 +280,57 @@ export default function BasketForm(props) {
       // eslint-disable-next-line
       const result = await calculateQuantityX(currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate, basketData)
       for (let x = 0; x <= apiKeysArr.length; x++) {
-        if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined)) {
-          const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
-          const presentPrice = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
-          let value = parseFloat(presentPrice * currencyQs[x]);
-          presentBasketValue = parseFloat(presentBasketValue+value) 
+        let directionLoSStr = directionsArr[x];
+        const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
+        const presentPriceInt = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
+        
+        if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined) && directionLoSStr === 'long') {
+          let value = parseFloat(presentPriceInt * currencyQs[x]);
+          presentBasketValue = parseFloat(presentBasketValue+value);
           setPresentBasketValue(presentBasketValue);
         } 
+
+        // appended logic to calculate position value of short position Sunday June 4, 2023 at 5:33pm
+        if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined) && directionLoSStr === 'short'){
+          console.log('direction...', directionLoSStr)
+          let quantityInt = currencyQs[x];
+          console.log('Line 289: Quantity Int:', quantityInt);
+          let weightInt = weights[x];
+          let initialPositionValueInt = weightInt * initialBasketValue;
+          console.log('initialPositionValueInt', initialPositionValueInt);
+          let initialPriceInt = parseInt(quantityInt / initialPositionValueInt);
+          console.log('/// intialPriceInt:', initialPriceInt)
+          console.log('/// presentPriceInt: ', presentPriceInt)
+          let differenceInt = -1 * (presentPriceInt - initialPriceInt) * quantityInt;
+          console.log('/// differenceInt:', differenceInt)
+          // if present price is 10,000 and initial price is 20,000, then, -1 * - 10,000 * 0.5 = 5,000
+          let presentPositionValueInt = initialPositionValueInt + differenceInt
+          console.log('/// presentPositionValueInt:', presentPositionValueInt)
+          presentBasketValue = parseFloat(presentBasketValue + presentPositionValueInt)
+          console.log('/// presentBasketValue', presentBasketValue)
+          setPresentBasketValue(presentPositionValueInt);
+        }
+        // /* Suppose I sell short 10,000 worth of Bitcoin on 01/01/2023. Bitcoin price 
+        // was 20,000. I sell short 0.5 units of Bitcoin. My return comes from comparing the initial 
+        // price and the current price. If I bought 0.5 units, and my initial basket value was 10,000, then 
+        // the price must have been 20,000. 
+        // If the current price is 30,000, then I am down 50%. 
+        // If the current price is 10,000, then i am up 50%. 
+        // */
+
+        // suppose initialPositionValueInt is 10,000
+        // suppose initial price is 20,000 
+        // suppose current price is 30,000
+        // the short position is -50% 
+
+        // let initialPrice = 
+        // let positionValueInt = 
+
+
       }      
+
+
+
       basketData.presentBasketValueInt = presentBasketValue;
       const pctReturn = (100 * (presentBasketValue - initialBasketValue) / initialBasketValue);
       setPercentReturn(pctReturn)
@@ -642,11 +693,8 @@ export default function BasketForm(props) {
                 </Grid>
                    
               </Box>  
-
             </Grid>
-          </form>
-        </Box>
-        <Grid item maxWidth='md'>
+            <Grid item maxWidth='md'>
                 <Button
                 type="submit"
                 color="primary"
@@ -655,7 +703,9 @@ export default function BasketForm(props) {
                >
                 CREATE
                 </Button>
-        </Grid>
+            </Grid>
+        </form>
+        </Box>
         <Copyright/>
       </div>
 
