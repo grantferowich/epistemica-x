@@ -38,7 +38,8 @@ export default function BasketForm(props) {
         try {
           console.log('//// RETRIEVING FRESH VERSION OF FUlL TABLE')
           const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h" + query);
-          const apiDataArr = (response.data);
+          // ensure menu options are sorted by market cap rank
+          const apiDataArr = (response.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank));
           await axios.post(postCoinsAPIStr, JSON.stringify(apiDataArr), {
             withCredentials: false,
             headers: {
@@ -48,7 +49,7 @@ export default function BasketForm(props) {
             console.log('200: Successfully posted to the coin/post API.');
             dispatchFn({type: 'SET_COIN_LIST', payload: apiDataArr});
             dispatchFn({type: 'SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL', payload: 0});
-
+            
             setData(apiDataArr);
           }).catch(errorHM => {
             console.log('Error running fetchData() inside BasketForm.js.')
@@ -61,7 +62,8 @@ export default function BasketForm(props) {
       } else {
         console.log('//// RETRIEVING LOCAL VERSION OF FUlL TABLE')
         const get250CoinsHM = await axios.get(get250CoinsAPIStr)
-        const coinListArr = get250CoinsHM.data;
+        // ensure menu options are sorted by market cap rank
+        const coinListArr = get250CoinsHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank)
         dispatchFn({type: 'SET_COIN_LIST', payload: coinListArr})
         setData(coinListArr)
       }
