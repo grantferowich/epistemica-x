@@ -429,7 +429,7 @@ export default function BasketForm(props) {
               {/* {// asset 1} */}
               <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
               <Grid container spacing={3}>
-                  <Grid item xs={3} >
+                  <Grid item xs={4} style={{ marginLeft: '10px' }}>
                       <TextField
                       id="weight1"
                       label="Weight (%)"
@@ -481,7 +481,7 @@ export default function BasketForm(props) {
               {/* {// asset 2} */}
               <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
                   <Grid container spacing={3}>
-                    <Grid item xs={3}> 
+                    <Grid item xs={4} style={{ marginLeft: '10px' }}> 
                               <TextField
                               id="weight2"
                               label="Weight (%)"
@@ -527,7 +527,7 @@ export default function BasketForm(props) {
               {/* {// asset 3} */}
                 <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
                   <Grid container spacing={3}>
-                  <Grid item xs={3}>
+                  <Grid item xs={4} style={{ marginLeft: '10px' }}>
                       <TextField
                       id="weight3"
                       label="Weight (%)"
@@ -576,7 +576,7 @@ export default function BasketForm(props) {
               {/* {// asset 4} */}
               <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
                   <Grid container spacing={3}>
-                      <Grid item xs={3}>
+                      <Grid item xs={4} style={{ marginLeft: '10px' }}>
                       <TextField
                       id="weight4"
                       label="Weight (%)"
@@ -624,7 +624,7 @@ export default function BasketForm(props) {
               {/* {// asset 5} */}
               <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
                 <Grid container spacing={3}>
-                    <Grid item xs={3}>
+                    <Grid item xs={4} style={{ marginLeft: '10px' }}>
                     <TextField
                     id="weight5"
                     label="Weight (%)"
