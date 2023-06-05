@@ -82,12 +82,7 @@ export default function BasketForm(props) {
   }, [query, dispatchFn]);
   // successfully read the user id from the redux store
   // on May 28, 2023
-
   const user_IdStr = useSelector(state => state.user.id)
-  const [userIsLoggedInToF, setUserIsLoggedInToF] = useState(false)
-  if (user_IdStr.length > 0){
-    setUserIsLoggedInToF(true)
-  }
   // URL endpoint for posting new baskets
   const postBasketURLString = 'https://epistemica-x-db.vercel.app/api/basket/post';
   // state variables set by user
@@ -166,8 +161,6 @@ export default function BasketForm(props) {
   const handleChange1 = event => {
     const key = event.target.value;
     setCurrency1(key.name);
-    // console.log("key is", key);
-    // console.log("key.id is", key.id);
     setCurrency1APIKey(key.id);
   };
 
@@ -264,7 +257,7 @@ export default function BasketForm(props) {
           asset5WeightInt: currency5Weight,
           asset5APIKeyStr: currency5APIKey
       }
-    }
+  }
 
   const calculateQuantityX = async (currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate) => {     
       
@@ -280,7 +273,7 @@ export default function BasketForm(props) {
           currencyQs[z] = quantityInt;
         }
       }     
-    }
+  }
 
   const calculatePercentReturn = ( async (presentBasketValue, currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey, currency1Q, currency2Q, currency3Q, currency4Q, currency5Q) => {
       // eslint-disable-next-line
@@ -317,7 +310,7 @@ export default function BasketForm(props) {
       setHandleSubmitFired(true);
       sendPostRequestToAPI(basketData);
       updateCard(basketData)
-    });
+  });
 
   const discoverCurencies = async () => {
       if (currencies[0] !=="") {
@@ -344,7 +337,7 @@ export default function BasketForm(props) {
     })
     .catch((errorHM) => {
       console.log('Error', errorHM.message)})
-    }  
+  }  
   
   const handleSubmit = async event => {
     event.preventDefault();
@@ -699,7 +692,6 @@ export default function BasketForm(props) {
         </Box>
         <Box sx={{ textAlign: 'center', paddingBottom: '20px' }}>
         <div>
-        { userIsLoggedInToF && (
           <div>
             <Link to='/'>
               <Button variant="contained">View all assets</Button>
@@ -709,19 +701,7 @@ export default function BasketForm(props) {
               <Button variant="contained">View all baskets</Button>
             </Link> 
           </div>
-        )} 
-        </div>
-        { !userIsLoggedInToF && (
-            <Link to='/'>
-              <Button variant="contained">View all assets</Button>
-            </Link>
-        )} 
-
-          
-          
-          
-          
-          
+        </div>  
         <Copyright />
       </Box>
     </div>)
