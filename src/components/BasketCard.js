@@ -29,16 +29,17 @@ export default function BasketCard({basketHM}) {
   if (isDeletedToF){
     return null
   }
-  
+
   return (
     <div>
       <Box className='basket-card'>
              <Card variant="outlined">
-              <div><CardContent>
+              <div style={{ display: 'flex', justifyContent: 'space-between'}}> 
+                <CardContent>
              <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
              {basketHM.basketNameStr}
                </Typography>
-               <button onClick={handleDelete}>x</button>
+               
               <Typography variant="h5" component="div">
                Return: {basketHM.percentReturnInt.toString().slice(0,5)}%
               </Typography>
@@ -48,6 +49,9 @@ export default function BasketCard({basketHM}) {
                 Basket value on {basketHM.indexDateStr} = ${basketHM.initialBasketValueInt.toLocaleString(undefined, { maximumFractionDigits: 2 })}
              </Typography>
             </CardContent>
+            <div style={{ marginTop: '20px', marginRight: '4px'}}>
+                <button onClick={handleDelete}>Delete x</button>
+            </div>
             </div>
             </Card>
       </Box>
