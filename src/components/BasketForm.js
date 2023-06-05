@@ -281,10 +281,12 @@ export default function BasketForm(props) {
       const result = await calculateQuantityX(currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate, basketData)
       for (let x = 0; x <= apiKeysArr.length; x++) {
         let directionLoSStr = directionsArr[x];
-        const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
-        const presentPriceInt = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
+        
         
         if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined) && directionLoSStr === 'long') {
+          
+          const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
+          const presentPriceInt = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
           let value = parseFloat(presentPriceInt * currencyQs[x]);
           presentBasketValue = parseFloat(presentBasketValue+value);
           setPresentBasketValue(presentBasketValue);
@@ -292,23 +294,22 @@ export default function BasketForm(props) {
 
         // appended logic to calculate position value of short position Sunday June 4, 2023 at 5:33pm
         if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined) && directionLoSStr === 'short'){
+          const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
+          const presentPriceInt = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
           console.log('direction...', directionLoSStr)
           let quantityInt = currencyQs[x];
           console.log('Line 289: Quantity Int:', quantityInt);
           let weightInt = weights[x];
-          let initialPositionValueInt = weightInt * initialBasketValue;
-          console.log('initialPositionValueInt', initialPositionValueInt);
-          let initialPriceInt = parseInt(quantityInt / initialPositionValueInt);
-          console.log('/// intialPriceInt:', initialPriceInt)
-          console.log('/// presentPriceInt: ', presentPriceInt)
+          let initialPositionValueInt = (weightInt/100) * initialBasketValue;
+          let initialPriceInt = (initialPositionValueInt / quantityInt);
+          // console.log('/// intialPriceInt:', initialPriceInt)
+          // console.log('/// presentPriceInt: ', presentPriceInt)
           let differenceInt = -1 * (presentPriceInt - initialPriceInt) * quantityInt;
           console.log('/// differenceInt:', differenceInt)
           // if present price is 10,000 and initial price is 20,000, then, -1 * - 10,000 * 0.5 = 5,000
-          let presentPositionValueInt = initialPositionValueInt + differenceInt
-          console.log('/// presentPositionValueInt:', presentPositionValueInt)
-          presentBasketValue = parseFloat(presentBasketValue + presentPositionValueInt)
+          presentBasketValue = initialPositionValueInt + differenceInt          
           console.log('/// presentBasketValue', presentBasketValue)
-          setPresentBasketValue(presentPositionValueInt);
+          setPresentBasketValue(presentBasketValue);
         }
         // /* Suppose I sell short 10,000 worth of Bitcoin on 01/01/2023. Bitcoin price 
         // was 20,000. I sell short 0.5 units of Bitcoin. My return comes from comparing the initial 
@@ -709,7 +710,7 @@ export default function BasketForm(props) {
         <Copyright/>
       </div>
 
-    </Container>): (
+    </Container>) : (
       <div>
         <Box sx={{ minWidth: 275, width: '100%', maxWidth: '1000px', margin: '0 auto' }}>
           <Card>
