@@ -460,7 +460,7 @@ export default function BasketForm(props) {
                     <FormHelperText>Select basket token 1</FormHelperText>
                   </FormControl>
                   </Grid>
-                  <Grid container alignItems='center' xs={4}>
+                  <Grid container alignItems='center' justifyContent='flex-end' xs={4}>
                       <Grid item>
                           <Typography>Short</Typography>
                       </Grid>
@@ -512,7 +512,7 @@ export default function BasketForm(props) {
                       <FormHelperText>Select basket token 2</FormHelperText>
                     </FormControl>
                     </Grid>
-                    <Grid container alignItems='center' xs={4}>
+                    <Grid container alignItems='center' justifyContent='flex-end'  xs={4}>
                             <Typography>Short</Typography>
                             <Switch 
                                 checked={c2LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
@@ -561,7 +561,7 @@ export default function BasketForm(props) {
                     </FormControl>
                     </div>
                     </Grid>
-                    <Grid container alignItems='center' xs={4}>
+                    <Grid container alignItems='center' justifyContent='flex-end' xs={4}>
                             <Typography>Short</Typography>
                             <Switch 
                                 checked={c3LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
@@ -609,7 +609,7 @@ export default function BasketForm(props) {
                       </FormControl>
                       </div>
                       </Grid>
-                      <Grid container alignItems='center' xs={4}>
+                      <Grid container alignItems='center' justifyContent='flex-end' xs={4}>
                               <Typography>Short</Typography>
                               <Switch 
                                   checked={c4LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
@@ -655,7 +655,7 @@ export default function BasketForm(props) {
                       <FormHelperText>Select basket token 5</FormHelperText>
                       </FormControl>
                     </Grid>
-                    <Grid container alignItems='center' xs={4}>
+                    <Grid container alignItems='center' justifyContent='flex-end' xs={4}>
                             <Typography>Short</Typography>
                             <Switch 
                                 checked={c5LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
