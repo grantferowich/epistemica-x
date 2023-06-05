@@ -30,7 +30,7 @@ export default function NavTabs(props) {
               (<div><Typography sx={{ml: 2}}>
             <Link to="/user-home" className="nav-link">Home</Link>
           </Typography></div>) : ( 
-            <div> 
+            <div style={{ display: 'flex', alignItems: 'center'}}> 
               <Typography sx={{ml: 2}}>
               <Link to="/login" className="nav-link">Login</Link>
               </Typography>
