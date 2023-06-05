@@ -5,18 +5,22 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-
-/* Engineering card on user home page
- @ 2:10 pm on Tuesday, May 30.
-*/
-
-/* 
-Percent return for each basket ... needs to be handled with Redux
-Present value for each basket  .... needs to be handled with Redux
-*/
+import axios from 'axios';
 
 export default function BasketCard({basketHM}) {
-
+  const basketIDStr = basketHM._id
+  const deleteAPIStr = 'https://epistemica-x-db.vercel.app/api/basket/delete/'+basketIDStr
+  console.log('basketIDStr: ', basketIDStr)
+  
+  const handleDelete = () => {
+    axios.delete(deleteAPIStr)
+    .then(responseHM => {
+      console.log(responseHM.data)
+    })
+    .catch(error => {
+      console.log('Error deleting card:', error)
+    })
+  }
   return (
     <div>
       <Box className='basket-card'>
@@ -25,6 +29,7 @@ export default function BasketCard({basketHM}) {
              <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
              {basketHM.basketNameStr}
                </Typography>
+               <button onClick={handleDelete}>x</button>
               <Typography variant="h5" component="div">
                Return: {basketHM.percentReturnInt.toString().slice(0,5)}%
               </Typography>

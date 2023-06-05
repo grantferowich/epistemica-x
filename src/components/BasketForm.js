@@ -14,7 +14,7 @@ export default function BasketForm(props) {
   const [handleSubmitFired, setHandleSubmitFired] = useState(false);
   const dispatchFn = useDispatch();
   // constants
-  const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/get';
+  const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/last-record';
   const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250'
   const postCoinsAPIStr = 'https://epistemica-x-db.vercel.app/api/coin/post'
   const postNewTimeAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/time/post'
@@ -35,6 +35,7 @@ export default function BasketForm(props) {
       // PRODUCTION ENVIRONMENT CODE
       if (hoursDifferenceInt >= 24) {
         try {
+          console.log('//// RETRIEVING FRESH VERSION OF FUlL TABLE')
           const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h" + query);
           const apiDataArr = (response.data);
           await axios.post(postCoinsAPIStr, JSON.stringify(apiDataArr), {
@@ -56,12 +57,8 @@ export default function BasketForm(props) {
           console.log('Error running fetchData. Check BasketForm.js.')
           console.log(error)
         }   
-        await axios.post(postNewTimeAPIStr)
-        .then(response => {
-          console.log('200: Successfully posted to the time/post API.')
-        })
-        .catch ( error => { console.log('Error with posting to the time post api,', error)})
       } else {
+        console.log('//// RETRIEVING LOCAL VERSION OF FUlL TABLE')
         console.log('Hours different < 24.')
         console.log('Retrieving 250 Coings from EPX API.')
         const get250CoinsHM = await axios.get(get250CoinsAPIStr)
@@ -72,7 +69,16 @@ export default function BasketForm(props) {
         dispatchFn({type: 'SET_COIN_LIST', payload: coinListArr})
         setData(coinListArr)
       }
+
+      if (hoursDifferenceInt >= 24){
+        await axios.post(postNewTimeAPIStr)
+        .then(response => {
+          console.log('200: Successfully posted to the time/post API.')
+        })
+        .catch ( error => { console.log('Error with posting to the time post api,', error)})
+      }
     }
+
   fetchData();
   }, [query, dispatchFn]);
   // successfully read the user id from the redux store
