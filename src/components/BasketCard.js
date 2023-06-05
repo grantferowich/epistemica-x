@@ -26,10 +26,10 @@ export default function BasketCard({basketHM}) {
              {basketHM.basketNameStr}
                </Typography>
               <Typography variant="h5" component="div">
-               {/* Return: {basketHM.percentReturn.toString().slice(0,5)}% */}
+               Return: {basketHM.percentReturnInt.toString().slice(0,5)}%
               </Typography>
               <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-               {/* Present basket value = ${basketHM.presentBasketValue.toLocaleString(undefined, { maximumFractionDigits: 2 })} */}
+               Present basket value = ${basketHM.presentBasketValueInt.toLocaleString(undefined, { maximumFractionDigits: 2 })}
               <br></br>
                 Basket value on {basketHM.indexDateStr} = ${basketHM.initialBasketValueInt.toLocaleString(undefined, { maximumFractionDigits: 2 })}
              </Typography>
