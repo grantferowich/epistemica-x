@@ -332,7 +332,7 @@ export default function BasketForm(props) {
       basketData.percentReturnInt = pctReturn;
       console.log('basketData after updates to percent return and present basketvalue', basketData)
       setHandleSubmitFired(true);
-      sendPostRequestToAPI();
+      sendPostRequestToAPI(basketData);
     });
 
   const discoverCurencies = async () => {
@@ -350,7 +350,7 @@ export default function BasketForm(props) {
       }
     }
 
-  const sendPostRequestToAPI = () => {
+  const sendPostRequestToAPI = (basketData) => {
     console.log('basket data ', basketData)
     console.log('sendPostRequestToAPI fired.')
     axios.post(postBasketURLString, JSON.stringify(basketData), {
