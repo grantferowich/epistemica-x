@@ -333,6 +333,7 @@ export default function BasketForm(props) {
       console.log('basketData after updates to percent return and present basketvalue', basketData)
       setHandleSubmitFired(true);
       sendPostRequestToAPI(basketData);
+      updateCard(basketData)
     });
 
   const discoverCurencies = async () => {
@@ -374,24 +375,30 @@ export default function BasketForm(props) {
     //  console.log('postData', postDataHM);
   }
 
-  const card = (
+const updateCard = (basketData) => {
+  const card = ( 
     <React.Fragment>
-       <><CardContent>
+     
+      <><CardContent>
          <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
            {basketData.basketNameStr}
          </Typography>
          <Typography variant="h5" component="div">
-           {/* Return: {basketData.percentReturnInt.toString().slice(0,5)}% */}
-           Return: {basketData.percentReturnInt.toString().slice(0,5)}%
+           Return: {percentReturn.toString().slice(0,5)}%
          </Typography>
          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-           Present basket value = ${basketData.presentBasketValueInt.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+           Present basket value = ${presentBasketValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
            <br></br>
            Basket value on {indexDate} = ${initialBasketValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+         </Typography>
+         <Typography>
          </Typography>
        </CardContent></>
     </React.Fragment>
   );
+  return card
+}
+
 
   return (
     (handleSubmitFired === false) ? (
@@ -705,13 +712,15 @@ export default function BasketForm(props) {
       </div>
 
     </Container>) : (
-      <div>
-        <Box sx={{ minWidth: 275, width: '100%', maxWidth: '1000px', margin: '0 auto' }}>
+      <div style={{ marginTop: '20px'}}>
+        <Box sx={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}>
           <Card>
-             {card}
+             {updateCard(basketData)}
           </Card>
         </Box>
-     <Copyright/>
+        <Box sx={{ textAlign: 'center', paddingBottom: '20px' }}>
+        <Copyright />
+      </Box>
     </div>)
   );
 }
