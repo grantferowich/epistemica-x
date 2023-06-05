@@ -284,7 +284,6 @@ export default function BasketForm(props) {
         
         
         if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined) && directionLoSStr === 'long') {
-          
           const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
           const presentPriceInt = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
           let value = parseFloat(presentPriceInt * currencyQs[x]);
@@ -296,19 +295,17 @@ export default function BasketForm(props) {
         if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined) && directionLoSStr === 'short'){
           const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
           const presentPriceInt = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
-          console.log('direction...', directionLoSStr)
+          // console.log('direction...', directionLoSStr)
           let quantityInt = currencyQs[x];
-          console.log('Line 289: Quantity Int:', quantityInt);
+          // console.log('Line 289: Quantity Int:', quantityInt);
           let weightInt = weights[x];
           let initialPositionValueInt = (weightInt/100) * initialBasketValue;
           let initialPriceInt = (initialPositionValueInt / quantityInt);
-          // console.log('/// intialPriceInt:', initialPriceInt)
-          // console.log('/// presentPriceInt: ', presentPriceInt)
           let differenceInt = -1 * (presentPriceInt - initialPriceInt) * quantityInt;
-          console.log('/// differenceInt:', differenceInt)
+          // console.log('/// differenceInt:', differenceInt)
           // if present price is 10,000 and initial price is 20,000, then, -1 * - 10,000 * 0.5 = 5,000
           presentBasketValue = initialPositionValueInt + differenceInt          
-          console.log('/// presentBasketValue', presentBasketValue)
+          // console.log('/// presentBasketValue', presentBasketValue)
           setPresentBasketValue(presentBasketValue);
         }
         // /* Suppose I sell short 10,000 worth of Bitcoin on 01/01/2023. Bitcoin price 
@@ -329,9 +326,6 @@ export default function BasketForm(props) {
 
 
       }      
-
-
-
       basketData.presentBasketValueInt = presentBasketValue;
       const pctReturn = (100 * (presentBasketValue - initialBasketValue) / initialBasketValue);
       setPercentReturn(pctReturn)
