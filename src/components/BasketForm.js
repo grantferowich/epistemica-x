@@ -725,16 +725,9 @@ export default function BasketForm(props) {
           </Card>
         </Box>
         <Box sx={{ textAlign: 'center', paddingBottom: '20px' }}>
-        <Link to='/user-home' style={{ textDecoration: 'none'}}>
-           <Button variant="contained">View all baskets</Button>
-        </Link>
-        
-        <Link to='/' style={{textDecoration: 'none'}}>
-            <Button variant="contained">View all assets</Button>
-        </Link>
-        
-
-        <Button variant="contained" onClick={setHandleSubmitFiredToFalse} >Create a new basket</Button>
+          <Button variant="contained" href='/user-home'>View all baskets</Button>
+          <Button variant="contained" href='/'>View all assets</Button>
+          <Button variant="contained" onClick={setHandleSubmitFiredToFalse} >Create a new basket</Button>
         <Copyright />
       </Box>
     </div>)

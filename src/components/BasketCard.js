@@ -2,9 +2,9 @@ import * as React from 'react';
 import { useState } from 'react';
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
+import { Button } from '@mui/material';
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import axios from 'axios';
 
@@ -50,7 +50,7 @@ export default function BasketCard({basketHM}) {
              </Typography>
             </CardContent>
             <div style={{ marginTop: '20px', marginRight: '4px'}}>
-                <button onClick={handleDelete}>Delete x</button>
+                <Button variant='contained' onClick={handleDelete}>Delete x</Button>
             </div>
             </div>
             </Card>
