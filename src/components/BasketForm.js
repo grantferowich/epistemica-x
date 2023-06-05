@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, FormControl, FormHelperText, MenuItem, CssBaseline, Grid, Box, Container, Button, TextField, Typography, Select } from "@mui/material";
+import { FormControl, FormHelperText, MenuItem, CssBaseline, Grid, Box, Container, Button, TextField, Typography, Select } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Copyright from "./Copyright";
@@ -60,13 +60,8 @@ export default function BasketForm(props) {
         }   
       } else {
         console.log('//// RETRIEVING LOCAL VERSION OF FUlL TABLE')
-        console.log('Hours different < 24.')
-        console.log('Retrieving 250 Coings from EPX API.')
         const get250CoinsHM = await axios.get(get250CoinsAPIStr)
-        console.log('BasketForm.js. Line 71. Variable check: get250CoinsHM', get250CoinsHM)
         const coinListArr = get250CoinsHM.data;
-        console.log('BasketForm.js. Line 71. Variable check: coinsListArr', coinListArr)
-        console.log('Coin List Arr: ', coinListArr)
         dispatchFn({type: 'SET_COIN_LIST', payload: coinListArr})
         setData(coinListArr)
       }
@@ -281,14 +276,10 @@ export default function BasketForm(props) {
     }
 
   const calculatePercentReturn = ( async (presentBasketValue, currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey, currency1Q, currency2Q, currency3Q, currency4Q, currency5Q) => {
-      console.log('calculatePercentReturn function started.');
-
       // eslint-disable-next-line
       const result = await calculateQuantityX(currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate, basketData)
       for (let x = 0; x <= apiKeysArr.length; x++) {
         let directionLoSStr = directionsArr[x];
-        
-        
         if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined) && directionLoSStr === 'long') {
           const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
           const presentPriceInt = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
@@ -296,7 +287,6 @@ export default function BasketForm(props) {
           presentBasketValue = parseFloat(presentBasketValue+value);
           setPresentBasketValue(presentBasketValue);
         } 
-
         // appended logic to calculate position value of short position Sunday June 4, 2023 at 5:33pm
         if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined) && directionLoSStr === 'short'){
           const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
@@ -308,42 +298,21 @@ export default function BasketForm(props) {
           let initialPositionValueInt = (weightInt/100) * initialBasketValue;
           let initialPriceInt = (initialPositionValueInt / quantityInt);
           let differenceInt = -1 * (presentPriceInt - initialPriceInt) * quantityInt;
-          // console.log('/// differenceInt:', differenceInt)
-          // if present price is 10,000 and initial price is 20,000, then, -1 * - 10,000 * 0.5 = 5,000
+
           presentBasketValue = initialPositionValueInt + differenceInt          
-          // console.log('/// presentBasketValue', presentBasketValue)
           setPresentBasketValue(presentBasketValue);
         }
-        // /* Suppose I sell short 10,000 worth of Bitcoin on 01/01/2023. Bitcoin price 
-        // was 20,000. I sell short 0.5 units of Bitcoin. My return comes from comparing the initial 
-        // price and the current price. If I bought 0.5 units, and my initial basket value was 10,000, then 
-        // the price must have been 20,000. 
-        // If the current price is 30,000, then I am down 50%. 
-        // If the current price is 10,000, then i am up 50%. 
-        // */
-
-        // suppose initialPositionValueInt is 10,000
-        // suppose initial price is 20,000 
-        // suppose current price is 30,000
-        // the short position is -50% 
-
-        // let initialPrice = 
-        // let positionValueInt = 
-
-
       }      
       basketData.presentBasketValueInt = presentBasketValue;
       const pctReturn = (100 * (presentBasketValue - initialBasketValue) / initialBasketValue);
       setPercentReturn(pctReturn)
       basketData.percentReturnInt = pctReturn;
-      console.log('basketData after updates to percent return and present basketvalue', basketData)
       setHandleSubmitFired(true);
       sendPostRequestToAPI(basketData);
       updateCard(basketData)
     });
 
   const discoverCurencies = async () => {
-      console.log("discoverCurrencies function started.")
       if (currencies[0] !=="") {
         const runCalculation = async () => {
           await calculatePercentReturn(presentBasketValue, 
@@ -355,11 +324,9 @@ export default function BasketForm(props) {
           }
         runCalculation()
       }
-    }
+  }
 
   const sendPostRequestToAPI = (basketData) => {
-    console.log('basket data ', basketData)
-    console.log('sendPostRequestToAPI fired.')
     axios.post(postBasketURLString, JSON.stringify(basketData), {
       headers: {
         "Content-Type":"application/json"
@@ -404,7 +371,6 @@ export default function BasketForm(props) {
   );
   return card
   }
-
 
   return (
     (handleSubmitFired === false) ? (

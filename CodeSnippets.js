@@ -182,3 +182,23 @@
       //   console.log('Error running fetchData. Check BasketForm.js.')
       //   console.log(error)
       // }
+
+              // /* Suppose I sell short 10,000 worth of Bitcoin on 01/01/2023. Bitcoin price 
+        // was 20,000. I sell short 0.5 units of Bitcoin. My return comes from comparing the initial 
+        // price and the current price. If I bought 0.5 units, and my initial basket value was 10,000, then 
+        // the price must have been 20,000. 
+        // If the current price is 30,000, then I am down 50%. 
+        // If the current price is 10,000, then i am up 50%. 
+        // */
+
+        // suppose initialPositionValueInt is 10,000
+        // suppose initial price is 20,000 
+        // suppose current price is 30,000
+        // the short position is -50% 
+
+        // let initialPrice = 
+        // let positionValueInt = 
+
+                  // console.log('/// differenceInt:', differenceInt)
+          // if present price is 10,000 and initial price is 20,000, then, -1 * - 10,000 * 0.5 = 5,000
+      // console.log('basketData after updates to percent return and present basketvalue', basketData)
