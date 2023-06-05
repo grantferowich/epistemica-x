@@ -3,9 +3,6 @@ import BasketCard from "../components/BasketCard";
 import Grid from "@mui/material/Grid";
 import { useSelector } from 'react-redux';
 
-
-
-
 export default function BasketCardContainer() {
   const basketsArr = useSelector(state => state.user.basketsArr);
   const generateUniqueAssetArray = (basketsArr) => {
@@ -27,7 +24,7 @@ export default function BasketCardContainer() {
           let assetName = assetObj[`asset${iInt}NameStr`];
           let apiKey = assetObj[`asset${iInt}APIKeyStr`];
           if (assetName && !assetsArr.some(a => a.assetNameStr === assetName)){
-            assetsArr.push({assetNameStr: assetName, apiKeyStr: apiKey})
+            assetsArr.push({assetNameStr: assetName, apiKeyStr: apiKey});
           }
           iInt++
         }  
@@ -38,13 +35,8 @@ export default function BasketCardContainer() {
     }
     return uniqueAssetsArr;
   }
-
-  // TO DO
-  // Friday June 2, 2023
-  // 11:05am
-  // write the assetsArray to the redux store
   const assetsArray = generateUniqueAssetArray(basketsArr);
-  console.log('assetsArray', assetsArray)
+
    
     return ( basketsArr.length !== 0 ?
     (<div>

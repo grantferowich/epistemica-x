@@ -19,6 +19,7 @@ export default function BasketForm(props) {
   const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250'
   const postCoinsAPIStr = 'https://epistemica-x-db.vercel.app/api/coin/post'
   const postNewTimeAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/time/post'
+  
   useEffect(() => {
     const fetchData = async () => {
       const currentTimeInt = Date.now();
@@ -83,6 +84,10 @@ export default function BasketForm(props) {
   // on May 28, 2023
 
   const user_IdStr = useSelector(state => state.user.id)
+  const [userIsLoggedInToF, setUserIsLoggedInToF] = useState(false)
+  if (user_IdStr.length > 0){
+    setUserIsLoggedInToF(true)
+  }
   // URL endpoint for posting new baskets
   const postBasketURLString = 'https://epistemica-x-db.vercel.app/api/basket/post';
   // state variables set by user
@@ -693,15 +698,26 @@ export default function BasketForm(props) {
           </Card>
         </Box>
         <Box sx={{ textAlign: 'center', paddingBottom: '20px' }}>
-          <Link to='/user-home'>
-              <Button variant="contained">View all baskets</Button>
-          </Link>
           
-          <Link to='/'>
+          ( userIsLoggedInToF) ? (
+            <Link to='/'>
               <Button variant="contained">View all assets</Button>
-          </Link>
+            </Link>
+            <Button variant="contained" onClick={setHandleSubmitFiredToFalse} >Create a new basket</Button>
+            <Link to='/user-home'>
+              <Button variant="contained">View all baskets</Button>
+            </Link>
+          ) : (
+            <Link to='/'>
+              <Button variant="contained">View all assets</Button>
+            </Link>
+            )
+
           
-          <Button variant="contained" onClick={setHandleSubmitFiredToFalse} >Create a new basket</Button>
+          
+          
+          
+          
         <Copyright />
       </Box>
     </div>)
