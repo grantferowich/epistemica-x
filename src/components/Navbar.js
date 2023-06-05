@@ -27,9 +27,15 @@ export default function NavTabs(props) {
           </Typography>
           <div>
               {userLoggedInToF ? 
-              (<div><Typography sx={{ml: 2}}>
+              (<div style={{display: 'flex', alignItems: 'center'}}>
+          <Typography sx={{ml: 2}}>
             <Link to="/user-home" className="nav-link">Home</Link>
-          </Typography></div>) : ( 
+          </Typography>
+          <Typography sx={{ml: 2}}>
+            <Link to="/signout" className="nav-link">Sign out</Link>
+          </Typography>
+          </div>
+          ) : ( 
             <div style={{ display: 'flex', alignItems: 'center'}}> 
               <Typography sx={{ml: 2}}>
               <Link to="/login" className="nav-link">Login</Link>

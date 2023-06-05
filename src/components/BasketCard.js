@@ -12,9 +12,7 @@ export default function BasketCard({basketHM}) {
   const [isDeletedToF, setIsDeletedToF] = useState(false)
   const basketIDStr = basketHM._id
   const deleteAPIStr = 'https://epistemica-x-db.vercel.app/api/basket/delete/'+basketIDStr
-  console.log('deleteAPIStr', deleteAPIStr)
-  console.log('basketIDStr: ', basketIDStr)
-  
+
   const handleDelete = () => {
     axios.delete(deleteAPIStr)
     .then(responseHM => {

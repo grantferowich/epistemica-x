@@ -48,8 +48,10 @@ export default function Login() {
       }
     }).then(responseHM => {
       console.log('200: Success');
-      updateStore(responseHM)
-      navigateFn('/user-home')
+      updateStore(responseHM);
+      localStorage.setItem('user', responseHM);
+      console.log('stuff sent to localStorage', responseHM);
+      navigateFn('/user-home');
     }).catch(errorHM => {
       console.log(errorHM);
     })

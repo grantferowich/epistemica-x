@@ -5,7 +5,8 @@ import Login from "./components/Login";
 import HomePage from "./components/HomePage";
 import SignUp from "./components/SignUp";
 import UserHome from "./components/UserHome";
-import BasketForm from "./components/BasketForm"
+import BasketForm from "./components/BasketForm";
+import SignOut from "./components/SignOut";
 import { Provider } from "react-redux";
 import store from './store/store';
 
@@ -21,6 +22,7 @@ function App() {
             <Route exact path='/signup' element={<SignUp/>}/>
             <Route exact path='/user-home' element={<UserHome/>}/>
             <Route exact path='/create-basket' element={<BasketForm/>}/>
+            <Route exact path='/signout' element={<SignOut/>}/>
           </Routes>
         </div>
       </Router>

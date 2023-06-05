@@ -477,7 +477,6 @@ export default function BasketForm(props) {
                   </Grid>            
               </Grid>
               </Box>
-
               {/* {// asset 2} */}
               <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
                   <Grid container spacing={3}>
@@ -523,7 +522,6 @@ export default function BasketForm(props) {
                     </Grid>
                   </Grid>
               </Box>
-
               {/* {// asset 3} */}
                 <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
                   <Grid container spacing={3}>
