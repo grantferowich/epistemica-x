@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FormControl, FormHelperText, MenuItem, CssBaseline, Grid, Box, Container, Button, TextField, Typography, Select } from "@mui/material";
+import { Link, FormControl, FormHelperText, MenuItem, CssBaseline, Grid, Box, Container, Button, TextField, Typography, Select } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Copyright from "./Copyright";
 import { useDispatch, useSelector } from "react-redux";
 import Switch from '@mui/material/Switch';
+
 
 export default function BasketForm(props) {
 
@@ -83,11 +84,10 @@ export default function BasketForm(props) {
   }, [query, dispatchFn]);
   // successfully read the user id from the redux store
   // on May 28, 2023
-  const user_IdStr = useSelector(state => state.user.id)
 
+  const user_IdStr = useSelector(state => state.user.id)
   // URL endpoint for posting new baskets
   const postBasketURLString = 'https://epistemica-x-db.vercel.app/api/basket/post';
-
   // state variables set by user
   const [basketName, setBasketName] = useState('');
   const [indexDate, setIndexDate] = useState('');
@@ -370,18 +370,18 @@ export default function BasketForm(props) {
     })
     .catch((errorHM) => {
       console.log('Error', errorHM.message)})
-
     }  
   
   const handleSubmit = async event => {
     event.preventDefault();
-    // console.log('handleSubmit completed.')
     await discoverCurencies(basketData); 
-    //  let postDataHM = basketData;
-    //  console.log('postData', postDataHM);
   }
 
-const updateCard = (basketData) => {
+  const setHandleSubmitFiredToFalse = () => {
+    setHandleSubmitFired(false)
+  }
+
+  const updateCard = (basketData) => {
   const card = ( 
     <React.Fragment>
      
@@ -403,7 +403,7 @@ const updateCard = (basketData) => {
     </React.Fragment>
   );
   return card
-}
+  }
 
 
   return (
@@ -725,6 +725,16 @@ const updateCard = (basketData) => {
           </Card>
         </Box>
         <Box sx={{ textAlign: 'center', paddingBottom: '20px' }}>
+        <Link to='/user-home' style={{ textDecoration: 'none'}}>
+           <Button variant="contained">View all baskets</Button>
+        </Link>
+        
+        <Link to='/' style={{textDecoration: 'none'}}>
+            <Button variant="contained">View all assets</Button>
+        </Link>
+        
+
+        <Button variant="contained" onClick={setHandleSubmitFiredToFalse} >Create a new basket</Button>
         <Copyright />
       </Box>
     </div>)
