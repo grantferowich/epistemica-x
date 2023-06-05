@@ -698,20 +698,24 @@ export default function BasketForm(props) {
           </Card>
         </Box>
         <Box sx={{ textAlign: 'center', paddingBottom: '20px' }}>
-          
-          ( userIsLoggedInToF) ? (
+        <div>
+        { userIsLoggedInToF && (
+          <div>
             <Link to='/'>
               <Button variant="contained">View all assets</Button>
             </Link>
             <Button variant="contained" onClick={setHandleSubmitFiredToFalse} >Create a new basket</Button>
             <Link to='/user-home'>
               <Button variant="contained">View all baskets</Button>
-            </Link>
-          ) : (
+            </Link> 
+          </div>
+        )} 
+        </div>
+        { !userIsLoggedInToF && (
             <Link to='/'>
               <Button variant="contained">View all assets</Button>
             </Link>
-            )
+        )} 
 
           
           
