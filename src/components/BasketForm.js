@@ -6,7 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Copyright from "./Copyright";
 import { useDispatch, useSelector } from "react-redux";
 import Switch from '@mui/material/Switch';
-
+import { Link } from 'react-router-dom';
 
 export default function BasketForm(props) {
 
@@ -693,8 +693,14 @@ export default function BasketForm(props) {
           </Card>
         </Box>
         <Box sx={{ textAlign: 'center', paddingBottom: '20px' }}>
-          <Button variant="contained" href='/user-home'>View all baskets</Button>
-          <Button variant="contained" href='/'>View all assets</Button>
+          <Link to='/user-home'>
+              <Button variant="contained">View all baskets</Button>
+          </Link>
+          
+          <Link to='/'>
+              <Button variant="contained">View all assets</Button>
+          </Link>
+          
           <Button variant="contained" onClick={setHandleSubmitFiredToFalse} >Create a new basket</Button>
         <Copyright />
       </Box>
