@@ -7,12 +7,15 @@ import SignUp from "./components/SignUp";
 import UserHome from "./components/UserHome";
 import BasketForm from "./components/BasketForm";
 import SignOut from "./components/SignOut";
-import { Provider } from "react-redux";
 import store from './store/store';
+import { Provider } from "react-redux";
 
 function App() {
+  // engineered implementation of localStorage
+  // for user persistence
+  // at 7:06pm, June 5, 2023
   return (
-  <Provider store={store}>
+    <Provider store={store}>
       <Router>
         <div>
           <NavBar/>
@@ -26,7 +29,7 @@ function App() {
           </Routes>
         </div>
       </Router>
-  </Provider>
+    </Provider>
   );
 }
 

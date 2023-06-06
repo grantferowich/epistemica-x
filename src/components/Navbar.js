@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -6,13 +6,34 @@ import Box from "@mui/material/Box";
 import { Link } from 'react-router-dom';
 import '../components/styles.css'
 import { useSelector } from "react-redux";
+import { useDispatch } from 'react-redux';
+import { setUserEmail, setUserId, setUserName } from '../actions/userActions';
 
 export default function NavTabs(props) {
-  let userLoggedInToF = false
+  const dispatchFn = useDispatch();
+  let userLoggedInToF = false;
   const userNameStr = useSelector(state => state.user.name);
+  
   if (userNameStr.length > 0){
     userLoggedInToF = true;
   }
+
+  useEffect(() => {
+    const updateStore = (userObj) => {
+      let dataHM = userObj.data.userObj;
+      dispatchFn(setUserName(dataHM.name));
+      dispatchFn(setUserEmail(dataHM.email));
+      dispatchFn(setUserId(dataHM._id));
+    }
+    
+    const loggedInUserObj = localStorage.getItem('user');
+    
+    if (loggedInUserObj.name) {
+        console.log('Someone is logged in...')
+        updateStore(loggedInUserObj);
+    };
+
+  }, [dispatchFn])
 
   return (
     <div sx={{ display: "flex" }}>

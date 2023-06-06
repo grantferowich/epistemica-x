@@ -21,40 +21,47 @@ const loginURLStr = 'https://epistemica-x-db.vercel.app/api/user/login';
 export default function Login() {
   const navigateFn = useNavigate();
   const dispatchFn = useDispatch();
-
   // engineered updateStore(userObj) on Sat May 27, 2023
   // at 9:07am
   const updateStore = (userObj) => {
+    console.log('/// LOGIN UPDATE STORE');
+    console.log('/// userObj', userObj);
     let dataHM = userObj.data.userObj
-    dispatchFn(setUserName(dataHM.name))
-    dispatchFn(setUserEmail(dataHM.email))
-    dispatchFn(setUserId(dataHM._id))
-  }
-  
+    dispatchFn(setUserName(dataHM.name));
+    dispatchFn(setUserEmail(dataHM.email));
+    dispatchFn(setUserId(dataHM._id));
+  }  
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const email = data.get('email');
-    const password = data.get('password');
-    const dataX = {
-      "email": email, 
-      "password": password
-    }
-    axios.post(loginURLStr, JSON.stringify(dataX), {
-      withCredentials: false,
-      headers: {
-        "Content-Type":"application/json"
+    try {
+      const data = new FormData(event.currentTarget);
+      const email = data.get('email');
+      const password = data.get('password');
+      const dataX = {
+        "email": email, 
+        "password": password
       }
-    }).then(responseHM => {
-      console.log('200: Success');
-      updateStore(responseHM);
-      localStorage.setItem('user', responseHM);
-      console.log('stuff sent to localStorage', responseHM);
-      navigateFn('/user-home');
-    }).catch(errorHM => {
-      console.log(errorHM);
-    })
+      axios.post(loginURLStr, JSON.stringify(dataX), {
+        withCredentials: false,
+        headers: {
+          "Content-Type":"application/json"
+        }
+      }).then(responseHM => {
+        console.log('200: Success');
+        updateStore(responseHM);
+        // engineered implementation of localStorage
+        // for user persistence
+        // at 7:06pm, June 5, 2023
+        localStorage.setItem('user', JSON.stringify(responseHM.data.userObj));
+        console.log('stuff sent to localStorage', responseHM.data.userObj);
+        navigateFn('/user-home');
+      }).catch(errorHM => {
+        console.log(errorHM);
+      })
+    } catch (error) {
+      console.log('Error occurred while logging in.')
+    }
   };
 
   return (

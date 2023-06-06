@@ -4,8 +4,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
 import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -18,24 +16,22 @@ import axios from 'axios';
 const theme = createTheme();
 const postURLStr = 'https://epistemica-x-db.vercel.app/api/user/post'
 
-
 export default function SignUp() {
   const navigateFn = useNavigate();
   const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const firstName = data.get('firstName');
-    const lastName = data.get('lastName');
-    const name = firstName + " " + lastName
-    const email = data.get('email');
-    const password = data.get('password');
+  event.preventDefault();
+  const data = new FormData(event.currentTarget);
+  const firstName = data.get('firstName');
+  const lastName = data.get('lastName');
+  const name = firstName + " " + lastName
+  const email = data.get('email');
+  const password = data.get('password');
    
-    const dataX = { 
+  const dataX = { 
       "name": name,
       "email": email, 
       "password": password
     }
-
     axios.post(postURLStr, JSON.stringify(dataX), {
       withCredentials: false,
       headers: {

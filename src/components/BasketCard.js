@@ -3,14 +3,13 @@ import { useState } from 'react';
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import { Button } from '@mui/material';
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import axios from 'axios';
 
 export default function BasketCard({basketHM}) {
   const [isDeletedToF, setIsDeletedToF] = useState(false)
-  const basketIDStr = basketHM._id
+  const basketIDStr = basketHM._id;
   const deleteAPIStr = 'https://epistemica-x-db.vercel.app/api/basket/delete/'+basketIDStr
 
   const handleDelete = () => {

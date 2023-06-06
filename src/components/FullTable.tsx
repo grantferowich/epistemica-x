@@ -7,6 +7,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { TableHead } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { setUserEmail, setUserId, setUserName } from '../actions/userActions';
 
 let columns;
 
@@ -36,6 +38,22 @@ columns = [ { id: 'Name', label: 'Name', minWidth: 170 },
 ];
 
 export default function FullTable(props) {
+
+  const dispatchFn = useDispatch();
+
+  const updateUserStore = (userObj) => {
+    let dataHM = userObj.data.userObj;
+    dispatchFn(setUserName(dataHM.name));
+    dispatchFn(setUserEmail(dataHM.email));
+    dispatchFn(setUserId(dataHM._id));
+  }
+
+  const loggedInUserObj = localStorage.getItem('user');
+  console.log('loggedInUserObj', loggedInUserObj)
+  if (loggedInUserObj !== null && loggedInUserObj.name) {
+      console.log('Someone is logged in...');
+      updateUserStore(loggedInUserObj);
+  };
 
   const [maxHeightInt, setMaxHeightInt] = useState(500) 
 

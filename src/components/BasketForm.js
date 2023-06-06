@@ -25,7 +25,7 @@ export default function BasketForm(props) {
       const currentTimeInt = Date.now();
       // retrieve the date string of the last time the external api call was made
       const responseHM = await axios.get(getLastUpdatedAPIStr)
-      console.log('/BasketForm.js: line 24: ResponseHM', responseHM)
+      // console.log('/BasketForm.js: line 24: ResponseHM', responseHM)
       const lastUpdatedDateStr = responseHM.data.lastUpdatedDate
       const lastUpdatedInt = Date.parse(lastUpdatedDateStr)
       const timeDifferenceInt = currentTimeInt - lastUpdatedInt;
@@ -33,7 +33,6 @@ export default function BasketForm(props) {
       const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60);
       console.log('Hours difference', hoursDifferenceInt)
      
-
       // PRODUCTION ENVIRONMENT CODE
       if (hoursDifferenceInt >= 24) {
         try {
