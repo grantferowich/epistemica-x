@@ -23,6 +23,7 @@ export default function BasketForm(){
   const postNewTimeAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/time/post'
 
 
+  // DATA MANAGEMENT SYSTEM (DMS)
   useEffect(() => {
     const fetchData = async () => {
       const currentTimeInt = Date.now();
@@ -262,7 +263,6 @@ export default function BasketForm(){
   }
 
   const calculateQuantityX = async (currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate) => {     
-      
     for (let z=0; z < apiKeysArr.length; z++) {
         if (apiKeysArr[z] !== ""){
           let historicalPriceAPIStr = "https://api.coingecko.com/api/v3/coins/"+apiKeysArr[z]+"/history?date="+indexDate+"&localization=false";
@@ -293,9 +293,7 @@ export default function BasketForm(){
         if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined) && directionLoSStr === 'short'){
           const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
           const presentPriceInt = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
-          // console.log('direction...', directionLoSStr)
           let quantityInt = currencyQs[x];
-          // console.log('Line 289: Quantity Int:', quantityInt);
           let weightInt = weights[x];
           let initialPositionValueInt = (weightInt/100) * initialBasketValue;
           let initialPriceInt = (initialPositionValueInt / quantityInt);
