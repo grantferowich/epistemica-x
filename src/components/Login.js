@@ -24,10 +24,7 @@ export default function Login() {
 
   // engineered updateStore(userObj) on Sat May 27, 2023
   // at 9:07am
-  
   const updateStore = (userObj) => {
-    // console.log('/// LOGIN UPDATE STORE');
-    // console.log('/// userObj', userObj);
     let dataHM = userObj.data.userObj
     dispatchFn(setUserName(dataHM.name));
     dispatchFn(setUserEmail(dataHM.email));

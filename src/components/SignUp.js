@@ -12,12 +12,25 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setUserEmail, setUserId, setUserName } from '../actions/userActions';
 
 const theme = createTheme();
 const postURLStr = 'https://epistemica-x-db.vercel.app/api/user/post'
 
 export default function SignUp() {
+
   const navigateFn = useNavigate();
+  const dispatchFn = useDispatch();
+  
+  const updateStore = (responseHM) => {
+    let dataHM = responseHM.data
+    console.log('dataHM', dataHM)
+    dispatchFn(setUserEmail(dataHM.email));
+    dispatchFn(setUserName(dataHM.name));
+    dispatchFn(setUserId(dataHM._id));
+  }
+
   const handleSubmit = (event) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
@@ -39,7 +52,9 @@ export default function SignUp() {
       }
     })
     .then(responseHM => {
+      updateStore(responseHM);
       console.log(responseHM.data);
+      localStorage.setItem('user', JSON.stringify(responseHM.data));
       navigateFn('/user-home');
     })
     .catch(errorHM => {

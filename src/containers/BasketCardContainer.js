@@ -64,7 +64,7 @@ export default function BasketCardContainer() {
     </div>)
     : (
       <div>
-        <p> You haven't created a basket yet.</p>
+        <p> You haven't created a basket yet. Once you do, all of your baskets will appear here!</p>
       </div>
     )
   );
