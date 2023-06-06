@@ -17,6 +17,7 @@ const NavTabs = ({ isAuthenticated, handleSignOut}) => {
   if (userNameStr.length > 0){
     isAuthenticated = true;
   }
+  
   return (
     <div sx={{ display: "flex" }}>
        <Box sx={{ flexGrow: 1 }}>
