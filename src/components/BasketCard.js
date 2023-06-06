@@ -12,6 +12,7 @@ export default function BasketCard({basketHM}) {
   const basketIDStr = basketHM._id;
   const deleteAPIStr = 'https://epistemica-x-db.vercel.app/api/basket/delete/'+basketIDStr
 
+  // DELETE
   const handleDelete = () => {
     axios.delete(deleteAPIStr)
     .then(responseHM => {
@@ -27,23 +28,52 @@ export default function BasketCard({basketHM}) {
     return null
   }
 
+  let asset1HM = basketHM.asset1HM;
+  let asset2HM = basketHM.asset2HM;
+  let asset3HM = basketHM.asset3HM;
+  let asset4HM = basketHM.asset4HM;
+  let asset5HM = basketHM.asset5HM;
+  let assetsArr = [asset1HM, asset2HM, asset3HM, asset4HM, asset5HM];
+
+  const getAssetInfo = (arr) => {
+    let xInt = 1;
+    let outputArr = []
+    while (xInt <= 5){
+      let assetHM = arr[xInt -1];
+      // console.log('assetHM', assetHM);
+      if (assetHM[`asset${xInt}NameStr`] !== ''){
+        let name = assetHM[`asset${xInt}NameStr`];
+        let LoS = assetHM[`asset${xInt}LoSStr`]
+        outputArr.push([`Asset: ${name} | Direction: ${LoS}`])
+      }
+      xInt++
+    }
+    return outputArr.join('\n')
+
+  }
+
   return (
     <div>
       <Box className='basket-card'>
-             <Card variant="outlined">
+          <Card variant="outlined">
               <div style={{ display: 'flex', justifyContent: 'space-between'}}> 
                 <CardContent>
-             <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-             {basketHM.basketNameStr}
-               </Typography>
-               
-              <Typography variant="h5" component="div">
+            <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+                {basketHM.basketNameStr}
+            </Typography>
+            <Typography variant="h5" component="div">
                Return: {basketHM.percentReturnInt.toString().slice(0,5)}%
-              </Typography>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            </Typography>
+            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                Present basket value = ${basketHM.presentBasketValueInt.toLocaleString(undefined, { maximumFractionDigits: 2 })}
-              <br></br>
+            <br></br>
                 Basket value on {basketHM.indexDateStr} = ${basketHM.initialBasketValueInt.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+            </Typography>
+            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+              Composition
+             </Typography>
+             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+             {getAssetInfo(assetsArr)}
              </Typography>
             </CardContent>
             <div style={{ marginTop: '20px', marginRight: '4px'}}>
