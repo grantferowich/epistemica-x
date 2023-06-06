@@ -10,30 +10,18 @@ import { useDispatch } from 'react-redux';
 import { setUserEmail, setUserId, setUserName } from '../actions/userActions';
 
 export default function NavTabs(props) {
-  const dispatchFn = useDispatch();
+
   let userLoggedInToF = false;
-  const userNameStr = useSelector(state => state.user.name);
+  let userNameStr = useSelector(state => state.user.name);
   
   if (userNameStr.length > 0){
     userLoggedInToF = true;
   }
 
   useEffect(() => {
-    const updateStore = (userObj) => {
-      let dataHM = userObj.data.userObj;
-      dispatchFn(setUserName(dataHM.name));
-      dispatchFn(setUserEmail(dataHM.email));
-      dispatchFn(setUserId(dataHM._id));
-    }
-    
-    const loggedInUserObj = localStorage.getItem('user');
-    
-    if (loggedInUserObj.name) {
-        console.log('Someone is logged in...')
-        updateStore(loggedInUserObj);
-    };
-
-  }, [dispatchFn])
+    console.log('userNameStr changed', userNameStr)
+    userLoggedInToF = false;
+  }, [userNameStr])
 
   return (
     <div sx={{ display: "flex" }}>

@@ -30,6 +30,7 @@ export default function Login() {
     dispatchFn(setUserName(dataHM.name));
     dispatchFn(setUserEmail(dataHM.email));
     dispatchFn(setUserId(dataHM._id));
+    
   }  
 
   const handleSubmit = async (event) => {

@@ -2,16 +2,15 @@ import { applyMiddleware } from 'redux';
 import { legacy_createStore as createStore} from 'redux'
 import { combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { Provider } from 'react-redux';
-// import { loadState, saveState } from './sessionStorage';
-// import storageSession from 'reduxjs-toolkit-persist/lib/storage/session'
 import userReducer from '../reducers/useReducer';
+import authReducer from '../reducers/authReducer';
 
 // const persistedState = loadState();
 const composedEnhancer = applyMiddleware(thunkMiddleware)
 
 const rootReducer = combineReducers({
-    user: userReducer
+    user: userReducer,
+    auth: authReducer
 })
 
 const store = createStore(rootReducer, composedEnhancer);

@@ -9,7 +9,6 @@ import BasketForm from "./components/BasketForm";
 import SignOut from "./components/SignOut";
 import store from './store/store';
 import { Provider } from "react-redux";
-
 function App() {
   // engineered implementation of localStorage
   // for user persistence

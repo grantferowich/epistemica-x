@@ -5,7 +5,7 @@ const initialStateHM = {
     name: '',
     email: '',
     id: '', 
-    basketsArr: ''
+    basketsArr: '',
 };
 
 // define the user reducer
@@ -35,7 +35,6 @@ const userReducer = ( stateHM = initialStateHM, action) => {
             return stateHM
     }
 }
-
 
 export default userReducer
 
