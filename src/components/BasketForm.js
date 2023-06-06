@@ -8,18 +8,20 @@ import { useDispatch, useSelector } from "react-redux";
 import Switch from '@mui/material/Switch';
 import { Link } from 'react-router-dom';
 
-export default function BasketForm(props) {
+
+export default function BasketForm(){
 
   const [data, setData] = useState([]);
   const [query] = useState('react');
   const [handleSubmitFired, setHandleSubmitFired] = useState(false);
   const dispatchFn = useDispatch();
+
   // constants
   const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/last-record';
   const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250'
   const postCoinsAPIStr = 'https://epistemica-x-db.vercel.app/api/coin/post'
   const postNewTimeAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/time/post'
-  
+
   useEffect(() => {
     const fetchData = async () => {
       const currentTimeInt = Date.now();
@@ -350,7 +352,6 @@ export default function BasketForm(props) {
   const updateCard = (basketData) => {
   const card = ( 
     <React.Fragment>
-     
       <><CardContent>
          <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
            {basketData.basketNameStr}
@@ -694,9 +695,6 @@ export default function BasketForm(props) {
               <Button variant="contained">View all assets</Button>
             </Link>
             <Button variant="contained" onClick={setHandleSubmitFiredToFalse} >Create a new basket</Button>
-            <Link to='/user-home'>
-              <Button variant="contained">View all baskets</Button>
-            </Link> 
           </div>
         </div>  
         <Copyright />

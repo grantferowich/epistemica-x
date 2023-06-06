@@ -7,26 +7,16 @@ import { Link } from 'react-router-dom';
 import '../components/styles.css'
 import { useSelector } from "react-redux";
 
-import { useDispatch } from 'react-redux';
 // import { setUserEmail, setUserId, setUserName } from '../actions/userActions';
 import { connect } from "react-redux";
 import { signOut } from "../actions/userActions";
 
 const NavTabs = ({ isAuthenticated, handleSignOut}) => {
-  const dispatch = useDispatch()
   let userNameStr = useSelector(state => state.user.name);
   
   if (userNameStr.length > 0){
     isAuthenticated = true;
   }
-
-
-
-  // useEffect(() => {
-  //   console.log('userNameStr changed', userNameStr)
-  //   isAuthenticated = false;
-  // }, [userNameStr])
-
   return (
     <div sx={{ display: "flex" }}>
        <Box sx={{ flexGrow: 1 }}>
