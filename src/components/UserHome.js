@@ -68,8 +68,8 @@ export default function UserHome() {
   .catch((errorHM) => {console.log(errorHM)})
 
   return (
-    <div>
-        <h2>Welcome home to Epistemica-X, {user_firstNameStr}!</h2>
+    <div style={{textAlign: 'center'}}>
+        <h2 style={{ margin: '20px 0' }}>Welcome home to Epistemica-X, {user_firstNameStr}!</h2>
         <BasketCardContainer/>
     </div>
   )

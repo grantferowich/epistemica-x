@@ -22,30 +22,24 @@ const NavTabs = ({ isAuthenticated, handleSignOut}) => {
        <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <div>
-              {isAuthenticated ? 
-              ( <div style={{display: 'flex', alignItems: 'center'}}> 
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               <Link to="/" className="nav-link">Epistemica-X</Link>
               </Typography>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 <Link to="/create-basket" className="nav-link">Create basket</Link>
               </Typography>
-              <Typography sx={{ml: 2}}>
+              {isAuthenticated ? 
+              ( <div> 
+              <Typography>
                <Link to="/user-home" className="nav-link">Home</Link>
               </Typography>
-              <Typography sx={{ml: 2}}>
+              <Typography>
                <Link onClick={handleSignOut()} to="/signout" className="nav-link">Sign out</Link>
               </Typography>
           </div>
           ) : ( 
-            <div style={{ display: 'flex', alignItems: 'center'}}> 
-               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              <Link to="/" className="nav-link">Epistemica-X</Link>
-              </Typography>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                <Link to="/create-basket" className="nav-link">Create basket</Link>
-              </Typography>
+            <div> 
               <Typography sx={{ml: 2}}>
               <Link to="/login" className="nav-link">Login</Link>
               </Typography>
