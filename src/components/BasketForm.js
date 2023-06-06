@@ -373,6 +373,7 @@ export default function BasketForm(){
 
   return (
     (handleSubmitFired === false) ? (
+    <div style={{backgroundColor: '#cbe3ff'}}>
     <Container component="main" maxWidth="md">
       <CssBaseline />
       <div style={{ width: '100%', maxWidth: '1000px', margin: '0 auto'}}>
@@ -382,7 +383,7 @@ export default function BasketForm(){
         <Typography variant="p" style={{width: '100%'}}>
           INSTRUCTIONS: Calculate the historical performance of a basket by selecting up to 5 crypto tokens and a weight for each crypto token. For example, try 50% Bitcoin and 50% Ether, and an initial basket value of your choice, with a start date of 01-01-2022 to see how the calculator works for yourself! 
         </Typography>
-        <Box mx="auto"  sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
+        <Box mx="auto"  sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto', backgroundColor: 'white' }}>
           <form
             noValidate
             autoComplete="off"
@@ -680,7 +681,8 @@ export default function BasketForm(){
         <Copyright/>
       </div>
 
-    </Container>) : (
+    </Container>
+    </div> ) : (
       <div style={{ marginTop: '20px'}}>
         <Box sx={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}>
           <Card>

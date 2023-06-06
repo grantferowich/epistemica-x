@@ -16,7 +16,7 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        <div>
+        <div style={{ backgroundColor: '#cbe3ff', minHeight: '100vh'}}>
           <NavBar/>
           <Routes>
             <Route exact path="/" element={<HomePage />}/>

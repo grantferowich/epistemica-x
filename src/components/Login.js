@@ -26,8 +26,8 @@ export default function Login() {
   // at 9:07am
   
   const updateStore = (userObj) => {
-    console.log('/// LOGIN UPDATE STORE');
-    console.log('/// userObj', userObj);
+    // console.log('/// LOGIN UPDATE STORE');
+    // console.log('/// userObj', userObj);
     let dataHM = userObj.data.userObj
     dispatchFn(setUserName(dataHM.name));
     dispatchFn(setUserEmail(dataHM.email));
@@ -68,7 +68,7 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" style={{ backgroundColor: '#cbe3ff'}}>
         <CssBaseline />
         <Box
           sx={{
@@ -86,6 +86,7 @@ export default function Login() {
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
+              style={{ backgroundColor: 'white'}}
               margin="normal"
               required
               fullWidth
@@ -96,6 +97,7 @@ export default function Login() {
               autoFocus
             />
             <TextField
+              style={{ backgroundColor: 'white'}}
               margin="normal"
               required
               fullWidth

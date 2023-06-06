@@ -21,12 +21,6 @@ export default function UserHome() {
 
   const loggedInUser = JSON.parse(localStorage.getItem('user'))
   console.log('/// user home line 23 || loggedInUser ||', loggedInUser)
-  // let userObj;
-  // try {
-  //   userObj = JSON.parse(loggedInUser)
-  // } catch (error) {
-  //   console.log('Error parsing json', error)
-  // }
   
   // console.log('UserHome.js || Line 23 || loggedInUserObj', userObj)
   if (loggedInUser) {
