@@ -3,7 +3,7 @@ export const SET_USER_NAME = 'SET_USER_NAME';
 export const SET_USER_EMAIL = 'SET_USER_EMAIL';
 export const SET_USER_ID = 'SET_USER_ID';
 export const SET_USER_BASKETS_ARR = 'SET_USER_BASKETS_ARR';
-export const LOG_OUT = 'LOG_OUT';
+export const SIGN_OUT = 'SIGN_OUT';
 
 export const setUserName = (name) => ({
     type: SET_USER_NAME,
@@ -25,8 +25,8 @@ export const setUserBasketsArr = (basketsArr) => ({
     payload: basketsArr
 })
 
-export const logOut = () => {
+export const signOut = () => {
     return {
-        type: LOG_OUT
+        type: SIGN_OUT
     }
 }

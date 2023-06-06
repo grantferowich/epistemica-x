@@ -6,46 +6,56 @@ import Box from "@mui/material/Box";
 import { Link } from 'react-router-dom';
 import '../components/styles.css'
 import { useSelector } from "react-redux";
+
 import { useDispatch } from 'react-redux';
-import { setUserEmail, setUserId, setUserName } from '../actions/userActions';
+// import { setUserEmail, setUserId, setUserName } from '../actions/userActions';
+import { connect } from "react-redux";
+import { signOut } from "../actions/userActions";
 
-export default function NavTabs(props) {
-
-  let userLoggedInToF = false;
+const NavTabs = ({ isAuthenticated, handleSignOut}) => {
+  const dispatch = useDispatch()
   let userNameStr = useSelector(state => state.user.name);
   
   if (userNameStr.length > 0){
-    userLoggedInToF = true;
+    isAuthenticated = true;
   }
 
-  useEffect(() => {
-    console.log('userNameStr changed', userNameStr)
-    userLoggedInToF = false;
-  }, [userNameStr])
+
+
+  // useEffect(() => {
+  //   console.log('userNameStr changed', userNameStr)
+  //   isAuthenticated = false;
+  // }, [userNameStr])
 
   return (
     <div sx={{ display: "flex" }}>
        <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/" className="nav-link">Epistemica-X</Link>
-          </Typography>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/create-basket" className="nav-link">Create basket</Link>
-          </Typography>
           <div>
-              {userLoggedInToF ? 
-              (<div style={{display: 'flex', alignItems: 'center'}}>
-          <Typography sx={{ml: 2}}>
-            <Link to="/user-home" className="nav-link">Home</Link>
-          </Typography>
-          <Typography sx={{ml: 2}}>
-            <Link to="/signout" className="nav-link">Sign out</Link>
-          </Typography>
+              {isAuthenticated ? 
+              ( <div style={{display: 'flex', alignItems: 'center'}}> 
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <Link to="/" className="nav-link">Epistemica-X</Link>
+              </Typography>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link to="/create-basket" className="nav-link">Create basket</Link>
+              </Typography>
+              <Typography sx={{ml: 2}}>
+               <Link to="/user-home" className="nav-link">Home</Link>
+              </Typography>
+              <Typography sx={{ml: 2}}>
+               <Link onClick={handleSignOut()} to="/signout" className="nav-link">Sign out</Link>
+              </Typography>
           </div>
           ) : ( 
             <div style={{ display: 'flex', alignItems: 'center'}}> 
+               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <Link to="/" className="nav-link">Epistemica-X</Link>
+              </Typography>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link to="/create-basket" className="nav-link">Create basket</Link>
+              </Typography>
               <Typography sx={{ml: 2}}>
               <Link to="/login" className="nav-link">Login</Link>
               </Typography>
@@ -61,3 +71,17 @@ export default function NavTabs(props) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleSignOut: () => dispatch(signOut())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavTabs)

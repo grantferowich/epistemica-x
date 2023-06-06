@@ -1,17 +1,17 @@
-import { LOG_OUT } from "../actions/userActions";
+import { SIGN_OUT } from "../actions/userActions";
 
 const initialStateHM = {
     isAuthenticated: false
 };
 const authReducer = ( state = initialStateHM, action) => {
     switch (action.type) {
-        case LOG_OUT:
+        case SIGN_OUT:
             return {
-                ...state,
+                ...initialStateHM,
                 isAuthenticated: false
             };
             default: 
-                return state
+                return initialStateHM
     }
 }
 
