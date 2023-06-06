@@ -377,13 +377,13 @@ export default function BasketForm(){
     <Container component="main" maxWidth="md">
       <CssBaseline />
       <div style={{ width: '100%', maxWidth: '1000px', margin: '0 auto'}}>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" style={{ margin: '20px 0' }}>
           Build Your Basket
         </Typography>
-        <Typography variant="p" style={{width: '100%'}}>
-          INSTRUCTIONS: Calculate the historical performance of a basket by selecting up to 5 crypto tokens and a weight for each crypto token. For example, try 50% Bitcoin and 50% Ether, and an initial basket value of your choice, with a start date of 01-01-2022 to see how the calculator works for yourself! 
+        <Typography variant="p" style={{width: '100%', margin: '20px 0 40px'}}>
+          Calculate the historical performance of a basket by selecting up to 5 crypto tokens and a weight for each crypto token. For example, try 50% Bitcoin and 50% Ether, and an initial basket value of your choice, with a start date of 01-01-2022 to see how the calculator works for yourself! 
         </Typography>
-        <Box mx="auto"  sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto', backgroundColor: 'white' }}>
+        <Box mx="auto"  sx={{ border: '2px solid black', maxWidth: 'md', margin: '20px auto', backgroundColor: 'white' }}>
           <form
             noValidate
             autoComplete="off"
