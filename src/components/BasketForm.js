@@ -684,13 +684,13 @@ export default function BasketForm(){
     </Container>
     </div>) : (
       <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>      
-        <div style={{ marginTop: '5px'}}>
+        <div style={{ marginBottom: '600px'}}>
         <Box sx={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}>
           <Card>
              {updateCard(basketData)}
           </Card>
         </Box>
-        <Box sx={{ textAlign: 'center', paddingBottom: '20px' }}>
+        <Box sx={{ textAlign: 'center'}}>
         <div>
           <div>
             <Link to='/'>
