@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -6,8 +6,6 @@ import Box from "@mui/material/Box";
 import { Link } from 'react-router-dom';
 import '../components/styles.css'
 import { useSelector } from "react-redux";
-
-// import { setUserEmail, setUserId, setUserName } from '../actions/userActions';
 import { connect } from "react-redux";
 import { signOut } from "../actions/userActions";
 
@@ -17,7 +15,7 @@ const NavTabs = ({ isAuthenticated, handleSignOut}) => {
   if (userNameStr.length > 0){
     isAuthenticated = true;
   }
-  
+
   return (
     <div sx={{ display: "flex" }}>
        <Box sx={{ flexGrow: 1 }}>

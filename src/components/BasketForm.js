@@ -682,8 +682,9 @@ export default function BasketForm(){
       </div>
 
     </Container>
-    </div> ) : (
-      <div style={{ marginTop: '20px'}}>
+    </div>) : (
+      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>      
+        <div style={{ marginTop: '5px'}}>
         <Box sx={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}>
           <Card>
              {updateCard(basketData)}
@@ -699,7 +700,8 @@ export default function BasketForm(){
           </div>
         </div>  
         <Copyright />
-      </Box>
+         </Box>
+      </div>
     </div>)
   );
 }
