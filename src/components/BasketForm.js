@@ -7,7 +7,7 @@ import Copyright from "./Copyright";
 import { useDispatch, useSelector } from "react-redux";
 import Switch from '@mui/material/Switch';
 import { Link } from 'react-router-dom';
-
+// import tableData from '../data/tableData.json'
 
 export default function BasketForm(){
 
@@ -25,6 +25,7 @@ export default function BasketForm(){
 
   // DATA MANAGEMENT SYSTEM (DMS)
   useEffect(() => {
+    
     const fetchData = async () => {
       const currentTimeInt = Date.now();
       // retrieve the date string of the last time the external api call was made
@@ -36,7 +37,6 @@ export default function BasketForm(){
       // miliseconds to seconds, seconds to minutes, minutes to hours
       const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60);
       console.log('Hours difference', hoursDifferenceInt)
-     
       // PRODUCTION ENVIRONMENT CODE
       if (hoursDifferenceInt >= 24) {
         try {
@@ -53,7 +53,6 @@ export default function BasketForm(){
             console.log('200: Successfully posted to the coin/post API.');
             dispatchFn({type: 'SET_COIN_LIST', payload: apiDataArr});
             dispatchFn({type: 'SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL', payload: 0});
-            
             setData(apiDataArr);
           }).catch(errorHM => {
             console.log('Error running fetchData() inside BasketForm.js.')
@@ -64,12 +63,13 @@ export default function BasketForm(){
           console.log(error)
         }   
       } else {
-        console.log('//// RETRIEVING LOCAL VERSION OF FUlL TABLE')
-        const get250CoinsHM = await axios.get(get250CoinsAPIStr)
+        console.log('//// RETRIEVING LOCAL VERSION OF FUlL TABLE');
+        const get250CoinsHM = await axios.get(get250CoinsAPIStr);
         // ensure menu options are sorted by market cap rank
-        const coinListArr = get250CoinsHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank)
-        dispatchFn({type: 'SET_COIN_LIST', payload: coinListArr})
-        setData(coinListArr)
+        const coinListArr = get250CoinsHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
+        localStorage.setItem('sortedCoinListArr', coinListArr);
+        dispatchFn({type: 'SET_COIN_LIST', payload: coinListArr});
+        setData(coinListArr);
       }
 
       if (hoursDifferenceInt >= 24){

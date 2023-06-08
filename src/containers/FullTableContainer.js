@@ -11,7 +11,8 @@ export default function FullTableContainer() {
   const fullTableDataArr = useSelector(state => state.coinList)
   
   useEffect(() => {
-    const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250'
+
+    const get50CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get50'    
     const generateDataTable = (dataArr) => {
         const rows = dataArr.map(coin => 
         [ coin.name,
@@ -27,7 +28,7 @@ export default function FullTableContainer() {
     };
 
     const getCoinList = async () => {
-      const get250CoinsHM = await axios.get(get250CoinsAPIStr)
+      const get250CoinsHM = await axios.get(get50CoinsAPIStr)
       const coinListArr = get250CoinsHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank)
       console.log('FullTableContainer: Coins list', coinListArr)
       generateDataTable(coinListArr)
