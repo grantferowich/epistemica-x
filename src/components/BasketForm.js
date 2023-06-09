@@ -7,7 +7,6 @@ import Copyright from "./Copyright";
 import { useDispatch, useSelector } from "react-redux";
 import Switch from '@mui/material/Switch';
 import { Link } from 'react-router-dom';
-// import tableData from '../data/tableData.json'
 
 export default function BasketForm(){
 
@@ -18,10 +17,9 @@ export default function BasketForm(){
 
   // constants
   const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/last-record';
-  const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250'
-  const postCoinsAPIStr = 'https://epistemica-x-db.vercel.app/api/coin/post'
-  const postNewTimeAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/time/post'
-
+  const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250';
+  const postCoinsAPIStr = 'https://epistemica-x-db.vercel.app/api/coin/post';
+  const postNewTimeAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/time/post';
 
   // DATA MANAGEMENT SYSTEM (DMS)
   useEffect(() => {
@@ -30,7 +28,6 @@ export default function BasketForm(){
       const currentTimeInt = Date.now();
       // retrieve the date string of the last time the external api call was made
       const responseHM = await axios.get(getLastUpdatedAPIStr)
-      // console.log('/BasketForm.js: line 24: ResponseHM', responseHM)
       const lastUpdatedDateStr = responseHM.data.lastUpdatedDate
       const lastUpdatedInt = Date.parse(lastUpdatedDateStr)
       const timeDifferenceInt = currentTimeInt - lastUpdatedInt;
@@ -41,7 +38,7 @@ export default function BasketForm(){
       if (hoursDifferenceInt >= 24) {
         try {
           console.log('//// RETRIEVING FRESH VERSION OF FUlL TABLE')
-          const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h" + query);
+          const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h" + query);
           // ensure menu options are sorted by market cap rank
           const apiDataArr = (response.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank));
           await axios.post(postCoinsAPIStr, JSON.stringify(apiDataArr), {
@@ -67,7 +64,6 @@ export default function BasketForm(){
         const get250CoinsHM = await axios.get(get250CoinsAPIStr);
         // ensure menu options are sorted by market cap rank
         const coinListArr = get250CoinsHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
-        localStorage.setItem('sortedCoinListArr', coinListArr);
         dispatchFn({type: 'SET_COIN_LIST', payload: coinListArr});
         setData(coinListArr);
       }

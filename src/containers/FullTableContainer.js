@@ -28,8 +28,8 @@ export default function FullTableContainer() {
     };
 
     const getCoinList = async () => {
-      const get250CoinsHM = await axios.get(get50CoinsAPIStr)
-      const coinListArr = get250CoinsHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank)
+      const get50CoinsHM = await axios.get(get50CoinsAPIStr)
+      const coinListArr = get50CoinsHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank)
       console.log('FullTableContainer: Coins list', coinListArr)
       generateDataTable(coinListArr)
     }
@@ -46,43 +46,3 @@ export default function FullTableContainer() {
     </div>
   )
 }
-
-// export default class FullTableContainer extends Component {
-//   state = {
-//     rows: [],
-//     pageUp: false
-//   };
-
-//   // store all this information as data in the
-//   // redux store. call the data FullTableData.
-//   // in this file write to a new file.
-//   // read from that file to write to the datastore. 
-//   // store the date and time the FullTable was 
-//   // last updated in the redux store
-
-
-//   // write a function which checks if the FullTable
-//   // data is more than 24 hours old
-//   // if the data is more than 24 hours old, make a
-//   // new api call and store that data in a local file 
-//   // read data from the local file to write to the redux store. 
-//   // If the data is more than 24 hours old, delete the current FullTable data 
-//   // file. 
-
-//   // async componentDidMount() {   
-//   //   axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=120&page=1&sparkline=false&price_change_percentage=24h")
-//   //   .then( (data) => this.generateDataTable(data.data))
-//   //   .catch((err) =>console.log(err))
-//   // }
-  
-  
-
-
-
-
-//   render() {
-//     return (
-      
-//     );
-//   }
-// }
