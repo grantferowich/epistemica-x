@@ -12,13 +12,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setUserEmail, setUserId, setUserName } from '../actions/userActions';
+import { setUserEmail, setUserId, setUserName, completedSignIn } from '../actions/userActions';
 
 const theme = createTheme();
 const loginURLStr = 'https://epistemica-x-db.vercel.app/api/user/login';
 
-export default function Login() {
+const Login = ({ completedSignIn }) => {
   const navigateFn = useNavigate();
   const dispatchFn = useDispatch();
 
@@ -49,6 +50,7 @@ export default function Login() {
       }).then(responseHM => {
         console.log('200: Success');
         updateStore(responseHM);
+        completedSignIn()
         // engineered implementation of localStorage
         // for user persistence
         // at 7:06pm, June 5, 2023
@@ -125,3 +127,4 @@ export default function Login() {
     </ThemeProvider>
   );
 }
+export default connect(null, { completedSignIn} )(Login);

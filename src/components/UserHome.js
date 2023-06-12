@@ -32,6 +32,7 @@ export default function UserHome() {
   if (user_firstNameStr.split(' ').length > 1){
     user_firstNameStr = user_firstNameStr.split(' ')[0]
   }
+  
   let getBasketsAPIStr = 'https://epistemica-x-db.vercel.app/api/basket/getAll'
   let basketsArr = []
   let currentUserBasketsArr = []
