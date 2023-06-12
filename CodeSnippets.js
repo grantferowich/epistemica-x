@@ -202,3 +202,17 @@
                   // console.log('/// differenceInt:', differenceInt)
           // if present price is 10,000 and initial price is 20,000, then, -1 * - 10,000 * 0.5 = 5,000
       // console.log('basketData after updates to percent return and present basketvalue', basketData)
+
+
+      // archived 1:08pm on June 12, 2023:
+/* 
+    // const getCoinList = async () => {
+    //   const get100CoinsHM = await axios.get(get100CoinsAPIStr)
+    //   const coinListArr = get100CoinsHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank)
+    //   console.log('FullTableContainer: Coins list', coinListArr)
+    //   generateDataTable(coinListArr)
+    // }
+    // getCoinList();
+
+
+*/

@@ -11,76 +11,77 @@ import { Link } from 'react-router-dom';
 export default function BasketForm(){
 
   const [data, setData] = useState([]);
-  const [query] = useState('react');
+  // const [query] = useState('react');
   const [handleSubmitFired, setHandleSubmitFired] = useState(false);
-  const dispatchFn = useDispatch();
+  // const dispatchFn = useDispatch();
 
   // constants
-  const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/last-record';
-  const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250';
-  const postCoinsAPIStr = 'https://epistemica-x-db.vercel.app/api/coin/post';
-  const postNewTimeAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/time/post';
+  // const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/last-record';
+  // const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250';
+  // const postCoinsAPIStr = 'https://epistemica-x-db.vercel.app/api/coin/post';
+  // const postNewTimeAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/time/post';
 
   // DATA MANAGEMENT SYSTEM (DMS)
-  useEffect(() => {
+  // useEffect(() => {
     
-    const fetchData = async () => {
-      const currentTimeInt = Date.now();
-      // retrieve the date string of the last time the external api call was made
-      const responseHM = await axios.get(getLastUpdatedAPIStr)
-      const lastUpdatedDateStr = responseHM.data.lastUpdatedDate
-      const lastUpdatedInt = Date.parse(lastUpdatedDateStr)
-      const timeDifferenceInt = currentTimeInt - lastUpdatedInt;
-      // miliseconds to seconds, seconds to minutes, minutes to hours
-      const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60);
-      console.log('Hours difference', hoursDifferenceInt)
-      // PRODUCTION ENVIRONMENT CODE
-      if (hoursDifferenceInt >= 24) {
-        try {
-          console.log('//// RETRIEVING FRESH VERSION OF FUlL TABLE')
-          const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h" + query);
-          // ensure menu options are sorted by market cap rank
-          const apiDataArr = (response.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank));
-          await axios.post(postCoinsAPIStr, JSON.stringify(apiDataArr), {
-            withCredentials: false,
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }).then(responseHM => {
-            console.log('200: Successfully posted to the coin/post API.');
-            dispatchFn({type: 'SET_COIN_LIST', payload: apiDataArr});
-            dispatchFn({type: 'SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL', payload: 0});
-            setData(apiDataArr);
-          }).catch(errorHM => {
-            console.log('Error running fetchData() inside BasketForm.js.')
-            console.error(errorHM)
-          })
-        } catch (error){
-          console.log('Error running fetchData. Check BasketForm.js.')
-          console.log(error)
-        }   
-      } else {
-        console.log('//// RETRIEVING LOCAL VERSION OF FUlL TABLE');
-        const get250CoinsHM = await axios.get(get250CoinsAPIStr);
-        // ensure menu options are sorted by market cap rank
-        const coinListArr = get250CoinsHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
-        dispatchFn({type: 'SET_COIN_LIST', payload: coinListArr});
-        setData(coinListArr);
-      }
+  //   const fetchData = async () => {
+  //     const currentTimeInt = Date.now();
+  //     // retrieve the date string of the last time the external api call was made
+  //     const responseHM = await axios.get(getLastUpdatedAPIStr)
+  //     const lastUpdatedDateStr = responseHM.data.lastUpdatedDate;
+  //     const lastUpdatedInt = Date.parse(lastUpdatedDateStr)
+  //     const timeDifferenceInt = currentTimeInt - lastUpdatedInt;
+  //     // miliseconds to seconds, seconds to minutes, minutes to hours
+  //     const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60);
+  //     console.log('Hours difference', hoursDifferenceInt)
+  //     // PRODUCTION ENVIRONMENT CODE
+  //     if (hoursDifferenceInt >= 24) {
+  //       try {
+  //         console.log('//// RETRIEVING FRESH VERSION OF FUlL TABLE')
+  //         const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h" + query);
+  //         // ensure menu options are sorted by market cap rank
+  //         const apiDataArr = (response.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank));
+  //         await axios.post(postCoinsAPIStr, JSON.stringify(apiDataArr), {
+  //           withCredentials: false,
+  //           headers: {
+  //             'Content-Type': 'application/json'
+  //           }
+  //         }).then(responseHM => {
+  //           console.log('200: Successfully posted to the coin/post API.');
+  //           dispatchFn({type: 'SET_COIN_LIST', payload: apiDataArr});
+  //           dispatchFn({type: 'SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL', payload: 0});
+  //           setData(apiDataArr);
+  //         }).catch(errorHM => {
+  //           console.log('Error running fetchData() inside BasketForm.js.')
+  //           console.error(errorHM)
+  //         })
+  //       } catch (error){
+  //         console.log('Error running fetchData. Check BasketForm.js.')
+  //         console.log(error)
+  //       }   
+  //     } else {
+  //       console.log('//// RETRIEVING LOCAL VERSION OF FUlL TABLE');
+  //       const get250CoinsHM = await axios.get(get250CoinsAPIStr);
+  //       // ensure menu options are sorted by market cap rank
+  //       const coinListArr = get250CoinsHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
+  //       dispatchFn({type: 'SET_COIN_LIST', payload: coinListArr});
+  //       setData(coinListArr);
+  //     }
 
-      if (hoursDifferenceInt >= 24){
-        await axios.post(postNewTimeAPIStr)
-        .then(response => {
-          console.log('200: Successfully posted to the time/post API.')
-        })
-        .catch ( error => { console.log('Error with posting to the time post api,', error)})
-      }
-    }
+  //     if (hoursDifferenceInt >= 24){
+  //       await axios.post(postNewTimeAPIStr)
+  //       .then(response => {
+  //         console.log('200: Successfully posted to the time/post API.')
+  //       })
+  //       .catch ( error => { console.log('Error with posting to the time post api,', error)})
+  //     }
+  //   }
 
-  fetchData();
-  }, [query, dispatchFn]);
+  // fetchData();
+  // }, [query, dispatchFn]);
   // successfully read the user id from the redux store
   // on May 28, 2023
+  
   const user_IdStr = useSelector(state => state.user.id)
   // URL endpoint for posting new baskets
   const postBasketURLString = 'https://epistemica-x-db.vercel.app/api/basket/post';
