@@ -14,13 +14,23 @@ export default function BasketForm(){
   // const [query] = useState('react');
   const [handleSubmitFired, setHandleSubmitFired] = useState(false);
   // const dispatchFn = useDispatch();
-
+  
   // constants
   // const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/last-record';
-  // const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250';
+
   // const postCoinsAPIStr = 'https://epistemica-x-db.vercel.app/api/coin/post';
   // const postNewTimeAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/time/post';
-
+  const fetchDataArr = async () => {
+    const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250';
+    let coinHM = await axios.get(get250CoinsAPIStr)
+    
+    // const get250CoinsHM = await axios.get(get250CoinsAPIStr);
+    //       // ensure menu options are sorted by market cap rank
+    const coinListArr = coinHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
+    setData(coinListArr)
+  }
+  fetchDataArr()
+  
   // DATA MANAGEMENT SYSTEM (DMS)
   // useEffect(() => {
     

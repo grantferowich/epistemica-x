@@ -19,7 +19,7 @@ import { setUserEmail, setUserId, setUserName, setUserLoggedIn } from '../action
 const theme = createTheme();
 const loginURLStr = 'https://epistemica-x-db.vercel.app/api/user/login';
 
-const Login = ({ completedSignIn }) => {
+const Login = ({ setUserLoggedIn }) => {
   const navigateFn = useNavigate();
   const dispatchFn = useDispatch();
 
@@ -125,4 +125,4 @@ const Login = ({ completedSignIn }) => {
     </ThemeProvider>
   );
 }
-export default connect(null, { completedSignIn} )(Login);
+export default connect(null, { setUserLoggedIn } )(Login);

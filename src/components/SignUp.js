@@ -19,7 +19,7 @@ import { setUserEmail, setUserId, setUserName, setUserLoggedIn } from '../action
 const theme = createTheme();
 const postURLStr = 'https://epistemica-x-db.vercel.app/api/user/post'
 
-const SignUp = () => {
+const SignUp = ({setUserLoggedIn}) => {
   const navigateFn = useNavigate();
   const dispatchFn = useDispatch();
   const updateStore = (responseHM) => {

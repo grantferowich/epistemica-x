@@ -5,12 +5,18 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Link } from 'react-router-dom';
 import '../components/styles.css'
-import { useDispatch, useSelector } from "react-redux";
 import { connect } from "react-redux";
 import { setUserLoggedOut } from "../actions/userActions";
-import localStorage from 'localStorage';
 
-const NavTabs = ({ isLoggedIn }) => { 
+
+
+const NavTabs = ({ isLoggedIn, setUserLoggedOut }) => { 
+
+  const handleSignOut = () => {
+    setUserLoggedOut()
+    console.log('handle signout...')
+    console.log('isLoggedIn (expect false):', isLoggedIn)
+  }
   return (
     <div sx={{ display: "flex" }}>
        <Box sx={{ flexGrow: 1 }}>
@@ -29,7 +35,7 @@ const NavTabs = ({ isLoggedIn }) => {
                <Link to="/user-home" className="nav-link">Home</Link>
               </Typography>
               <Typography>
-                <Link to="/signout-page" className="nav-link">Sign out</Link>
+                <Link onClick={handleSignOut}to="/signout-page" className="nav-link">Sign out</Link>
               </Typography>
               </div>
           ) : ( 
@@ -58,7 +64,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setUserLoggedOut: () => dispatch(setUserLoggedOut())
+    setUserLoggedOut
   }
 }
 

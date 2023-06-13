@@ -121,7 +121,7 @@ export default function FullTable(props) {
         </TableContainer>
         <TablePagination
           component="div"
-          count='250'
+          count={props.rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
