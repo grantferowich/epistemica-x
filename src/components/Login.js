@@ -50,12 +50,10 @@ const Login = ({ completedSignIn }) => {
       }).then(responseHM => {
         console.log('200: Success');
         updateStore(responseHM);
+
+        // call the Redux function
+        // write to the saga state, too
         completedSignIn()
-        // engineered implementation of localStorage
-        // for user persistence
-        // at 7:06pm, June 5, 2023
-        localStorage.setItem('user', JSON.stringify(responseHM.data.userObj));
-        console.log('stuff sent to localStorage', responseHM.data.userObj);
         navigateFn('/user-home');
       }).catch(errorHM => {
         console.log(errorHM);

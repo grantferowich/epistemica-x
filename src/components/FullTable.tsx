@@ -39,21 +39,21 @@ columns = [ { id: 'Name', label: 'Name', minWidth: 170 },
 
 export default function FullTable(props) {
 
-  const dispatchFn = useDispatch();
+  // const dispatchFn = useDispatch();
 
-  const updateUserStore = (userObj) => {
-    let dataHM = userObj.data.userObj;
-    dispatchFn(setUserName(dataHM.name));
-    dispatchFn(setUserEmail(dataHM.email));
-    dispatchFn(setUserId(dataHM._id));
-  }
+  // const updateUserStore = (userObj) => {
+  //   let dataHM = userObj.data.userObj;
+  //   dispatchFn(setUserName(dataHM.name));
+  //   dispatchFn(setUserEmail(dataHM.email));
+  //   dispatchFn(setUserId(dataHM._id));
+  // }
 
-  const loggedInUserObj = localStorage.getItem('user');
-  console.log('loggedInUserObj', loggedInUserObj)
-  if (loggedInUserObj !== null && loggedInUserObj.name) {
-      console.log('Someone is logged in...');
-      updateUserStore(loggedInUserObj);
-  };
+  // const loggedInUserObj = localStorage.getItem('user');
+  // console.log('loggedInUserObj', loggedInUserObj)
+  // if (loggedInUserObj !== null && loggedInUserObj.name) {
+  //     console.log('Someone is logged in...');
+  //     updateUserStore(loggedInUserObj);
+  // };
 
   const [maxHeightInt, setMaxHeightInt] = useState(500) 
 
@@ -89,7 +89,6 @@ export default function FullTable(props) {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth, fontWeight: 'bold'}}
-
                 >
                   {column.label}
                 </TableCell>

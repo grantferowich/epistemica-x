@@ -5,27 +5,16 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Link } from 'react-router-dom';
 import '../components/styles.css'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { connect } from "react-redux";
 import { signOut } from "../actions/userActions";
-import localStorage from 'localStorage'
+import localStorage from 'localStorage';
 
-const NavTabs = ({ isAuthenticated, signOut}) => {
-  // let userNameStr = useSelector(state => state.user.name);
-  let loggedInUser = JSON.parse(localStorage.getItem('user'))
-  if (loggedInUser){
-    isAuthenticated = true;
-  }
-
-  // const handleSignOut = () => {
-  //   dispatchFn(setUserName(''));
-  //   dispatchFn(setUserEmail(''));
-  //   dispatchFn(setUserId(''));
-  //   localStorage.clear()
-  //   console.log('localStorage.clear ran..')
-  //   console.log(localStorage.getItem('user'))
-  // }
-  
+const NavTabs = ({ isAuthenticated, signOut }) => {
+  // read isAuthenticated from the redux store v listen for isAuthenticated to become true
+  // const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  console.log('isAuthenticated...', isAuthenticated)
+ 
   return (
     <div sx={{ display: "flex" }}>
        <Box sx={{ flexGrow: 1 }}>
@@ -39,14 +28,14 @@ const NavTabs = ({ isAuthenticated, signOut}) => {
                 <Link to="/create-basket" className="nav-link">Create basket</Link>
               </Typography>
               {isAuthenticated ? 
-              ( <div> 
+              (<div> 
               <Typography>
                <Link to="/user-home" className="nav-link">Home</Link>
               </Typography>
               <Typography>
-                <Link onClick={signOut} to="/signout" className="nav-link">Sign out</Link>
+                <Link to="/signout-page" className="nav-link">Sign out</Link>
               </Typography>
-          </div>
+              </div>
           ) : ( 
             <div> 
               <Typography sx={{ml: 2}}>
@@ -66,6 +55,8 @@ const NavTabs = ({ isAuthenticated, signOut}) => {
 }
 
 const mapStateToProps = (state) => {
+  // console.log('nav bar line 67 lookie here')
+  // console.log('state.auth.IA', state.auth.isAuthenticated)
   return {
     isAuthenticated: state.auth.isAuthenticated
   }

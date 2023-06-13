@@ -20,10 +20,8 @@ const theme = createTheme();
 const postURLStr = 'https://epistemica-x-db.vercel.app/api/user/post'
 
 const SignUp = ({ completedSignIn }) => {
-
   const navigateFn = useNavigate();
   const dispatchFn = useDispatch();
-  
   const updateStore = (responseHM) => {
     let dataHM = responseHM.data
     console.log('dataHM', dataHM)

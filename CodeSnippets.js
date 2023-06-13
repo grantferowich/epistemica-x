@@ -215,4 +215,54 @@
     // getCoinList();
 
 
+
+
+
+
+
+                  {isAuthenticated ? 
+          //     ( <div> 
+          //     <Typography>
+          //      <Link to="/user-home" className="nav-link">Home</Link>
+          //     </Typography>
+          //     <Typography>
+          //       <Link onClick={signOut} to="/signout" className="nav-link">Sign out</Link>
+          //     </Typography>
+          // </div>
+          ) : ( 
+            <div> 
+              <Typography sx={{ml: 2}}>
+              <Link to="/login" className="nav-link">Log-in</Link>
+              </Typography>
+              <Typography sx={{ml: 2}}>
+              <Link to="/signup" className="nav-link">Sign-up</Link>
+              </Typography>
+            </div>
+          )}
+
+
+  // const handleSignOut = () => {
+  //   console.log('navBar line 20 saying what is up')
+  //   console.log('handleSignOut fired...');
+  //   // isAuthenticated = false;
+  //   dispatchFn(signOut());
+  // }
+
+
+
+
+
+  // const mapStateToProps = (state) => {
+//   console.log('nav bar line 67 lookie here')
+//   console.log('state.auth.IA', state.auth.isAuthenticated)
+//   return {
+//     isAuthenticated: state.auth.isAuthenticated
+//   }
+// }
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     signOut: () => dispatch(signOut())
+//   }
+// }
 */

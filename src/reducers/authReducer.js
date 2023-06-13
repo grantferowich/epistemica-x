@@ -1,7 +1,7 @@
 import { COMPLETED_SIGN_IN, SIGN_OUT } from "../actions/userActions";
 
 const initialStateHM = {
-    isAuthenticated: false
+    isAuthenticated: ''
 };
 
 const authReducer = ( state = initialStateHM, action) => {
@@ -14,7 +14,7 @@ const authReducer = ( state = initialStateHM, action) => {
         case COMPLETED_SIGN_IN: 
             return {
                 ...state,
-                isAuthenticated: action.isAuthenticated
+                isAuthenticated: true
             };
         default: 
             return initialStateHM
