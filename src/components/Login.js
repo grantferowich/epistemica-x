@@ -14,7 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setUserEmail, setUserId, setUserName, completedSignIn } from '../actions/userActions';
+import { setUserEmail, setUserId, setUserName, setUserLoggedIn } from '../actions/userActions';
 
 const theme = createTheme();
 const loginURLStr = 'https://epistemica-x-db.vercel.app/api/user/login';
@@ -53,7 +53,7 @@ const Login = ({ completedSignIn }) => {
 
         // call the Redux function
         // write to the saga state, too
-        completedSignIn()
+        setUserLoggedIn()
         navigateFn('/user-home');
       }).catch(errorHM => {
         console.log(errorHM);

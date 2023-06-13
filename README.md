@@ -1,5 +1,7 @@
 ## Dependencies
 npm i axios
+npm i redux
+npm i redux-saga
 ## About
 Epistemica-X is a web application for managing investment theses. Evidence-based reasoning helps managers determine how different mixtures of crypto tokens perform. Epistemica-X incorporates a Solana wallet interface as well.
 

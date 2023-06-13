@@ -7,14 +7,10 @@ import { Link } from 'react-router-dom';
 import '../components/styles.css'
 import { useDispatch, useSelector } from "react-redux";
 import { connect } from "react-redux";
-import { signOut } from "../actions/userActions";
+import { setUserLoggedOut } from "../actions/userActions";
 import localStorage from 'localStorage';
 
-const NavTabs = ({ isAuthenticated, signOut }) => {
-  // read isAuthenticated from the redux store v listen for isAuthenticated to become true
-  // const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-  console.log('isAuthenticated...', isAuthenticated)
- 
+const NavTabs = ({ isLoggedIn }) => { 
   return (
     <div sx={{ display: "flex" }}>
        <Box sx={{ flexGrow: 1 }}>
@@ -27,7 +23,7 @@ const NavTabs = ({ isAuthenticated, signOut }) => {
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 <Link to="/create-basket" className="nav-link">Create basket</Link>
               </Typography>
-              {isAuthenticated ? 
+              {isLoggedIn ? 
               (<div> 
               <Typography>
                <Link to="/user-home" className="nav-link">Home</Link>
@@ -55,16 +51,14 @@ const NavTabs = ({ isAuthenticated, signOut }) => {
 }
 
 const mapStateToProps = (state) => {
-  // console.log('nav bar line 67 lookie here')
-  // console.log('state.auth.IA', state.auth.isAuthenticated)
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    isLoggedIn: state.auth.isLoggedIn
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signOut: () => dispatch(signOut())
+    setUserLoggedOut: () => dispatch(setUserLoggedOut())
   }
 }
 

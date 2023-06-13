@@ -14,12 +14,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
-import { setUserEmail, setUserId, setUserName, completedSignIn } from '../actions/userActions';
+import { setUserEmail, setUserId, setUserName, setUserLoggedIn } from '../actions/userActions';
 
 const theme = createTheme();
 const postURLStr = 'https://epistemica-x-db.vercel.app/api/user/post'
 
-const SignUp = ({ completedSignIn }) => {
+const SignUp = () => {
   const navigateFn = useNavigate();
   const dispatchFn = useDispatch();
   const updateStore = (responseHM) => {
@@ -52,7 +52,7 @@ const SignUp = ({ completedSignIn }) => {
     })
     .then(responseHM => {
       updateStore(responseHM);
-      completedSignIn()
+      setUserLoggedIn()
       console.log(responseHM.data);
       localStorage.setItem('user', JSON.stringify(responseHM.data));
       navigateFn('/user-home');
@@ -151,4 +151,4 @@ const SignUp = ({ completedSignIn }) => {
     </ThemeProvider>
   );
 }
-export default connect(null, { completedSignIn } )(SignUp);
+export default connect(null )(SignUp);

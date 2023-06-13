@@ -1,23 +1,23 @@
-import { COMPLETED_SIGN_IN, SIGN_OUT } from "../actions/userActions";
+import { SET_USER_LOGGED_IN, SET_USER_LOGGED_OUT } from "../actions/userActions";
 
-const initialStateHM = {
-    isAuthenticated: ''
+const authStateHM = {
+    isLoggedIn: ''
 };
 
-const authReducer = ( state = initialStateHM, action) => {
+const authReducer = ( state = authStateHM, action) => {
     switch (action.type) {
-        case SIGN_OUT:
+        case SET_USER_LOGGED_IN:
             return {
-                ...initialStateHM,
-                isAuthenticated: false
+                ...authStateHM,
+                isLoggedIn: false
             };
-        case COMPLETED_SIGN_IN: 
+        case SET_USER_LOGGED_OUT: 
             return {
                 ...state,
-                isAuthenticated: true
+                isLoggedIn: true
             };
         default: 
-            return initialStateHM
+            return authStateHM
     }
 }
 
