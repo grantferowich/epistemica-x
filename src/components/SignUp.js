@@ -52,7 +52,7 @@ const SignUp = () => {
     })
     .then(responseHM => {
       updateStore(responseHM);
-      setUserLoggedIn()
+      dispatchFn(setUserLoggedIn())
       // console.log(responseHM.data);
       // localStorage.setItem('user', JSON.stringify(responseHM.data));
        

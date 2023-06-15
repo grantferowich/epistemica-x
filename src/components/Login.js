@@ -51,9 +51,9 @@ const Login = ({isLoggedIn}) => {
         console.log('200: Success');
         updateStore(responseHM);
         // engineered at 4:48pm on June 13, 2023
-        localStorage.setItem('isLoggedInToF', 'true')
-        setUserLoggedIn()
-        console.log('isLoggedIn', isLoggedIn)
+        // localStorage.setItem('isLoggedInToF', 'true')
+        dispatchFn(setUserLoggedIn)
+        // console.log('isLoggedIn', sLoggedIn)
         navigateFn('/user-home');
       }).catch(errorHM => {
         console.log(errorHM);

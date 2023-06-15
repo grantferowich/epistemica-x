@@ -6,9 +6,15 @@ import Box from "@mui/material/Box";
 import { Link } from 'react-router-dom';
 import '../components/styles.css';
 import { Button } from "@mui/material";
+import { useSelector } from "react-redux";
 
-const NavTabs = ({isLoggedIn, isLoggedOut, handleSignOut}) => {   
-  if (isLoggedIn && !isLoggedOut) {
+const NavTabs = ({ handleSignOut }) => {   
+  const userLoggedIn = useSelector(state => state.user.userLoggedIn)
+  console.log('Navbar: userLoggedIn:', userLoggedIn)
+  const userLoggedOut = useSelector(state => state.user.userLoggedOut)
+  console.log('Navbar: userLoggedOut:', userLoggedOut)
+  
+  if (userLoggedIn) {
     return (
     <div> 
       <AppBar position="static">

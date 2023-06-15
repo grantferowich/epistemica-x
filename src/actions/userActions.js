@@ -29,7 +29,7 @@ export const setUserBasketsArr = (basketsArr) => ({
     payload: basketsArr
 })
 
-export const setUserLoggedIn = (isLoggedIn) => ({
+export const setUserLoggedIn = () => ({
     type: SET_IS_LOGGED_IN,
   });
 

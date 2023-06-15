@@ -12,6 +12,7 @@ export default function UserHome() {
   const user_IDStr = useSelector(state => state.user.id);
   let user_firstNameStr = useSelector(state =>state.user.name);
   const dispatchFn = useDispatch();
+
   if (user_firstNameStr.split(' ').length > 1){
     user_firstNameStr = user_firstNameStr.split(' ')[0]
   }
@@ -41,8 +42,10 @@ export default function UserHome() {
   .catch((errorHM) => {console.log(errorHM)})
   return (
     <div style={{textAlign: 'center'}}>
-        <h2 style={{ margin: '20px 0' }}>Welcome home to Epistemica-X, {user_firstNameStr}!</h2>
-        <BasketCardContainer/>
+         <div>
+         <h2 style={{ margin: '20px 0' }}>Welcome home to Epistemica-X, {user_firstNameStr}!</h2>
+         <><BasketCardContainer/></>
+         </div>
     </div>
   )
 }
