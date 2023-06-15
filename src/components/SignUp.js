@@ -22,12 +22,14 @@ const postURLStr = 'https://epistemica-x-db.vercel.app/api/user/post'
 const SignUp = () => {
   const navigateFn = useNavigate();
   const dispatchFn = useDispatch();
+  
   const updateStore = (responseHM) => {
     let dataHM = responseHM.data
     console.log('dataHM', dataHM)
     dispatchFn(setUserEmail(dataHM.email));
     dispatchFn(setUserName(dataHM.name));
     dispatchFn(setUserId(dataHM._id));
+    dispatchFn(setUserLoggedIn(true))
   }
 
   const handleSubmit = (event) => {
@@ -52,7 +54,7 @@ const SignUp = () => {
     })
     .then(responseHM => {
       updateStore(responseHM);
-      dispatchFn(setUserLoggedIn())
+      
       // console.log(responseHM.data);
       // localStorage.setItem('user', JSON.stringify(responseHM.data));
        

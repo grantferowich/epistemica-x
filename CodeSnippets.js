@@ -315,4 +315,16 @@
 //   yield all([watchIsLoggedIn()]);
 // }
 
+
+
+  // const handleSignOut = (e) => {
+  //   e.preventDefault()
+  //   setUserLoggedIn('something')
+  //   console.log('expect f', isLoggedIn)
+  //   return (
+  //     <div>
+  //         <h3>You have succcessfully signed out.</h3>
+  //     </div>
+  //   )
+  // }
 */

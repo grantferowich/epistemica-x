@@ -7,7 +7,6 @@ export const SET_USER_BASKETS_ARR = 'SET_USER_BASKETS_ARR';
 export const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN';
 export const SET_USER_LOGGED_OUT = 'SET_USER_LOGGED_OUT';
 export const SET_IS_LOGGED_IN = 'SET_IS_LOGGED_IN';
-export const SET_IS_LOGGED_OUT = 'SET_IS_LOGGED_OUT';
 
 export const setUserName = (name) => ({
     type: SET_USER_NAME,
@@ -29,10 +28,8 @@ export const setUserBasketsArr = (basketsArr) => ({
     payload: basketsArr
 })
 
-export const setUserLoggedIn = () => ({
+export const setUserLoggedIn = (userLoggedInToF) => ({
     type: SET_IS_LOGGED_IN,
-  });
+    payload:userLoggedInToF
+});
 
-export const setUserLoggedOut = () => ({
-    type: SET_IS_LOGGED_OUT,
-})

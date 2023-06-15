@@ -30,6 +30,7 @@ const Login = ({isLoggedIn}) => {
     dispatchFn(setUserName(dataHM.name));
     dispatchFn(setUserEmail(dataHM.email));
     dispatchFn(setUserId(dataHM._id));
+    dispatchFn(setUserLoggedIn(true))
   }  
 
   const handleSubmit = async (event) => {
@@ -52,8 +53,6 @@ const Login = ({isLoggedIn}) => {
         updateStore(responseHM);
         // engineered at 4:48pm on June 13, 2023
         // localStorage.setItem('isLoggedInToF', 'true')
-        dispatchFn(setUserLoggedIn)
-        // console.log('isLoggedIn', sLoggedIn)
         navigateFn('/user-home');
       }).catch(errorHM => {
         console.log(errorHM);

@@ -6,13 +6,11 @@ import Box from "@mui/material/Box";
 import { Link } from 'react-router-dom';
 import '../components/styles.css';
 import { Button } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useSelector, connect } from "react-redux";
 
 const NavTabs = ({ handleSignOut }) => {   
   const userLoggedIn = useSelector(state => state.user.userLoggedIn)
   console.log('Navbar: userLoggedIn:', userLoggedIn)
-  const userLoggedOut = useSelector(state => state.user.userLoggedOut)
-  console.log('Navbar: userLoggedOut:', userLoggedOut)
   
   if (userLoggedIn) {
     return (
@@ -31,12 +29,13 @@ const NavTabs = ({ handleSignOut }) => {
         </Toolbar>
       </AppBar>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-      <Button variant='outlined' onClick={handleSignOut}>Sign out</Button>
+      <Button variant='outlined' >Sign out</Button>
       </div>
     </div>)
   };
 
-  return (
+  if (!userLoggedIn){
+    return (
       <div style={{ display: "flex" }}>
         <Box style={{ flexGrow: 1 }}>
         <AppBar position="static">
@@ -60,5 +59,7 @@ const NavTabs = ({ handleSignOut }) => {
       </Box>
     </div>
     );
+  }
+
 }
-export default NavTabs
+export default connect()(NavTabs)

@@ -1,15 +1,12 @@
-import { SET_USER_BASKETS_ARR, SET_USER_EMAIL, SET_USER_ID, SET_USER_NAME, SET_USER_LOGGED_IN, SET_USER_LOGGED_OUT } from "../actions/userActions";
-
+import { SET_USER_BASKETS_ARR, SET_USER_EMAIL, SET_USER_ID, SET_USER_NAME, SET_USER_LOGGED_IN } from "../actions/userActions";
 // Define initial state
 const initialStateHM = {
     name: '',
     email: '',
     id: '', 
     basketsArr: '',
-    userLoggedIn: '',
-    userLoggedOut: ''
+    userLoggedIn: 'false',
 };
-
 // define the user reducer
 const userReducer = ( stateHM = initialStateHM, action) => {
     switch (action.type) {
@@ -35,16 +32,9 @@ const userReducer = ( stateHM = initialStateHM, action) => {
             };
         case SET_USER_LOGGED_IN:
                 return {
-                    ...stateHM,
-                    userLoggedIn: true,
-                    userLoggedOut: false
-                };
-        case SET_USER_LOGGED_OUT: 
-                return {
-                    ...stateHM,
-                    userLoggedIn: false,
-                    userLoggedOut: true
-                };
+                ...stateHM,
+                userLoggedIn: 'true'
+            };
         default: 
             return stateHM
     }

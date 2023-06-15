@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 export default function UserHome() {
   const user_IDStr = useSelector(state => state.user.id);
   let user_firstNameStr = useSelector(state =>state.user.name);
+  let user_logged_in = useSelector(state => state.user.userLoggedIn)
   const dispatchFn = useDispatch();
 
   if (user_firstNameStr.split(' ').length > 1){
@@ -40,9 +41,12 @@ export default function UserHome() {
   axios.get(getBasketsAPIStr)
   .then((responseHM) => {consumeAPI(responseHM.data)})
   .catch((errorHM) => {console.log(errorHM)})
+  
   return (
     <div style={{textAlign: 'center'}}>
          <div>
+
+          <h3> The user is logged in: {user_logged_in} </h3>
          <h2 style={{ margin: '20px 0' }}>Welcome home to Epistemica-X, {user_firstNameStr}!</h2>
          <><BasketCardContainer/></>
          </div>
