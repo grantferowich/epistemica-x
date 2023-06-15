@@ -7,8 +7,6 @@ import SignUp from "./components/SignUp";
 import UserHome from "./components/UserHome";
 import BasketForm from "./components/BasketForm";
 import SignOutPage from "./components/SignOutPage";
-import store from './store/store';
-import { Provider } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {setUserLoggedOut, setUserLoggedIn} from './actions/userActions'
 
@@ -26,7 +24,6 @@ function App(isLoggedIn, isLoggedOut) {
   }
 
   return (
-    <Provider store={store}>
       <Router>
         <div style={{ backgroundColor: '#cbe3ff', minHeight: '100vh'}}>
           <NavBar handleSignOut={handleSignOut}/>
@@ -40,7 +37,6 @@ function App(isLoggedIn, isLoggedOut) {
           </Routes>
         </div>
       </Router>
-    </Provider>
   );
 }
 export default App;

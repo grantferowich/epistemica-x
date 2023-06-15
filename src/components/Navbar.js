@@ -6,8 +6,9 @@ import Box from "@mui/material/Box";
 import { Link } from 'react-router-dom';
 import '../components/styles.css';
 import { Button } from "@mui/material";
+
 const NavTabs = ({isLoggedIn, isLoggedOut, handleSignOut}) => {   
-  if (isLoggedIn) {
+  if (isLoggedIn && !isLoggedOut) {
     return (
     <div> 
       <AppBar position="static">
