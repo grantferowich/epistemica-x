@@ -13,16 +13,16 @@ import { useNavigate } from "react-router-dom";
 import {setUserLoggedOut, setUserLoggedIn} from './actions/userActions'
 
 function checkLoginStatus() {
-  const isLoggedIn = localStorage.getItem('isLoggedInToF') === 'true';
+  let isLoggedIn = localStorage.getItem('isLoggedInToF') === 'true';
   return isLoggedIn;
 }
 
 function App() {
   
-  const handleSignOut = () => {
+  const handleSignOut = (e) => {
+    e.preventDefault()
     setUserLoggedOut()
-    localStorage.clear()
-    checkLoginStatus()
+    console.log('expect f', isLoggedIn)
     return (
       <div>
           <h3>You have succcessfully signed out.</h3>

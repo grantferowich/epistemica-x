@@ -6,8 +6,9 @@ const initialStateHM = {
     email: '',
     id: '', 
     basketsArr: '',
-    isLoggedIn: localStorage.getItem('isLoggedInToF') === 'true',
+    isLoggedIn: ''
 };
+
 // define the user reducer
 const userReducer = ( stateHM = initialStateHM, action) => {
     switch (action.type) {
@@ -34,12 +35,14 @@ const userReducer = ( stateHM = initialStateHM, action) => {
         case SET_USER_LOGGED_IN:
                 return {
                     ...stateHM,
-                    isLoggedIn: true
+                    isLoggedIn: true,
+                    isLoggedOut: false
                 };
         case SET_USER_LOGGED_OUT: 
                 return {
                     ...stateHM,
-                    isLoggedIn: false
+                    isLoggedIn: false,
+                    isLoggedOut: true
                 };
         default: 
             return stateHM
