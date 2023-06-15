@@ -1,4 +1,3 @@
-
 // import localStorage from 'localStorage';
 // action types
 export const SET_USER_NAME = 'SET_USER_NAME';
@@ -28,16 +27,12 @@ export const setUserBasketsArr = (basketsArr) => ({
     payload: basketsArr
 })
 
-export const setUserLoggedIn = () => {
-    return {
-        type: SET_USER_LOGGED_IN,
-        isLoggedIn: true
-    }   
-}
+export const setUserLoggedIn = (isLoggedIn) => ({
+    type: 'SET_IS_LOGGED_IN',
+    payload: isLoggedIn,
+  });
 
-export const setUserLoggedOut = () => {
-    return {
-        type: SET_USER_LOGGED_IN,
-        isLoggedIn: false
-    }   
-}
+export const setUserLoggedOut = (isLoggedIn) => ({
+    type: 'SET_IS_LOGGED_OUT',
+    payload: isLoggedIn
+})

@@ -19,7 +19,7 @@ import { setUserEmail, setUserId, setUserName, setUserLoggedIn } from '../action
 const theme = createTheme();
 const postURLStr = 'https://epistemica-x-db.vercel.app/api/user/post'
 
-const SignUp = ({setUserLoggedIn}) => {
+const SignUp = () => {
   const navigateFn = useNavigate();
   const dispatchFn = useDispatch();
   const updateStore = (responseHM) => {
@@ -53,8 +53,11 @@ const SignUp = ({setUserLoggedIn}) => {
     .then(responseHM => {
       updateStore(responseHM);
       setUserLoggedIn()
-      console.log(responseHM.data);
-      localStorage.setItem('user', JSON.stringify(responseHM.data));
+      // console.log(responseHM.data);
+      // localStorage.setItem('user', JSON.stringify(responseHM.data));
+       
+      // engineered at 4:48pm on June 13, 2023
+      localStorage.setItem('isLoggedInToF', 'true')
       navigateFn('/user-home');
     })
     .catch(errorHM => {

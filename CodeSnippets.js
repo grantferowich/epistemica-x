@@ -265,4 +265,54 @@
 //     signOut: () => dispatch(signOut())
 //   }
 // }
+
+
+
+// import { SET_USER_LOGGED_IN, SET_USER_LOGGED_OUT } from "../actions/userActions";
+
+// const authStateHM = {
+//     isLoggedIn: ''
+// };
+
+// const authReducer = ( state = authStateHM, action) => {
+    // switch (action.type) {
+    //     case SET_USER_LOGGED_IN:
+    //         return {
+    //             ...authStateHM,
+    //             isLoggedIn: true
+    //         };
+    //     case SET_USER_LOGGED_OUT: 
+    //         return {
+    //             ...state,
+    //             isLoggedIn: false
+    //         };
+    //     default: 
+    //         return authStateHM
+    // }
+// }
+
+// export default authReducer
+
+// import { takeLatest, put, all } from 'redux-saga/effects';
+// import { setUserLoggedIn, setUserLoggedOut } from '../actions/userActions';
+
+// function* watchIsLoggedIn() {
+//   yield takeLatest('SET_USER_LOGGED_IN', setUserLoggedInSaga);
+//   yield takeLatest('SET_USER_LOGGED_OUT', setUserLoggedOutSaga);
+// }
+
+// function* setUserLoggedInSaga() {
+//   // Perform any additional logic or API calls if needed
+//   yield put(setUserLoggedIn());
+// }
+
+// function* setUserLoggedOutSaga() {
+//   // Perform any additional logic or API calls if needed
+//   yield put(setUserLoggedOut());
+// }
+
+// export default function* rootSaga() {
+//   yield all([watchIsLoggedIn()]);
+// }
+
 */

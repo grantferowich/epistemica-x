@@ -14,12 +14,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setUserEmail, setUserId, setUserName, setUserLoggedIn } from '../actions/userActions';
+import { setUserEmail, setUserId, setUserName } from '../actions/userActions';
 
 const theme = createTheme();
 const loginURLStr = 'https://epistemica-x-db.vercel.app/api/user/login';
 
-const Login = ({ setUserLoggedIn }) => {
+const Login = () => {
   const navigateFn = useNavigate();
   const dispatchFn = useDispatch();
 
@@ -50,10 +50,8 @@ const Login = ({ setUserLoggedIn }) => {
       }).then(responseHM => {
         console.log('200: Success');
         updateStore(responseHM);
-
-        // call the Redux function
-        // write to the saga state, too
-        setUserLoggedIn()
+        // engineered at 4:48pm on June 13, 2023
+        localStorage.setItem('isLoggedInToF', 'true')
         navigateFn('/user-home');
       }).catch(errorHM => {
         console.log(errorHM);
@@ -125,4 +123,4 @@ const Login = ({ setUserLoggedIn }) => {
     </ThemeProvider>
   );
 }
-export default connect(null, { setUserLoggedIn } )(Login);
+export default connect(null)(Login);

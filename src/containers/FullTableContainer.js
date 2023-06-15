@@ -107,7 +107,7 @@ export default function FullTableContainer() {
         // ensure menu options are sorted by market cap rank
         const apiDataArr = get250CoinsHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
         dispatchFn({type: 'SET_COIN_LIST', payload: apiDataArr}); 
-        console.log(apiDataArr)
+        // console.log(apiDataArr)
         generateDataTable(apiDataArr);
       }
 
