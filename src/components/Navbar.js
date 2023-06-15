@@ -6,11 +6,7 @@ import Box from "@mui/material/Box";
 import { Link } from 'react-router-dom';
 import '../components/styles.css';
 import { Button } from "@mui/material";
-const NavTabs = ({isLoggedIn, isLoggedOut, handleSignOut}) => { 
-
-  console.log('NavBar: isLoggedIn..', isLoggedIn)
-  console.log('NavBar:isLoggedOut: ', isLoggedOut)
-  
+const NavTabs = ({isLoggedIn, isLoggedOut, handleSignOut}) => {   
   if (isLoggedIn) {
     return (
     <div> 
@@ -30,14 +26,12 @@ const NavTabs = ({isLoggedIn, isLoggedOut, handleSignOut}) => {
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
       <Button variant='outlined' onClick={handleSignOut}>Sign out</Button>
       </div>
-      
     </div>)
   };
 
-  
-    return (
+  return (
       <div style={{ display: "flex" }}>
-         <Box style={{ flexGrow: 1 }}>
+        <Box style={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
@@ -57,7 +51,7 @@ const NavTabs = ({isLoggedIn, isLoggedOut, handleSignOut}) => {
           </Toolbar>
         </AppBar>
       </Box>
-      </div>
+    </div>
     );
 }
 export default NavTabs
