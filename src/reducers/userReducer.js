@@ -6,7 +6,8 @@ const initialStateHM = {
     email: '',
     id: '', 
     basketsArr: '',
-    isLoggedIn: ''
+    isLoggedIn: '',
+    isLoggedOut: ''
 };
 
 // define the user reducer

@@ -12,13 +12,8 @@ import { Provider } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {setUserLoggedOut, setUserLoggedIn} from './actions/userActions'
 
-function checkLoginStatus() {
-  let isLoggedIn = localStorage.getItem('isLoggedInToF') === 'true';
-  return isLoggedIn;
-}
 
-function App() {
-  
+function App(isLoggedIn, isLoggedOut) {
   const handleSignOut = (e) => {
     e.preventDefault()
     setUserLoggedOut()
@@ -30,12 +25,11 @@ function App() {
     )
   }
 
-  const isLoggedIn = checkLoginStatus();
   return (
     <Provider store={store}>
       <Router>
         <div style={{ backgroundColor: '#cbe3ff', minHeight: '100vh'}}>
-          <NavBar isLoggedIn={isLoggedIn} handleSignOut={handleSignOut}/>
+          <NavBar handleSignOut={handleSignOut}/>
           <Routes>
             <Route exact path="/" element={<HomePage />}/>
             <Route exact path="/login" element={<Login />}/>

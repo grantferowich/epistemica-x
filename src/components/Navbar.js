@@ -7,9 +7,10 @@ import { Link } from 'react-router-dom';
 import '../components/styles.css';
 import { Button } from "@mui/material";
 const NavTabs = ({isLoggedIn, isLoggedOut, handleSignOut}) => { 
-  
+
   console.log('NavBar: isLoggedIn..', isLoggedIn)
-  console.log('NavBar:isLoggedOut: ')
+  console.log('NavBar:isLoggedOut: ', isLoggedOut)
+  
   if (isLoggedIn) {
     return (
     <div> 
@@ -33,7 +34,7 @@ const NavTabs = ({isLoggedIn, isLoggedOut, handleSignOut}) => {
     </div>)
   };
 
-  if (isLoggedOut) {
+  
     return (
       <div style={{ display: "flex" }}>
          <Box style={{ flexGrow: 1 }}>
@@ -58,7 +59,5 @@ const NavTabs = ({isLoggedIn, isLoggedOut, handleSignOut}) => {
       </Box>
       </div>
     );
-  } 
-  
 }
 export default NavTabs

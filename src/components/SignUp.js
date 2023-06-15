@@ -57,7 +57,7 @@ const SignUp = () => {
       // localStorage.setItem('user', JSON.stringify(responseHM.data));
        
       // engineered at 4:48pm on June 13, 2023
-      localStorage.setItem('isLoggedInToF', 'true')
+      // localStorage.setItem('isLoggedInToF', 'true')
       navigateFn('/user-home');
     })
     .catch(errorHM => {
