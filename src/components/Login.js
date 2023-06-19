@@ -13,16 +13,16 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUserEmail, setUserId, setUserLoggedIn, setUserName } from '../actions/userActions';
 
 const theme = createTheme();
 const loginURLStr = 'https://epistemica-x-db.vercel.app/api/user/login';
 
-const Login = ({isLoggedIn}) => {
+const Login = () => {
   const navigateFn = useNavigate();
   const dispatchFn = useDispatch();
-
+  let userLoggedIn = useSelector(state => state.user.userLoggedIn)
   // engineered updateStore(userObj) on Sat May 27, 2023
   // at 9:07am
   const updateStore = (userObj) => {
@@ -32,6 +32,10 @@ const Login = ({isLoggedIn}) => {
     dispatchFn(setUserId(dataHM._id));
     dispatchFn(setUserLoggedIn(true))
   }  
+
+  React.useEffect(() => {
+    console.log('userLoggedIn..', userLoggedIn.toString())
+  }, [userLoggedIn])
 
   const handleSubmit = async (event) => {
     event.preventDefault();

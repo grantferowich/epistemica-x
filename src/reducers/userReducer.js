@@ -5,7 +5,7 @@ const initialStateHM = {
     email: '',
     id: '', 
     basketsArr: '',
-    userLoggedIn: 'false',
+    userLoggedIn: '',
 };
 // define the user reducer
 const userReducer = ( stateHM = initialStateHM, action) => {
@@ -33,7 +33,7 @@ const userReducer = ( stateHM = initialStateHM, action) => {
         case SET_USER_LOGGED_IN:
                 return {
                 ...stateHM,
-                userLoggedIn: 'true'
+                userLoggedIn: action.payload
             };
         default: 
             return stateHM

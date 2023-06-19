@@ -11,30 +11,6 @@ import { useSelector, connect } from "react-redux";
 const NavTabs = ({ handleSignOut }) => {   
   const userLoggedIn = useSelector(state => state.user.userLoggedIn)
   console.log('Navbar: userLoggedIn:', userLoggedIn)
-  
-  if (userLoggedIn) {
-    return (
-    <div> 
-      <AppBar position="static">
-        <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-        <Link to="/" className="nav-link">Epistemica-X</Link>
-        </Typography>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-        <Link to="/create-basket" className="nav-link">Create basket</Link>
-        </Typography>
-        <Typography sx={{ml: 2}}>
-        <Link to="/user-home" className="nav-link">Home</Link>
-        </Typography>
-        </Toolbar>
-      </AppBar>
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-      <Button variant='outlined' >Sign out</Button>
-      </div>
-    </div>)
-  };
-
-  if (!userLoggedIn){
     return (
       <div style={{ display: "flex" }}>
         <Box style={{ flexGrow: 1 }}>
@@ -47,19 +23,29 @@ const NavTabs = ({ handleSignOut }) => {
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 <Link to="/create-basket" className="nav-link">Create basket</Link>
                 </Typography>
-                <Typography sx={{ml: 2}}>
-                <Link to="/login" className="nav-link">Log-in</Link>
-                </Typography>
-                <Typography sx={{ml: 2}}>
-                <Link to="/signup" className="nav-link">Sign-up</Link>
-                </Typography>
+                { userLoggedIn ? 
+                    <>
+                    <Typography sx={{ml: 2}}>   
+                    <Link to="/user-home" className="nav-link">Home</Link>
+                    </Typography>
+                    <Typography sx={{ml: 2}}>
+                    <Link to="/signout-page" className="nav-link">Sign out</Link>
+                    </Typography>
+                    </> :
+                    <>
+                    <Typography sx={{ml: 2}}>
+                    <Link to="/login" className="nav-link">Log-in</Link>
+                    </Typography>
+                    <Typography sx={{ml: 2}}>
+                    <Link to="/signup" className="nav-link">Sign-up</Link>
+                    </Typography>
+                    </>
+                }  
             </div>
           </Toolbar>
         </AppBar>
       </Box>
     </div>
     );
-  }
-
 }
 export default connect()(NavTabs)

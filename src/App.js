@@ -8,11 +8,8 @@ import UserHome from "./components/UserHome";
 import BasketForm from "./components/BasketForm";
 import SignOutPage from "./components/SignOutPage";
 import { useNavigate } from "react-router-dom";
-import { setUserLoggedIn} from './actions/userActions'
 
-
-function App(isLoggedIn, isLoggedOut) {
-
+function App() {
   return (
       <Router>
         <div style={{ backgroundColor: '#cbe3ff', minHeight: '100vh'}}>
