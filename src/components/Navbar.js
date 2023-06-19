@@ -5,13 +5,24 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Link } from 'react-router-dom';
 import '../components/styles.css';
-import { Button } from "@mui/material";
-import { useSelector, connect } from "react-redux";
+import { useSelector, connect, useDispatch } from "react-redux";
+import { setUserEmail, setUserId, setUserLoggedIn, setUserName } from '../actions/userActions';
 
-const NavTabs = ({ handleSignOut }) => {   
+const NavTabs = () => {   
   const userLoggedIn = useSelector(state => state.user.userLoggedIn)
   console.log('Navbar: userLoggedIn:', userLoggedIn)
-    return (
+  const dispatchFn = useDispatch();
+
+  const handleExit = (eventHM) => {
+    eventHM.preventDefault()
+    
+    dispatchFn(setUserName(''));
+    dispatchFn(setUserEmail(''));
+    dispatchFn(setUserId(''));
+    dispatchFn(setUserLoggedIn(false))
+
+  }
+  return (
       <div style={{ display: "flex" }}>
         <Box style={{ flexGrow: 1 }}>
         <AppBar position="static">
@@ -29,7 +40,7 @@ const NavTabs = ({ handleSignOut }) => {
                     <Link to="/user-home" className="nav-link">Home</Link>
                     </Typography>
                     <Typography sx={{ml: 2}}>
-                    <Link to="/signout-page" className="nav-link">Sign out</Link>
+                    <Link onClick={handleExit} to="/signout-page" className="nav-link">Sign out</Link>
                     </Typography>
                     </> :
                     <>
