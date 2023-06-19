@@ -54,8 +54,6 @@ export default function UserHome() {
   return (
     <div style={{textAlign: 'center'}}>
          <div>
-
-          <h3> The user is logged in: {userLoggedIn.toString()} </h3>
          <h2 style={{ margin: '20px 0' }}>Welcome home to Epistemica-X, {user_firstNameStr}!</h2>
          <><BasketCardContainer/></>
          </div>
