@@ -22,7 +22,8 @@ const loginURLStr = 'https://epistemica-x-db.vercel.app/api/user/login';
 const Login = () => {
   const navigateFn = useNavigate();
   const dispatchFn = useDispatch();
-  let userLoggedIn = useSelector(state => state.user.userLoggedIn)
+  let userLoggedIn = useSelector(state => state.user.userLoggedIn);
+  
   // engineered updateStore(userObj) on Sat May 27, 2023
   // at 9:07am
   const updateStore = (userObj) => {

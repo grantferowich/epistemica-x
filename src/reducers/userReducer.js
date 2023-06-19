@@ -7,7 +7,8 @@ const initialStateHM = {
     basketsArr: '',
     userLoggedIn: '',
 };
-// define the user reducer
+
+// Define the user reducer
 const userReducer = ( stateHM = initialStateHM, action) => {
     switch (action.type) {
         case SET_USER_NAME:
