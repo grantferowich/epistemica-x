@@ -1,14 +1,23 @@
-import { applyMiddleware } from 'redux';
 import { legacy_createStore as createStore} from 'redux'
-import { combineReducers } from 'redux';
-import thunkMiddleware from 'redux-thunk';
+import { compose, combineReducers, applyMiddleware } from 'redux';
 import userReducer from '../reducers/userReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 const rootReducer = combineReducers({
     user: userReducer,
 })
 
-const store = createStore(rootReducer, composeWithDevTools());
+const persistConfig = { 
+    key: 'root',
+    storage
+}
 
-export default store;
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = createStore(persistedReducer, composeWithDevTools());
+
+const persistor = persistStore(store);
+
+export {store, persistor}

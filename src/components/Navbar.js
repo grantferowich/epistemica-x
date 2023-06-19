@@ -45,10 +45,10 @@ const NavTabs = () => {
                     </> :
                     <>
                     <Typography sx={{ml: 2}}>
-                    <Link to="/login" className="nav-link">Log-in</Link>
+                    <Link to="/login" className="nav-link">Log in</Link>
                     </Typography>
                     <Typography sx={{ml: 2}}>
-                    <Link to="/signup" className="nav-link">Sign-up</Link>
+                    <Link to="/signup" className="nav-link">Sign up</Link>
                     </Typography>
                     </>
                 }  
