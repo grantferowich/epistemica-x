@@ -113,12 +113,14 @@ const SignUp = () => {
             Sign up
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <div id='error' style={{ paddingBottom: '10px'}}>
+          {errorMessageStr && <Stack sx={{ width: '100%' }} spacing={2}>
+                <Alert severity="error">{errorMessageStr}</Alert>
+                </Stack>}
+          </div>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <div id='first-name'>
-                {errorMessageStr && <Stack sx={{ width: '100%' }} spacing={2}>
-                <Alert severity="error">{errorMessageStr}</Alert>
-                </Stack>}
                   <TextField
                     style={{ backgroundColor: 'white'}}
                     autoComplete="given-name"
