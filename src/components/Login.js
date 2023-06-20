@@ -46,21 +46,24 @@ const Login = () => {
     
     let messagesArr = [];
     const data = new FormData(event.currentTarget)
-    const emailStr = data.get('email')    
-    console.log('emailStr', emailStr);
+    const emailStr = data.get('email')   
+    const passwordStr = data.get('password') 
     if (emailStr === '' || emailStr === null){
-      console.log('hallo')
-      messagesArr.push('An email is required.')
+      messagesArr.push('Invalid email.')
+    }
+
+    if (passwordStr === '' || passwordStr === null){
+      messagesArr.push('Invalid password.')
     }
 
 
     if (messagesArr.length > 0){
       event.preventDefault();
-      console.log('hallo')
       setErrorMessageStr(messagesArr[messagesArr.length - 1])
     }
     
     event.preventDefault();
+    
     try {
       const data = new FormData(event.currentTarget);
       const email = data.get('email');

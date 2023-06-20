@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -15,6 +15,8 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
 import { setUserEmail, setUserId, setUserName, setUserLoggedIn } from '../actions/userActions';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 const theme = createTheme();
 const postURLStr = 'https://epistemica-x-db.vercel.app/api/user/post'
@@ -22,7 +24,8 @@ const postURLStr = 'https://epistemica-x-db.vercel.app/api/user/post'
 const SignUp = () => {
   const navigateFn = useNavigate();
   const dispatchFn = useDispatch();
-  
+  const [errorMessageStr, setErrorMessageStr] = useState('')
+
   const updateStore = (responseHM) => {
     let dataHM = responseHM.data
     console.log('dataHM', dataHM)
@@ -32,39 +35,63 @@ const SignUp = () => {
     dispatchFn(setUserLoggedIn(true))
   }
 
-  const handleSubmit = (event) => {
-  event.preventDefault();
-  const data = new FormData(event.currentTarget);
-  const firstName = data.get('firstName');
-  const lastName = data.get('lastName');
-  const name = firstName + " " + lastName
-  const email = data.get('email');
-  const password = data.get('password');
-   
-  const dataX = { 
-      "name": name,
-      "email": email, 
-      "password": password
-    }
-    axios.post(postURLStr, JSON.stringify(dataX), {
-      withCredentials: false,
-      headers: {
-        "Content-Type":"application/json",
-      }
-    })
-    .then(responseHM => {
-      updateStore(responseHM);
+  const handleSubmit = async (event) => {
+      let messagesArr = []
+      const data = new FormData(event.currentTarget);
+      const firstName = data.get('firstName');
+      const lastName = data.get('lastName');
+      let name = firstName + " " + lastName;
+      const email = data.get('email');
+      const password = data.get('password');
       
-      // console.log(responseHM.data);
-      // localStorage.setItem('user', JSON.stringify(responseHM.data));
-       
-      // engineered at 4:48pm on June 13, 2023
-      // localStorage.setItem('isLoggedInToF', 'true')
-      navigateFn('/user-home');
-    })
-    .catch(errorHM => {
-      console.log(errorHM)
-    })
+      // ensure every email has some string, "@", string, ".", string
+
+      if (email === '' || email === null ) {
+        messagesArr.push('Invalid email.')
+      }
+
+      if (password === '' || password === null){
+        messagesArr.push('Invalid password.')
+      }
+
+      if (name === ' '){
+        name = ''
+        messagesArr.push('Invalid name.')
+      }
+
+
+      if (messagesArr.length > 0){
+        event.preventDefault()
+        setErrorMessageStr(messagesArr[messagesArr.length -1])
+      }
+      event.preventDefault()
+      
+      try { 
+        const dataX = { 
+          "name": name,
+          "email": email, 
+          "password": password
+        }
+        axios.post(postURLStr, JSON.stringify(dataX), {
+        withCredentials: false,
+        headers: {
+        "Content-Type":"application/json",
+        }
+        })
+        .then(responseHM => {
+          updateStore(responseHM);       
+          // engineered at 4:48pm on June 13, 2023
+          // localStorage.setItem('isLoggedInToF', 'true')
+          navigateFn('/user-home');
+        })
+        .catch(errorHM => {
+          messagesArr.push(errorHM.response.data.message)
+          setErrorMessageStr(messagesArr[messagesArr.length - 1])
+        })
+        } catch (errorHM) {
+          console.log('Error occurred while signing up.')
+        }
+
   };
 
   return (
@@ -88,51 +115,61 @@ const SignUp = () => {
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  style={{ backgroundColor: 'white'}}
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                  
-                />
+                <div id='first-name'>
+                {errorMessageStr && <Stack sx={{ width: '100%' }} spacing={2}>
+                <Alert severity="error">{errorMessageStr}</Alert>
+                </Stack>}
+                  <TextField
+                    style={{ backgroundColor: 'white'}}
+                    autoComplete="given-name"
+                    name="firstName"
+                    required
+                    fullWidth
+                    id="firstName"
+                    label="First Name"
+                    autoFocus
+                    
+                  />
+                </div>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  style={{ backgroundColor: 'white'}}
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
+                <div id='last-name'>
+                  <TextField
+                    style={{ backgroundColor: 'white'}}
+                    fullWidth
+                    id="lastName"
+                    label="Last Name"
+                    name="lastName"
+                    autoComplete="family-name"
+                  />
+                </div>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  style={{ backgroundColor: 'white'}}
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
+                <div id='email'>
+                  <TextField
+                    style={{ backgroundColor: 'white'}}
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                  />
+                </div>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  style={{ backgroundColor: 'white'}}
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
+                <div id='password'>
+                  <TextField
+                    style={{ backgroundColor: 'white'}}
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="new-password"
+                  />
+                </div>
               </Grid>
             </Grid>
             <Button
