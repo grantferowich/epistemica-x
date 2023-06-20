@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -15,6 +15,8 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserEmail, setUserId, setUserLoggedIn, setUserName } from '../actions/userActions';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 const theme = createTheme();
 const loginURLStr = 'https://epistemica-x-db.vercel.app/api/user/login';
@@ -23,7 +25,8 @@ const Login = () => {
   const navigateFn = useNavigate();
   const dispatchFn = useDispatch();
   let userLoggedIn = useSelector(state => state.user.userLoggedIn);
-  
+  const [errorMessageStr, setErrorMessageStr] = useState('')
+
   // engineered updateStore(userObj) on Sat May 27, 2023
   // at 9:07am
   const updateStore = (userObj) => {
@@ -39,6 +42,24 @@ const Login = () => {
   }, [userLoggedIn])
 
   const handleSubmit = async (event) => {
+    
+    
+    let messagesArr = [];
+    const data = new FormData(event.currentTarget)
+    const emailStr = data.get('email')    
+    console.log('emailStr', emailStr);
+    if (emailStr === '' || emailStr === null){
+      console.log('hallo')
+      messagesArr.push('An email is required.')
+    }
+
+
+    if (messagesArr.length > 0){
+      event.preventDefault();
+      console.log('hallo')
+      setErrorMessageStr(messagesArr[messagesArr.length - 1])
+    }
+    
     event.preventDefault();
     try {
       const data = new FormData(event.currentTarget);
@@ -60,12 +81,16 @@ const Login = () => {
         // localStorage.setItem('isLoggedInToF', 'true')
         navigateFn('/user-home');
       }).catch(errorHM => {
-        console.log(errorHM);
+        messagesArr.push(errorHM.response.data.message)
+        setErrorMessageStr(messagesArr[messagesArr.length - 1])
       })
     } catch (error) {
       console.log('Error occurred while logging in.')
     }
   };
+
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -86,6 +111,10 @@ const Login = () => {
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <div id='email'>
+              {errorMessageStr && <Stack sx={{ width: '100%' }} spacing={2}>
+              <Alert severity="error">{errorMessageStr}</Alert>
+              </Stack>}
             <TextField
               style={{ backgroundColor: 'white'}}
               margin="normal"
@@ -97,6 +126,8 @@ const Login = () => {
               autoComplete="email"
               autoFocus
             />
+            </div>
+            <div id='password'>
             <TextField
               style={{ backgroundColor: 'white'}}
               margin="normal"
@@ -108,6 +139,7 @@ const Login = () => {
               id="password"
               autoComplete="current-password"
             />
+            </div>
             <Button
               type="submit"
               fullWidth
