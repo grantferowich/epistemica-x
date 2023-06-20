@@ -50,16 +50,23 @@ const Login = () => {
     const passwordStr = data.get('password') 
     if (emailStr === '' || emailStr === null){
       messagesArr.push('Invalid email.')
+
     }
 
     if (passwordStr === '' || passwordStr === null){
       messagesArr.push('Invalid password.')
     }
 
+    
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr)){
+      messagesArr.push('Invalid email.')
+    }
+
 
     if (messagesArr.length > 0){
       event.preventDefault();
       setErrorMessageStr(messagesArr[messagesArr.length - 1])
+      return
     }
     
     event.preventDefault();
