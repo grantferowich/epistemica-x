@@ -56,7 +56,6 @@ const Login = () => {
     if (passwordStr === '' || passwordStr === null){
       messagesArr.push('Invalid password.')
     }
-
     
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr)){
       messagesArr.push('Invalid email.')

@@ -381,22 +381,22 @@ export default function BasketForm(){
   return (
     (handleSubmitFired === false) ? (
     <div style={{backgroundColor: '#cbe3ff'}}>
-    <Container component="main" maxWidth="md">
+    <Container component="main" maxWidth="xl">
       <CssBaseline />
-      <div style={{ width: '100%', maxWidth: '1000px', margin: '0 auto'}}>
+      <div style={{ width: '60%', maxWidth: '1000px', margin: '0 auto'}}>
         <Typography component="h1" variant="h5" style={{ margin: '20px 0' }}>
           Build Your Basket
         </Typography>
-        <Typography variant="p" style={{width: '100%', margin: '20px 0 40px'}}>
+        <Typography variant="p" style={{width: '60%', margin: '20px 0 40px'}}>
           Calculate the historical performance of a basket by selecting up to 5 crypto tokens and a weight for each crypto token. For example, try 50% Bitcoin and 50% Ether, and an initial basket value of your choice, with a start date of 01-01-2022 to see how the calculator works for yourself! 
         </Typography>
-        <Box mx="auto"  sx={{ border: '2px solid black', maxWidth: 'md', margin: '20px auto', backgroundColor: 'white' }}>
+        <Box mx="auto"  sx={{ border: '2px solid black', maxWidth: 'xl', margin: '20px auto', backgroundColor: 'white' }}>
           <form
             noValidate
             autoComplete="off"
             onSubmit={event => handleSubmit(event)}
           >
-            <Grid container spacing={1}>
+            <Grid container spacing={1} style={{alignItems: 'center'}}>
               <Grid item xs={12}>
                 <TextField
                   id="basketName"
@@ -434,7 +434,7 @@ export default function BasketForm(){
                 />
               </Grid>
               {/* {// asset 1} */}
-              <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
+              <Box md={{ maxWidth: 'xl', margin: '0 auto' }}>
               <Grid container spacing={3}>
                   <Grid item xs={4} style={{ marginLeft: '10px' }}>
                       <TextField
@@ -450,42 +450,36 @@ export default function BasketForm(){
                       }}
                       />
                   </Grid>
-                  <Grid item xs={3}>
-                  <FormControl>
-                    <Select 
-                      displayEmpty
-                      onChange={handleChange1}
-                      inputProps={{ 'aria-label': 'Without label' }}
-                      >
-                      <MenuItem value=""><em>None</em></MenuItem>
-                        {data.map((option) => (
-                      <MenuItem key={option.id} value={option}>
-                        {option.name}
-                      </MenuItem>
-                    ))}
-                    </Select>
-                    <FormHelperText>Select basket token 1</FormHelperText>
-                  </FormControl>
+                  <Grid item xs={4} >
+                      <FormControl>
+                        <Select 
+                          displayEmpty
+                          onChange={handleChange1}
+                          inputProps={{ 'aria-label': 'Without label' }}
+                          >
+                          <MenuItem value=""><em>None</em></MenuItem>
+                            {data.map((option) => (
+                          <MenuItem key={option.id} value={option}>
+                            {option.name}
+                          </MenuItem>
+                        ))}
+                        </Select>
+                        <FormHelperText>Select basket token 1</FormHelperText>
+                      </FormControl>
                   </Grid>
-                  <Grid container alignItems='center' justifyContent='flex-end' xs={4}>
-                      <Grid item>
+                  <Grid container alignItems='center' justifyContent='flex-end' xs={3}>
                           <Typography>Short</Typography>
-                      </Grid>
-                      <Grid item> 
                           <Switch 
                           checked={c1LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
                           onChange={handleLoSChange1}
                           inputProps={{ 'aria-label': 'controlled' }}
                           />
-                      </Grid>
-                      <Grid item>
                           <Typography>Long</Typography>
-                      </Grid>
                   </Grid>            
               </Grid>
               </Box>
               {/* {// asset 2} */}
-              <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
+              <Box md={{ maxWidth: 'xl', margin: '0 auto' }}>
                   <Grid container spacing={3}>
                     <Grid item xs={4} style={{ marginLeft: '10px' }}> 
                               <TextField
@@ -501,36 +495,36 @@ export default function BasketForm(){
                               }}
                               />
                     </Grid>
-                    <Grid item xs={3}>
-                    <FormControl>
-                      <Select 
-                        displayEmpty
-                        onChange={handleChange2}
-                        inputProps={{ 'aria-label': 'Without label' }}
-                        >
-                        <MenuItem value=""><em>None</em></MenuItem>
-                          {data.map((option) => (
-                        <MenuItem key={option.id} value={option}>
-                          {option.name}
-                        </MenuItem>
-                      ))}
-                      </Select>
-                      <FormHelperText>Select basket token 2</FormHelperText>
-                    </FormControl>
+                    <Grid item xs={4}>
+                      <FormControl>
+                        <Select 
+                          displayEmpty
+                          onChange={handleChange2}
+                          inputProps={{ 'aria-label': 'Without label' }}
+                          >
+                          <MenuItem value=""><em>None</em></MenuItem>
+                            {data.map((option) => (
+                          <MenuItem key={option.id} value={option}>
+                            {option.name}
+                          </MenuItem>
+                        ))}
+                        </Select>
+                        <FormHelperText>Select basket token 2</FormHelperText>
+                      </FormControl>
                     </Grid>
-                    <Grid container alignItems='center' justifyContent='flex-end'  xs={4}>
+                    <Grid container alignItems='center' justifyContent='flex-end'  xs={3}>
                             <Typography>Short</Typography>
-                            <Switch 
-                                checked={c2LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
-                                onChange={handleLoSChange2}
-                                inputProps={{ 'aria-label': 'controlled' }}
-                            />
+                              <Switch 
+                                  checked={c2LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
+                                  onChange={handleLoSChange2}
+                                  inputProps={{ 'aria-label': 'controlled' }}
+                              />
                             <Typography>Long</Typography>
                     </Grid>
                   </Grid>
               </Box>
               {/* {// asset 3} */}
-                <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
+                <Box md={{ maxWidth: 'md', margin: '0 auto' }}>
                   <Grid container spacing={3}>
                   <Grid item xs={4} style={{ marginLeft: '10px' }}>
                       <TextField
@@ -546,7 +540,7 @@ export default function BasketForm(){
                       }}
                       />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                     <div >
                     <FormControl>
                       <Select 
@@ -566,7 +560,7 @@ export default function BasketForm(){
                     </FormControl>
                     </div>
                     </Grid>
-                    <Grid container alignItems='center' justifyContent='flex-end' xs={4}>
+                    <Grid container alignItems='center' justifyContent='flex-end' xs={3}>
                             <Typography>Short</Typography>
                             <Switch 
                                 checked={c3LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
@@ -579,7 +573,7 @@ export default function BasketForm(){
                 </Box>
               
               {/* {// asset 4} */}
-              <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
+              <Box md={{ maxWidth: 'md', margin: '0 auto' }}>
                   <Grid container spacing={3}>
                       <Grid item xs={4} style={{ marginLeft: '10px' }}>
                       <TextField
@@ -595,7 +589,7 @@ export default function BasketForm(){
                       }}
                       />
                       </Grid>
-                      <Grid item xs={3}> 
+                      <Grid item xs={4}> 
                       <div>
                       <FormControl>
                         <Select 
@@ -614,7 +608,7 @@ export default function BasketForm(){
                       </FormControl>
                       </div>
                       </Grid>
-                      <Grid container alignItems='center' justifyContent='flex-end' xs={4}>
+                      <Grid container alignItems='center' justifyContent='flex-end' xs={3}>
                               <Typography>Short</Typography>
                               <Switch 
                                   checked={c4LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
@@ -627,7 +621,7 @@ export default function BasketForm(){
               </Box>
 
               {/* {// asset 5} */}
-              <Box sx={{ border: '2px solid black', maxWidth: 'md', margin: '0 auto' }}>
+              <Box md={{ maxWidth: 'md', margin: '0 auto' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={4} style={{ marginLeft: '10px' }}>
                     <TextField
@@ -643,7 +637,7 @@ export default function BasketForm(){
                     }}
                     /> 
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                       <FormControl>
                       <Select 
                         displayEmpty
@@ -660,7 +654,7 @@ export default function BasketForm(){
                       <FormHelperText>Select basket token 5</FormHelperText>
                       </FormControl>
                     </Grid>
-                    <Grid container alignItems='center' justifyContent='flex-end' xs={4}>
+                    <Grid container alignItems='center' justifyContent='flex-end' xs={3}>
                             <Typography>Short</Typography>
                             <Switch 
                                 checked={c5LongOrShort === 'long'} // Set the checked state based on the value of 'checked'

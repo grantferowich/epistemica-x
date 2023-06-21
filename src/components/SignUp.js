@@ -54,6 +54,14 @@ const SignUp = () => {
         messagesArr.push('Invalid password.')
       }
 
+      if (password.length < 6){
+        messagesArr.push('Invalid password: password is too short.')
+      }
+      
+      if (password.length > 20) {
+        messagesArr.push('Invalid password: password is too long.')
+      }
+
       if (name === ' '){
         name = ''
         messagesArr.push('Invalid name.')
@@ -63,7 +71,6 @@ const SignUp = () => {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
         messagesArr.push('Invalid email.')
       }
-
 
       if (messagesArr.length > 0){
         event.preventDefault()
