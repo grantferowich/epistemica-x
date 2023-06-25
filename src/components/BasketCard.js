@@ -1,3 +1,15 @@
+/* 
+High level overview of this file: BasketCard.js
+Date: June 25, 2023
+On the /user-home page, the user will be able to view information about 
+all of the baskets the user has previously created.
+BasketCard.js is the file which populates information in each basket card. 
+Each basket card instance may have up to 5 assets included.
+(In the future, there will be a version of the application which enables users to put 
+an arbitrary number of assets in the basket.)
+
+*/
+
 import * as React from 'react';
 import { useState } from 'react';
 import Box from "@mui/material/Box";

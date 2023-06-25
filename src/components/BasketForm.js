@@ -1,3 +1,12 @@
+/* 
+High level overview of this file: BasketForm.js
+Date: June 25, 2023
+BasketForm.js is a file responsible for rendering the form after users click "Create basket."
+BasketForm.js is responsible for posting data to the /baskets API.
+BasketForm.js retrieves a list of asset names to render in the dropdown menu "select basket token 1/2/3/4/5"
+BasketForm.js renders the most recently created basket immediately after a user creates the basket.
+*/
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FormControl, FormHelperText, MenuItem, CssBaseline, Grid, Box, Container, Button, TextField, Typography, Select } from "@mui/material";
