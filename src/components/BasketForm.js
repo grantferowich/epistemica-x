@@ -22,6 +22,8 @@ export default function BasketForm(){
   const [data, setData] = useState([]);
   // const [query] = useState('react');
   const [handleSubmitFired, setHandleSubmitFired] = useState(false);
+
+
   // const dispatchFn = useDispatch();
   
   // constants
@@ -140,6 +142,11 @@ export default function BasketForm(){
   const [currency5APIKey, setCurrency5APIKey] = useState('');
   const [c5LongOrShort, setc5LongOrShort] = useState('long'); 
   const currency5Q = 0;
+
+
+  useEffect(() => {
+    let currArr = [currency1, currency2, currency3, currency4, currency5]
+  }, [currency1, currency2, currency3, currency4, currency5])
   
   // The basket object contains the crypto token names, initial basket value, historical date and quantity of crypto tokens.
   // All the basket data fields are from user inputs except the quantity values, which are calculated in state. 
@@ -473,7 +480,7 @@ export default function BasketForm(){
                           </MenuItem>
                         ))}
                         </Select>
-                        <FormHelperText>Select basket token 1</FormHelperText>
+                        <FormHelperText>Select asset for the basket</FormHelperText>
                       </FormControl>
                   </Grid>
                   <Grid container alignItems='center' justifyContent='flex-end' xs={3}>
@@ -518,7 +525,7 @@ export default function BasketForm(){
                           </MenuItem>
                         ))}
                         </Select>
-                        <FormHelperText>Select basket token 2</FormHelperText>
+                        <FormHelperText>Select asset for the basket</FormHelperText>
                       </FormControl>
                     </Grid>
                     <Grid container alignItems='center' justifyContent='flex-end'  xs={3}>
@@ -565,7 +572,7 @@ export default function BasketForm(){
                       ))}
 
                       </Select>
-                      <FormHelperText>Select basket token 3</FormHelperText>
+                      <FormHelperText>Select asset for the basket</FormHelperText>
                     </FormControl>
                     </div>
                     </Grid>
@@ -613,7 +620,7 @@ export default function BasketForm(){
                           </MenuItem>
                         ))}
                         </Select>
-                        <FormHelperText>Select basket token 4</FormHelperText>
+                        <FormHelperText>Select asset for the basket</FormHelperText>
                       </FormControl>
                       </div>
                       </Grid>
@@ -660,7 +667,7 @@ export default function BasketForm(){
                         </MenuItem>
                       ))}
                       </Select>
-                      <FormHelperText>Select basket token 5</FormHelperText>
+                      <FormHelperText>Select asset for the basket</FormHelperText>
                       </FormControl>
                     </Grid>
                     <Grid container alignItems='center' justifyContent='flex-end' xs={3}>

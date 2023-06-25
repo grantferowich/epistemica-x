@@ -1,3 +1,14 @@
+/* 
+High level overview of this file: Login.js
+Date: June 25, 2023
+
+The file esssentially handles a user logging in. 
+A user login attempt is matched with a post attempt to the /users api endpoint.
+Successfully login attempts bring users to the /user-home page.
+Unsuccessful login attempts deliber users error messages.
+
+*/
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';

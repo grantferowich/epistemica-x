@@ -1,4 +1,11 @@
-import React, { useEffect, useState } from "react";
+/* 
+The navigation bar obviously allows users to navigate to different parts of the application.
+The main pages available for the user who is logged in are the assets page,
+the create basket page, and the user home page.
+
+
+*/
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
