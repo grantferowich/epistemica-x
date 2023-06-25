@@ -1,3 +1,9 @@
+/* 
+High level overview of this file: FullTable.js
+Date: June 25, 2023
+FullTable.js is a file which basically sets the structure 
+of the asset table on the main page of the application.
+*/
 import React, {useState, useEffect} from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -38,23 +44,6 @@ columns = [ { id: 'Name', label: 'Name', minWidth: 170 },
 ];
 
 export default function FullTable(props) {
-
-  // const dispatchFn = useDispatch();
-
-  // const updateUserStore = (userObj) => {
-  //   let dataHM = userObj.data.userObj;
-  //   dispatchFn(setUserName(dataHM.name));
-  //   dispatchFn(setUserEmail(dataHM.email));
-  //   dispatchFn(setUserId(dataHM._id));
-  // }
-
-  // const loggedInUserObj = localStorage.getItem('user');
-  // console.log('loggedInUserObj', loggedInUserObj)
-  // if (loggedInUserObj !== null && loggedInUserObj.name) {
-  //     console.log('Someone is logged in...');
-  //     updateUserStore(loggedInUserObj);
-  // };
-
   const [maxHeightInt, setMaxHeightInt] = useState(500) 
 
   useEffect(()=>{
