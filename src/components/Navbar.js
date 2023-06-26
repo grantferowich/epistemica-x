@@ -22,7 +22,6 @@ const NavTabs = () => {
 
   const handleExit = (eventHM) => {
     eventHM.preventDefault()
-    
     dispatchFn(setUserName(''));
     dispatchFn(setUserEmail(''));
     dispatchFn(setUserId(''));

@@ -157,7 +157,12 @@ export default function BasketForm(){
   };
 
   const handleDateChange = event => {
-    setIndexDate(event.target.value);
+    let inputStr = event.target.value
+    let monthStr = inputStr.slice(0, 3)
+    let dayStr = inputStr.slice(3, 5)
+    let yearStr = inputStr.slice(6, 10)
+    let apiFormattedDateStr = dayStr+"-"+monthStr+yearStr
+    setIndexDate(apiFormattedDateStr);
   };
 
   const handleIBVChange = event => {
@@ -362,7 +367,55 @@ export default function BasketForm(){
       console.log('Error', errorHM.message)})
   }  
   
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
+    let messagesArr = [];
+    const data = new FormData(event.currentTarget)
+    const basketNameStr = data.get('basketName')   
+    const startingDateStr = data.get('startingDate')
+    const initialBasketValueInt = data.get('initialBasketValue')
+
+    const weight1Int = data.get('weight1')
+    const asset1Str = data.get('asset1')
+    const asset1LoSStr = data.get('asset1LoS')
+
+    const weight2Int = data.get('weight2')
+    const asset2Str = data.get('asset2')
+    const asset2LoSStr = data.get('asset2LoS')
+
+    const weight3Int = data.get('weight3')
+    const asset3Str = data.get('asset3')
+    const asset3LoSStr = data.get('asset3LoS')
+
+    const weight4Int = data.get('weight4')
+    const asset4Str = data.get('asset4')
+    const asset4LoSStr = data.get('asset4LoS')
+
+    const weight5Int = data.get('weight5')
+    const asset5Str = data.get('asset5')
+    const asset5LoSStr = data.get('asset5LoS')
+
+    const passwordStr = data.get('password') 
+
+    if (basketNameStr === '' || basketNameStr === null){
+      messagesArr.push('Invalid basket name. The basket name field must not be empty.')
+    }
+
+    if (startingDateStr === '' || startingDateStr === null){
+      messagesArr.push('Invalid starting date. The starting date field must not be empty.')
+    }
+
+    if (startingDateStr){
+
+      messagesArr.push('Invalid email.')
+    }
+
+
+    // if (messagesArr.length > 0){
+    //   event.preventDefault();
+    //   setErrorMessageStr(messagesArr[messagesArr.length - 1])
+    //   return
+    // }
+
     event.preventDefault();
     await discoverCurencies(basketData); 
   }
@@ -417,6 +470,7 @@ export default function BasketForm(){
                 <TextField
                   id="basketName"
                   label="Basket Name"
+                  name="basketName"
                   fullWidth
                   required
                   onChange={event => {
@@ -426,12 +480,13 @@ export default function BasketForm(){
               </Grid>
               <Grid item xs={12} >
                 <TextField
-                  id="standard-helperText"
+                  id="startingDate"
+                  name="startingDate"
                   label="Starting date"
                   fullWidth
                   required
                   defaultValue=""
-                  helperText="DD-MM-YYYY"
+                  helperText="MM-DD-YYYY"
                   onChange={event => {
                     handleDateChange(event);
                   }}
@@ -439,7 +494,8 @@ export default function BasketForm(){
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  id="initial-basket-value"
+                  id="initialBasketValue"
+                  name="initialBasketValue"
                   label="Initial Basket $ Value"
                   required
                   fullWidth
@@ -455,6 +511,7 @@ export default function BasketForm(){
                   <Grid item xs={4} style={{ marginLeft: '10px' }}>
                       <TextField
                       id="weight1"
+                      name="weight1"
                       label="Weight (%)"
                       variant="filled"
                       type="number"
@@ -472,6 +529,8 @@ export default function BasketForm(){
                           displayEmpty
                           onChange={handleChange1}
                           inputProps={{ 'aria-label': 'Without label' }}
+                          id="asset1"
+                          name="asset1"
                           >
                           <MenuItem value=""><em>None</em></MenuItem>
                             {data.map((option) => (
@@ -485,7 +544,8 @@ export default function BasketForm(){
                   </Grid>
                   <Grid container alignItems='center' justifyContent='flex-end' xs={3}>
                           <Typography>Short</Typography>
-                          <Switch 
+                          <Switch id="asset1LoS"
+                          name="asset1LoS"
                           checked={c1LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
                           onChange={handleLoSChange1}
                           inputProps={{ 'aria-label': 'controlled' }}
@@ -500,6 +560,7 @@ export default function BasketForm(){
                     <Grid item xs={4} style={{ marginLeft: '10px' }}> 
                               <TextField
                               id="weight2"
+                              name="weight2"
                               label="Weight (%)"
                               variant="filled"
                               type="number"
@@ -515,6 +576,8 @@ export default function BasketForm(){
                       <FormControl>
                         <Select 
                           displayEmpty
+                          id="asset2"
+                          name="asset2"
                           onChange={handleChange2}
                           inputProps={{ 'aria-label': 'Without label' }}
                           >
@@ -531,6 +594,8 @@ export default function BasketForm(){
                     <Grid container alignItems='center' justifyContent='flex-end'  xs={3}>
                             <Typography>Short</Typography>
                               <Switch 
+                                  id="asset2LoS"
+                                  name="asset2LoS"
                                   checked={c2LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
                                   onChange={handleLoSChange2}
                                   inputProps={{ 'aria-label': 'controlled' }}
@@ -545,6 +610,7 @@ export default function BasketForm(){
                   <Grid item xs={4} style={{ marginLeft: '10px' }}>
                       <TextField
                       id="weight3"
+                      name="weight3"
                       label="Weight (%)"
                       variant="filled"
                       type="number"
@@ -561,6 +627,8 @@ export default function BasketForm(){
                     <FormControl>
                       <Select 
                         displayEmpty
+                        name="asset3"
+                        id="asset3"
                         onChange={handleChange3}
                         inputProps={{ 'aria-label': 'Without label' }}
                         >
@@ -579,6 +647,8 @@ export default function BasketForm(){
                     <Grid container alignItems='center' justifyContent='flex-end' xs={3}>
                             <Typography>Short</Typography>
                             <Switch 
+                                id="asset3LoS"
+                                name="asset3LoS"
                                 checked={c3LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
                                 onChange={handleLoSChange3}
                                 inputProps={{ 'aria-label': 'controlled' }}
@@ -594,6 +664,7 @@ export default function BasketForm(){
                       <Grid item xs={4} style={{ marginLeft: '10px' }}>
                       <TextField
                       id="weight4"
+                      name="weight4"
                       label="Weight (%)"
                       variant="filled"
                       type="number"
@@ -610,6 +681,8 @@ export default function BasketForm(){
                       <FormControl>
                         <Select 
                           displayEmpty
+                          id="asset4"
+                          name="asset4"
                           onChange={handleChange4}
                           inputProps={{ 'aria-label': 'Without label' }}
                           >
@@ -627,6 +700,8 @@ export default function BasketForm(){
                       <Grid container alignItems='center' justifyContent='flex-end' xs={3}>
                               <Typography>Short</Typography>
                               <Switch 
+                                  id="asset4LoS"
+                                  name="asset4LoS"
                                   checked={c4LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
                                   onChange={handleLoSChange4}
                                   inputProps={{ 'aria-label': 'controlled' }}
@@ -642,6 +717,7 @@ export default function BasketForm(){
                     <Grid item xs={4} style={{ marginLeft: '10px' }}>
                     <TextField
                     id="weight5"
+                    name="weight5"
                     label="Weight (%)"
                     variant="filled"
                     type="number"
@@ -657,6 +733,8 @@ export default function BasketForm(){
                       <FormControl>
                       <Select 
                         displayEmpty
+                        id="asset5"
+                        name="asset5"
                         onChange={handleChange5}
                         inputProps={{ 'aria-label': 'Without label' }}
                         >
@@ -673,6 +751,8 @@ export default function BasketForm(){
                     <Grid container alignItems='center' justifyContent='flex-end' xs={3}>
                             <Typography>Short</Typography>
                             <Switch 
+                                id="asset5LoS"
+                                name="asset5LoS"
                                 checked={c5LongOrShort === 'long'} // Set the checked state based on the value of 'checked'
                                 onChange={handleLoSChange5}
                                 inputProps={{ 'aria-label': 'controlled' }}
