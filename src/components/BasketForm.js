@@ -1,30 +1,30 @@
 /* 
 High level overview of this file: BasketForm.js
 Date: June 25, 2023
-BasketForm.js is a file responsible for rendering the form after users click "Create basket."
-BasketForm.js is responsible for posting data to the /baskets API.
-BasketForm.js retrieves a list of asset names to render in the dropdown menu "select basket token 1/2/3/4/5"
-BasketForm.js renders the most recently created basket immediately after a user creates the basket.
+1. BasketForm.js is a file responsible for rendering the form after users click "Create basket."
+2. BasketForm.js is responsible for posting data to the /baskets API.
+3. BasketForm.js retrieves a list of asset names to render in the dropdown menu "select basket token 1/2/3/4/5"
+4. BasketForm.js renders the most recently created basket immediately after a user creates the basket.
+When the user enters invalid inputs, there will be an error message 
+returned and the basket will not post to the API.
 */
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FormControl, FormHelperText, MenuItem, CssBaseline, Grid, Box, Container, Button, TextField, Typography, Select } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Copyright from "./Copyright";
 import { useDispatch, useSelector } from "react-redux";
 import Switch from '@mui/material/Switch';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 export default function BasketForm(){
-
   const [data, setData] = useState([]);
-  // const [query] = useState('react');
   const [handleSubmitFired, setHandleSubmitFired] = useState(false);
-
-
-  // const dispatchFn = useDispatch();
+  const navigateFn = useNavigate();
+  const dispatchFn = useDispatch();
   
   // constants
   // const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/last-record';
@@ -109,6 +109,8 @@ export default function BasketForm(){
   // state variables set by user
   const [basketName, setBasketName] = useState('');
   const [indexDate, setIndexDate] = useState('');
+  const [errorMessageStr, setErrorMessageStr] = useState('')
+
   const [initialBasketValue, setInitialBasketValue] = useState('');
   const [presentBasketValue, setPresentBasketValue] = useState(0);
   const [percentReturn, setPercentReturn ] = useState(0);
@@ -372,81 +374,116 @@ export default function BasketForm(){
     const data = new FormData(event.currentTarget)
     const basketNameStr = data.get('basketName')   
     const startingDateStr = data.get('startingDate')
-    const initialBasketValueInt = data.get('initialBasketValue')
+    const initialBasketValueStr = data.get('initialBasketValue')
 
-    const weight1Int = data.get('weight1')
+    const weight1Int = parseInt(data.get('weight1'))
     const asset1Str = data.get('asset1')
     const asset1LoSStr = data.get('asset1LoS')
 
-    const weight2Int = data.get('weight2')
+    const weight2Int = parseInt(data.get('weight2'))
     const asset2Str = data.get('asset2')
     const asset2LoSStr = data.get('asset2LoS')
 
-    const weight3Int = data.get('weight3')
+    const weight3Int = parseInt(data.get('weight3'))
     const asset3Str = data.get('asset3')
     const asset3LoSStr = data.get('asset3LoS')
 
-    const weight4Int = data.get('weight4')
+    const weight4Int = parseInt(data.get('weight4'))
     const asset4Str = data.get('asset4')
     const asset4LoSStr = data.get('asset4LoS')
 
-    const weight5Int = data.get('weight5')
+    const weight5Int = parseInt(data.get('weight5'))
     const asset5Str = data.get('asset5')
     const asset5LoSStr = data.get('asset5LoS')
 
     const passwordStr = data.get('password') 
-
+    
+    // Error scenarios
+    // basket name empty
     if (basketNameStr === '' || basketNameStr === null){
       messagesArr.push('Invalid basket name. The basket name field must not be empty.')
     }
 
+    // Empty starting date
     if (startingDateStr === '' || startingDateStr === null){
       messagesArr.push('Invalid starting date. The starting date field must not be empty.')
     }
 
-    if (startingDateStr){
-
-      messagesArr.push('Invalid email.')
+    const monthInt = parseInt(startingDateStr.slice(0, 3))
+    const dayInt = parseInt(startingDateStr.slice(3, 5))
+    const yearInt = parseInt(startingDateStr.slice(6, 10))
+    let now = new Date();
+    let currentYearInt = now.getFullYear()
+    
+    // Starting date numbers invalid
+    if (monthInt < 1 || monthInt > 12 || dayInt < 1 || dayInt > 31 || yearInt > currentYearInt ){
+      messagesArr.push('Invalid date.');
     }
 
+    // Starting date is too early
+    if (yearInt < 2014){
+      messagesArr.push('The earliest date you can enter is 01-01-2014.');
+    }
 
-    // if (messagesArr.length > 0){
-    //   event.preventDefault();
-    //   setErrorMessageStr(messagesArr[messagesArr.length - 1])
-    //   return
-    // }
+    // initial basket value is negative
+    if (initialBasketValueStr < 0){
+      messagesArr.push('The initial basket value must be greater than 0.')
+    }
+
+    if (isNaN(initialBasketValueStr)){
+      messagesArr.push('The initial basket value must be a number.')
+    }
+
+    if (isNaN(weight1Int) || isNaN(weight2Int) || isNaN(weight3Int) || isNaN(weight4Int) || isNaN(weight5Int)) {
+      messagesArr.push('The weight(s) must be numbers.')
+    }
+
+    if (isNaN(weight1Int) || isNaN(weight2Int) || isNaN(weight3Int) || isNaN(weight4Int) || isNaN(weight5Int)) {
+      messagesArr.push('The weight(s) must be numbers.')
+    }
+
+    if (weight1Int < 0 || weight1Int > 100 || weight2Int < 0 || weight2Int > 100 || weight3Int < 0 || weight3Int > 100 || weight4Int < 0 || weight5Int > 100){
+      messagesArr.push('The weights must be valid.')
+    }
+
+    let totalWeightInt = weight1Int + weight2Int + weight3Int + weight4Int + weight5Int
+    if (parseInt(totalWeightInt) !== 100){
+      messagesArr.push('The total weight of the basket must equal 100%.')
+    }
+
+    const numbersAfterPeriodInt = initialBasketValueStr.split(".")[1]
+    if (numbersAfterPeriodInt.length > 2){
+      messagesArr.push('The initial basket value must only have two decimal places.')
+    }
+
+    if (messagesArr.length > 0){
+      event.preventDefault();
+      setErrorMessageStr(messagesArr[messagesArr.length - 1])
+      return
+    }
 
     event.preventDefault();
     await discoverCurencies(basketData); 
+    navigateFn('/view-single-basket-page');
   }
 
   const setHandleSubmitFiredToFalse = () => {
     setHandleSubmitFired(false)
   }
 
-  const updateCard = (basketData) => {
-  const card = ( 
-    <React.Fragment>
-      <><CardContent>
-         <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-           {basketData.basketNameStr}
-         </Typography>
-         <Typography variant="h5" component="div">
-           Return: {percentReturn.toString().slice(0,5)}%
-         </Typography>
-         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-           Present basket value = ${presentBasketValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
-           <br></br>
-           Basket value on {indexDate} = ${initialBasketValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
-         </Typography>
-         <Typography>
-         </Typography>
-       </CardContent></>
-    </React.Fragment>
-  );
-  return card
-  }
 
+  // /* 
+  
+  // {errorMessageStr && <Stack sx={{ width: '100%' }} spacing={2}>
+  // <Alert severity="error">{errorMessageStr}</Alert>
+  // </Stack>}
+
+
+  // (errorMessageStr) ? (<Stack sx={{ width: '100%' }} spacing={2}>
+  //    <Alert severity="error">{errorMessageStr}</Alert>
+  //    </Stack>) : (null)
+  
+  // */
   return (
     (handleSubmitFired === false) ? (
     <div style={{backgroundColor: '#cbe3ff'}}>
@@ -638,7 +675,6 @@ export default function BasketForm(){
                           {option.name}
                         </MenuItem>
                       ))}
-
                       </Select>
                       <FormHelperText>Select asset for the basket</FormHelperText>
                     </FormControl>
@@ -779,7 +815,12 @@ export default function BasketForm(){
       </div>
 
     </Container>
-    </div>) : (
+    </div>) :
+    
+    
+    
+    
+    (
       <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>      
         <div style={{ marginBottom: '600px'}}>
         <Box sx={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}>

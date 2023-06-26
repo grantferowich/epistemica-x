@@ -1,11 +1,11 @@
-import { SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL, SET_COIN_LIST } from './actionTypes';
+import { SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL, SET_COIN_LIST } from '../actions/systemActions';
 
 const initialState = {
-  hoursSinceLastExternalAPICall: 0,
-  coinList: []
+  hoursSinceLastExternalAPICall: '',
+  coinList: ''
 };
 
-const reducer = (state = initialState, action) => {
+const systemReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL:
       return {
@@ -22,4 +22,4 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-export default reducer;
+export default systemReducer;

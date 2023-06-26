@@ -1,4 +1,4 @@
-import { SET_USER_BASKETS_ARR, SET_USER_EMAIL, SET_USER_ID, SET_USER_NAME, SET_USER_LOGGED_IN } from "../actions/userActions";
+import { SET_USER_BASKETS_ARR, SET_USER_EMAIL, SET_USER_ID, SET_USER_NAME, SET_USER_LOGGED_IN, SET_LAST_BASKET_DATA } from "../actions/userActions";
 // Define initial state
 const initialStateHM = {
     name: '',
@@ -6,6 +6,7 @@ const initialStateHM = {
     id: '', 
     basketsArr: '',
     userLoggedIn: '',
+    lastBasketData: ''
 };
 
 // Define the user reducer
@@ -36,6 +37,11 @@ const userReducer = ( stateHM = initialStateHM, action) => {
                 ...stateHM,
                 userLoggedIn: action.payload
             };
+        case SET_LAST_BASKET_DATA:
+                return {
+                ...stateHM,
+                lastBasketData: action.payload
+                }
         default: 
             return stateHM
     }

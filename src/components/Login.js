@@ -53,23 +53,20 @@ const Login = () => {
   }, [userLoggedIn])
 
   const handleSubmit = async (event) => {
-    
-    
     let messagesArr = [];
     const data = new FormData(event.currentTarget)
     const emailStr = data.get('email')   
     const passwordStr = data.get('password') 
     if (emailStr === '' || emailStr === null){
-      messagesArr.push('Invalid email.')
-
+      messagesArr.push('Invalid email.');
     }
 
     if (passwordStr === '' || passwordStr === null){
-      messagesArr.push('Invalid password.')
+      messagesArr.push('Invalid password.');
     }
     
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr)){
-      messagesArr.push('Invalid email.')
+      messagesArr.push('Invalid email.');
     }
 
 

@@ -17,7 +17,6 @@ import { setUserEmail, setUserId, setUserLoggedIn, setUserName } from '../action
 
 const NavTabs = () => {   
   const userLoggedIn = useSelector(state => state.user.userLoggedIn)
-  console.log('Navbar: userLoggedIn:', userLoggedIn)
   const dispatchFn = useDispatch();
 
   const handleExit = (eventHM) => {

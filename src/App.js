@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import NavBar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from "./components/Login";
@@ -7,7 +7,7 @@ import SignUp from "./components/SignUp";
 import UserHome from "./components/UserHome";
 import BasketForm from "./components/BasketForm";
 import SignOutPage from "./components/SignOutPage";
-import { useNavigate } from "react-router-dom";
+import ViewSingleBasketPage from "./components/ViewSingleBasketPage";
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
             <Route exact path='/user-home' element={<UserHome/>}/>
             <Route exact path='/create-basket' element={<BasketForm/>}/>
             <Route exact path='/signout-page' element={<SignOutPage/>}/>
+            <Route exact path='/view-single-basket-page' element={<ViewSingleBasketPage/>}/>
           </Routes>
         </div>
       </Router>
