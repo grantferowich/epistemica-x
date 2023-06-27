@@ -25,22 +25,27 @@ export default function BasketForm(){
   const [handleSubmitFired, setHandleSubmitFired] = useState(false);
   const navigateFn = useNavigate();
   const dispatchFn = useDispatch();
+  const coinListArr = useSelector(state => state.system.coinList);
   
-  // constants
-  // const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/last-record';
-
-  // const postCoinsAPIStr = 'https://epistemica-x-db.vercel.app/api/coin/post';
-  // const postNewTimeAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/time/post';
-  const fetchDataArr = async () => {
-    const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250';
-    let coinHM = await axios.get(get250CoinsAPIStr)
+  useEffect(() => {
     
-    // const get250CoinsHM = await axios.get(get250CoinsAPIStr);
-    //       // ensure menu options are sorted by market cap rank
-    const coinListArr = coinHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
-    setData(coinListArr)
-  }
-  fetchDataArr()
+    const fetchDataArr = async () => {
+      
+
+      if (coinListArr !== '' && coinListArr.length > 0){
+        setData(coinListArr)
+        return
+      } else {
+        const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250';
+        let coinHM = await axios.get(get250CoinsAPIStr)
+        let coinArray = coinHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
+        setData(coinArray)
+        return 
+      }
+    }
+    fetchDataArr()
+  }, [])
+  
   
   // DATA MANAGEMENT SYSTEM (DMS)
   // useEffect(() => {
@@ -473,19 +478,14 @@ export default function BasketForm(){
 
 
   // /* 
-  
+  // Error message render logic 
   // {errorMessageStr && <Stack sx={{ width: '100%' }} spacing={2}>
   // <Alert severity="error">{errorMessageStr}</Alert>
   // </Stack>}
-
-
-  // (errorMessageStr) ? (<Stack sx={{ width: '100%' }} spacing={2}>
-  //    <Alert severity="error">{errorMessageStr}</Alert>
-  //    </Stack>) : (null)
   
   // */
   return (
-    (handleSubmitFired === false) ? (
+   
     <div style={{backgroundColor: '#cbe3ff'}}>
     <Container component="main" maxWidth="xl">
       <CssBaseline />
@@ -746,7 +746,6 @@ export default function BasketForm(){
                       </Grid>
                   </Grid>   
               </Box>
-
               {/* {// asset 5} */}
               <Box md={{ maxWidth: 'md', margin: '0 auto' }}>
                 <Grid container spacing={3}>
@@ -813,33 +812,7 @@ export default function BasketForm(){
         </Box>
         <Copyright/>
       </div>
-
-    </Container>
-    </div>) :
-    
-    
-    
-    
-    (
-      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>      
-        <div style={{ marginBottom: '600px'}}>
-        <Box sx={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}>
-          <Card>
-             {updateCard(basketData)}
-          </Card>
-        </Box>
-        <Box sx={{ textAlign: 'center'}}>
-        <div>
-          <div>
-            <Link to='/'>
-              <Button variant="contained">View all assets</Button>
-            </Link>
-            <Button variant="contained" onClick={setHandleSubmitFiredToFalse} >Create a new basket</Button>
-          </div>
-        </div>  
-        <Copyright />
-         </Box>
-      </div>
-    </div>)
+      </Container>
+    </div>
   );
 }
