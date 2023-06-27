@@ -11,8 +11,6 @@ export default function FullTableContainer() {
   const [rows, setRows] = useState([]);
   const [pageUpToF, setPageUpToF] = useState(false);
   const coinListArr = useSelector(state => state.system.coinList);
-  console.log('coinListArr', coinListArr)
-  
   
   const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/last-record';
   const postCoinsAPIStr = 'https://epistemica-x-db.vercel.app/api/coin/post';
@@ -31,7 +29,6 @@ export default function FullTableContainer() {
     ]);
     setRows(rows)
     setPageUpToF(true);
-    console.log('FullTableContainer.js. Line 28. Variable check. newRows.', rows)
   };
 
   useEffect(() => {
@@ -90,7 +87,6 @@ export default function FullTableContainer() {
             setCoinList(apiDataArr)
             dispatchFn({type: 'SET_COIN_LIST', payload: apiDataArr});
             dispatchFn({type: 'SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL', payload: 0});
-            console.log(apiDataArr)
             generateDataTable(apiDataArr)
           }).catch(errorHM => {
             console.log('Error running fetchData() inside BasketForm.js.')
@@ -103,7 +99,6 @@ export default function FullTableContainer() {
       } else {
         // if the redux store contains the coins list, 
         // there's no need to fetch the coins from the local API
-        
         if (coinListArr !== undefined && coinListArr.length > 0 ) {
           console.log('//// RETRIEVING FUlL TABLE FROM REDUX STORE');
           const fullTableDataSortedArr = coinListArr.sort((a, b) => a.market_cap_rank - b.market_cap_rank);

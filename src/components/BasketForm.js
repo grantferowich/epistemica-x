@@ -28,10 +28,7 @@ export default function BasketForm(){
   const coinListArr = useSelector(state => state.system.coinList);
   
   useEffect(() => {
-    
     const fetchDataArr = async () => {
-      
-
       if (coinListArr !== '' && coinListArr.length > 0){
         setData(coinListArr)
         return
@@ -381,23 +378,25 @@ export default function BasketForm(){
     const startingDateStr = data.get('startingDate')
     const initialBasketValueStr = data.get('initialBasketValue')
 
-    const weight1Int = parseInt(data.get('weight1'))
+    const weight1Int = data.get('weight1')
+    console.log('weight1Int', weight1Int)
+    console.log(typeof weight1Int)
     const asset1Str = data.get('asset1')
     const asset1LoSStr = data.get('asset1LoS')
 
-    const weight2Int = parseInt(data.get('weight2'))
+    const weight2Int = data.get('weight2')
     const asset2Str = data.get('asset2')
     const asset2LoSStr = data.get('asset2LoS')
 
-    const weight3Int = parseInt(data.get('weight3'))
+    const weight3Int = data.get('weight3')
     const asset3Str = data.get('asset3')
     const asset3LoSStr = data.get('asset3LoS')
 
-    const weight4Int = parseInt(data.get('weight4'))
+    const weight4Int = data.get('weight4')
     const asset4Str = data.get('asset4')
     const asset4LoSStr = data.get('asset4LoS')
 
-    const weight5Int = parseInt(data.get('weight5'))
+    const weight5Int = data.get('weight5')
     const asset5Str = data.get('asset5')
     const asset5LoSStr = data.get('asset5LoS')
 
@@ -405,7 +404,7 @@ export default function BasketForm(){
     
     // Error scenarios
     // basket name empty
-    if (basketNameStr === '' || basketNameStr === null){
+    if (basketNameStr === '' || basketNameStr === null || basketNameStr.length === 0){
       messagesArr.push('Invalid basket name. The basket name field must not be empty.')
     }
 
@@ -439,57 +438,67 @@ export default function BasketForm(){
       messagesArr.push('The initial basket value must be a number.')
     }
 
-    if (isNaN(weight1Int) || isNaN(weight2Int) || isNaN(weight3Int) || isNaN(weight4Int) || isNaN(weight5Int)) {
+    if (isNaN(weight1Int)) {
       messagesArr.push('The weight(s) must be numbers.')
     }
 
-    if (isNaN(weight1Int) || isNaN(weight2Int) || isNaN(weight3Int) || isNaN(weight4Int) || isNaN(weight5Int)) {
-      messagesArr.push('The weight(s) must be numbers.')
-    }
-
-    if (weight1Int < 0 || weight1Int > 100 || weight2Int < 0 || weight2Int > 100 || weight3Int < 0 || weight3Int > 100 || weight4Int < 0 || weight5Int > 100){
+    if (weight1Int < 0 || weight1Int > 100){
       messagesArr.push('The weights must be valid.')
     }
 
-    let totalWeightInt = weight1Int + weight2Int + weight3Int + weight4Int + weight5Int
+
+    let totalWeightInt = parseInt(weight1Int) + parseInt(weight2Int) + parseInt(weight3Int) + parseInt(weight4Int) + parseInt(weight5Int)
+
     if (parseInt(totalWeightInt) !== 100){
-      messagesArr.push('The total weight of the basket must equal 100%.')
+      messagesArr.push('The total weight of the basket must equal 100.')
     }
 
-    const numbersAfterPeriodInt = initialBasketValueStr.split(".")[1]
-    if (numbersAfterPeriodInt.length > 2){
-      messagesArr.push('The initial basket value must only have two decimal places.')
+    if (initialBasketValueStr.includes(".")){
+      const numbersAfterPeriodInt = initialBasketValueStr.split(".")[1]
+      if (numbersAfterPeriodInt.length > 2){
+        messagesArr.push('The initial basket value must only have two decimal places.')
+      }
     }
 
+    if (isNaN(initialBasketValueStr)){
+      messagesArr.push("The initial basket value must be a number.")
+    }
+    
+
+    console.log('messages', messagesArr)
     if (messagesArr.length > 0){
+      console.log('messages', messagesArr)
       event.preventDefault();
-      setErrorMessageStr(messagesArr[messagesArr.length - 1])
+      setErrorMessageStr(messagesArr[0])
+      console.log('Yello!!!')
       return
+    } else {
+      event.preventDefault();
+      await discoverCurencies(basketData); 
+      navigateFn('/view-single-basket-page');
     }
 
-    event.preventDefault();
-    await discoverCurencies(basketData); 
-    navigateFn('/view-single-basket-page');
+   
   }
 
-  const setHandleSubmitFiredToFalse = () => {
-    setHandleSubmitFired(false)
-  }
+  // const setHandleSubmitFiredToFalse = () => {
+  //   setHandleSubmitFired(false)
+  // }
 
 
   // /* 
   // Error message render logic 
-  // {errorMessageStr && <Stack sx={{ width: '100%' }} spacing={2}>
-  // <Alert severity="error">{errorMessageStr}</Alert>
-  // </Stack>}
+ 
   
   // */
   return (
-   
+
+    
     <div style={{backgroundColor: '#cbe3ff'}}>
     <Container component="main" maxWidth="xl">
       <CssBaseline />
       <div style={{ width: '60%', maxWidth: '1000px', margin: '0 auto'}}>
+      
         <Typography component="h1" variant="h5" style={{ margin: '20px 0' }}>
           Build Your Basket
         </Typography>
@@ -504,6 +513,9 @@ export default function BasketForm(){
           >
             <Grid container spacing={1} style={{alignItems: 'center'}}>
               <Grid item xs={12}>
+              {errorMessageStr && <Stack sx={{ width: '100%' }} spacing={2}>
+      <Alert severity="error">{errorMessageStr}</Alert>
+      </Stack>}
                 <TextField
                   id="basketName"
                   label="Basket Name"
@@ -552,6 +564,7 @@ export default function BasketForm(){
                       label="Weight (%)"
                       variant="filled"
                       type="number"
+                      defaultValue={0}
                       onChange={event => {
                       handleWeight1(event);
                       }}
@@ -601,6 +614,7 @@ export default function BasketForm(){
                               label="Weight (%)"
                               variant="filled"
                               type="number"
+                              defaultValue={0}
                               onChange={event => {
                                 handleWeight2(event);
                               }}
@@ -651,6 +665,7 @@ export default function BasketForm(){
                       label="Weight (%)"
                       variant="filled"
                       type="number"
+                      defaultValue={0}
                       onChange={event => {
                       handleWeight3(event);
                       }}
@@ -704,6 +719,7 @@ export default function BasketForm(){
                       label="Weight (%)"
                       variant="filled"
                       type="number"
+                      defaultValue={0}
                       onChange={event => {
                         handleWeight4(event);
                       }}
@@ -756,6 +772,7 @@ export default function BasketForm(){
                     label="Weight (%)"
                     variant="filled"
                     type="number"
+                    defaultValue={0}
                     onChange={event => {
                       handleWeight5(event);
                     }}
