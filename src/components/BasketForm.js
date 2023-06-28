@@ -15,14 +15,13 @@ import { FormControl, FormHelperText, MenuItem, CssBaseline, Grid, Box, Containe
 import Copyright from "./Copyright";
 import { useDispatch, useSelector } from "react-redux";
 import Switch from '@mui/material/Switch';
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import { setLastBasketData } from "../actions/userActions";
 
 export default function BasketForm(){
   const [data, setData] = useState([]);
-  const [handleSubmitFired, setHandleSubmitFired] = useState(false);
   const navigateFn = useNavigate();
   const dispatchFn = useDispatch();
   const coinListArr = useSelector(state => state.system.coinList);
@@ -41,7 +40,7 @@ export default function BasketForm(){
       }
     }
     fetchDataArr()
-  }, [])
+  }, [coinListArr])
   
   
   // DATA MANAGEMENT SYSTEM (DMS)
@@ -339,9 +338,7 @@ export default function BasketForm(){
       const pctReturn = (100 * (presentBasketValue - initialBasketValue) / initialBasketValue);
       setPercentReturn(pctReturn)
       basketData.percentReturnInt = pctReturn;
-      setHandleSubmitFired(true);
       sendPostRequestToAPI(basketData);
-      updateCard(basketData)
   });
 
   const discoverCurencies = async () => {
@@ -365,7 +362,10 @@ export default function BasketForm(){
       }
     })
     .then((responseHM) => {
+      console.log('yello!!')
+      dispatchFn(setLastBasketData(responseHM.data))
       console.log(responseHM.data)
+      navigateFn('/view-single-basket-page');
     })
     .catch((errorHM) => {
       console.log('Error', errorHM.message)})
@@ -474,31 +474,17 @@ export default function BasketForm(){
       return
     } else {
       event.preventDefault();
+      console.log('Yello!!!')
       await discoverCurencies(basketData); 
-      navigateFn('/view-single-basket-page');
+      
     }
-
-   
   }
 
-  // const setHandleSubmitFiredToFalse = () => {
-  //   setHandleSubmitFired(false)
-  // }
-
-
-  // /* 
-  // Error message render logic 
- 
-  
-  // */
   return (
-
-    
     <div style={{backgroundColor: '#cbe3ff'}}>
     <Container component="main" maxWidth="xl">
       <CssBaseline />
       <div style={{ width: '60%', maxWidth: '1000px', margin: '0 auto'}}>
-      
         <Typography component="h1" variant="h5" style={{ margin: '20px 0' }}>
           Build Your Basket
         </Typography>
@@ -514,8 +500,8 @@ export default function BasketForm(){
             <Grid container spacing={1} style={{alignItems: 'center'}}>
               <Grid item xs={12}>
               {errorMessageStr && <Stack sx={{ width: '100%' }} spacing={2}>
-      <Alert severity="error">{errorMessageStr}</Alert>
-      </Stack>}
+              <Alert severity="error">{errorMessageStr}</Alert>
+              </Stack>}
                 <TextField
                   id="basketName"
                   label="Basket Name"
@@ -631,7 +617,7 @@ export default function BasketForm(){
                           name="asset2"
                           onChange={handleChange2}
                           inputProps={{ 'aria-label': 'Without label' }}
-                          >
+                        >
                           <MenuItem value=""><em>None</em></MenuItem>
                             {data.map((option) => (
                           <MenuItem key={option.id} value={option}>
@@ -708,7 +694,6 @@ export default function BasketForm(){
                     </Grid>
                   </Grid>
                 </Box>
-              
               {/* {// asset 4} */}
               <Box md={{ maxWidth: 'md', margin: '0 auto' }}>
                   <Grid container spacing={3}>
