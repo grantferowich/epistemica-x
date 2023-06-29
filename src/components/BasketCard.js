@@ -67,11 +67,11 @@ export default function BasketCard({basketHM}) {
 
   return (
     <div>
-      <Box className='basket-card'>
+      <Box className='basket-card' style={{ width: '450px', marginLeft: '25px' }}>
           <Card variant="outlined">
               <div style={{ display: 'flex', justifyContent: 'space-between'}}> 
                 <CardContent>
-            <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+            <Typography md={{ fontSize: 20 }} color="text.secondary" gutterBottom>
                 {basketHM.basketNameStr}
             </Typography>
             <Typography variant="h5" component="div">
@@ -94,8 +94,10 @@ export default function BasketCard({basketHM}) {
               ))} 
              </Typography>
             </CardContent>
-            <div style={{ marginTop: '20px', marginRight: '4px'}}>
-                <Button variant='contained' onClick={handleDelete}>Delete x</Button>
+            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+              <div style={{ marginTop: '20px', marginRight: '4px'}}>
+                  <Button variant='contained' onClick={handleDelete}>Delete x</Button>
+              </div>
             </div>
             </div>
             </Card>
