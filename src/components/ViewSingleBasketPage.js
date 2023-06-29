@@ -1,9 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import { Typography } from '@mui/material';
-import { Box, Link, Button } from '@mui/material'
+import { Box } from '@mui/material'
 import Copyright from './Copyright';
 import BasketCard from './BasketCard';
 export default function ViewSingleBasketPage() {
