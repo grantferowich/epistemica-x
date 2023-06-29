@@ -9,7 +9,7 @@ import BasketCard from './BasketCard';
 export default function ViewSingleBasketPage() {
   const lastBasketData = useSelector(state => state.user.lastBasketData)
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "50vh" }}>
     <div> 
       <div>
         <h3>Here is the basket you just created!</h3>
@@ -19,12 +19,6 @@ export default function ViewSingleBasketPage() {
           <div style={{margin: '20px 0',  }}>
             <div>
             <BasketCard basketHM={lastBasketData} />
-              <Link to='/'>
-                <Button variant="contained">View all assets</Button>
-              </Link>
-              <Link to="/create-basket">
-              <Button variant="contained">Create a new basket</Button>
-              </Link>
             </div>
           </div>  
           <Copyright />
