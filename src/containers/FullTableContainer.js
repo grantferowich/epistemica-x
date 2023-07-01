@@ -1,3 +1,20 @@
+/* 
+The full table container component
+High level overview
+The component is responsible for retrieving the data every 24 hours.
+The component implements a data management system.
+I was calling an external API (the coingecko api) too frequently during development,
+which slowed down developer velocity. Here's the solution I implemented. Every 24 hours, I retrieve a 
+new version of the table data from the external API. 
+I store that data on the /coins MongoDB API.
+Any user who reaches the page will see the table data from the MongoDB API,
+which has no rate limits. For users who are on the page, there is only one API call made to the local API.
+Instead of repeatedly calling the local API, the information from the local coins API is stored 
+in the Redux store, which is persisted. 
+The data management system is implemented in the fetchData function.
+
+*/
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import FullTable from "../components/FullTable.tsx";
@@ -11,7 +28,7 @@ export default function FullTableContainer() {
   const [rows, setRows] = useState([]);
   const [pageUpToF, setPageUpToF] = useState(false);
   const coinListArr = useSelector(state => state.system.coinList);
-  
+
   const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/last-record';
   const postCoinsAPIStr = 'https://epistemica-x-db.vercel.app/api/coin/post';
   const postNewTimeAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/time/post';
