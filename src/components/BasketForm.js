@@ -235,10 +235,12 @@ export default function BasketForm(){
 
   const handleLoSChange1 = event => {
     const newState = event.target.checked ? 'long' : 'short';
+    console.log(newState)
     setc1LongOrShort(newState)
   }
   const handleLoSChange2 = event => {
     const newState = event.target.checked ? 'long' : 'short';
+    console.log(newState)
     setc2LongOrShort(newState)
   }
   const handleLoSChange3 = event => {
@@ -271,38 +273,71 @@ export default function BasketForm(){
           asset1NameStr: currency1,
           asset1IndexPriceInt: 0,
           asset1QuantityInt: currency1Q,
+          asset1PresentPriceInt: 0,
+          asset1InitialPositionValueInt: 0,
+          asset1PresentPositionValueInt: 0,
           asset1WeightInt: currency1Weight,
-          asset1APIKeyStr: currency1APIKey
+          asset1APIKeyStr: currency1APIKey,
+          asset1LoSStr: c1LongOrShort
       },
       asset2HM: {
           asset2NameStr: currency2,
           asset2IndexPriceInt: 0, 
           asset2QuantityInt: currency2Q,
+          asset2PresentPriceInt: 0,
+          asset2InitialPositionValueInt: 0,
+          asset2PresentPositionValueInt: 0,
           asset2WeightInt: currency2Weight,
-          asset2APIKeyStr: currency2APIKey
+          asset2APIKeyStr: currency2APIKey,
+          asset2LoSStr: c2LongOrShort
       },
       asset3HM: {
           asset3NameStr: currency3,
           asset3IndexPriceInt: 0,
           asset3QuantityInt: currency3Q,
+          asset3PresentPriceInt: 0,
+          asset3InitialPositionValueInt: 0,
+          asset3PresentPositionValueInt: 0,
           asset3WeightInt: currency3Weight,
-          asset3APIKeyStr: currency3APIKey
+          asset3APIKeyStr: currency3APIKey,
+          asset3LoSStr: c3LongOrShort
       },
       asset4HM: {
           asset4NameStr: currency4,
           asset4IndexPriceInt: 0,
           asset4QuantityInt: currency4Q,
+          asset4PresentPriceInt: 0,
+          asset4InitialPositionValueInt: 0,
+          asset4PresentPositionValueInt: 0,
           asset4WeightInt: currency4Weight,
-          asset4APIKeyStr: currency4APIKey
+          asset4APIKeyStr: currency4APIKey, 
+          asset4LoSStr: c4LongOrShort
       },
       asset5HM: {
           asset5NameStr: currency5,
           asset5IndexPriceInt: 0, 
           asset5QuantityInt: currency5Q,
+          asset5PresentPriceInt: 0,
+          asset5InitialPositionValueInt: 0,
+          asset5PresentPositionValueInt: 0,
           asset5WeightInt: currency5Weight,
-          asset5APIKeyStr: currency5APIKey
+          asset5APIKeyStr: currency5APIKey,
+          asset5LoSStr: c5LongOrShort
       }
   }
+
+  // started July 2, 2023 at 3:41pm
+  /// function which returns position value of long position
+  const getLongReturn = (quantityInt, initialPriceInt, presentPriceInt) => {
+
+    let percentReturnInt;
+
+
+    return percentReturnInt
+  }
+
+  // function which returns position value of short position
+
 
   const calculateQuantityX = async (currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate) => {     
     for (let z=0; z < apiKeysArr.length; z++) {
@@ -313,7 +348,9 @@ export default function BasketForm(){
           basketData[`asset${iInt}HM`][`asset${iInt}IndexPriceInt`] = historicalPriceInt;
           let quantityInt = ((weights[z]/100) * initialBasketValue) / historicalPriceInt;
           console.log('line 263: Quantity Int:', quantityInt);
-          basketData[`asset${iInt}HM`][`asset${iInt}QuantityInt`] = quantityInt
+          basketData[`asset${iInt}HM`][`asset${iInt}QuantityInt`] = quantityInt;
+          // set initial position value X
+          basketData[`asset${iInt}HM`][`asset${iInt}InitialPositionValueInt`] = historicalPriceInt * quantityInt;
           currencyQs[z] = quantityInt;
         }
       }     
@@ -391,12 +428,16 @@ export default function BasketForm(){
 
     const weight1Int = data.get('weight1')
     const asset1Str = data.get('asset1')
-    const asset1LoSStr = data.get('asset1LoS')
 
-    const weight2Int = data.get('weight2')
-    const weight3Int = data.get('weight3')
-    const weight4Int = data.get('weight4')
-    const weight5Int = data.get('weight5')
+    const weight2 = data.get('weight2') 
+    const weight2Int = weight2 === '' ? 0 : parseInt(weight2, 10)
+    
+    const weight3 = data.get('weight3')
+    const weight3Int = weight3 === '' ? 0 : parseInt(weight3, 10)
+    const weight4 = data.get('weight4')
+    const weight4Int = weight4 === '' ? 0 : parseInt(weight4, 10)
+    const weight5 = data.get('weight5')
+    const weight5Int = weight5 === '' ? 0 : parseInt(weight5, 10)
     
     // Error scenarios
     // basket name empty
@@ -442,9 +483,13 @@ export default function BasketForm(){
       messagesArr.push('The weights must be valid.')
     }
 
-
     let totalWeightInt = parseInt(weight1Int) + parseInt(weight2Int) + parseInt(weight3Int) + parseInt(weight4Int) + parseInt(weight5Int)
-
+    console.log(parseInt(weight1Int))
+    console.log(weight2Int)
+    console.log(weight3Int)
+    console.log(weight4Int)
+    console.log(weight5Int)
+    console.log(totalWeightInt)
     if (parseInt(totalWeightInt) !== 100){
       messagesArr.push('The total weight of the basket must equal 100.')
     }
@@ -548,6 +593,7 @@ export default function BasketForm(){
                       variant="filled"
                       type="number"
                       value={isWeight1FieldEmpty ? '' : currency1Weight}
+                      defaultValue={0}
                       onChange={event => {
                       handleWeight1(event);
                       }}
@@ -598,6 +644,7 @@ export default function BasketForm(){
                               variant="filled"
                               type="number"
                               value={isWeight2FieldEmpty ? '' : currency2Weight}
+                              defaultValue={0}
                               onChange={event => {
                                 handleWeight2(event);
                               }}
@@ -649,6 +696,7 @@ export default function BasketForm(){
                       variant="filled"
                       type="number"
                       value={isWeight3FieldEmpty ? '' : currency3Weight}
+                      defaultValue={0}
                       onChange={event => {
                       handleWeight3(event);
                       }}
@@ -702,6 +750,7 @@ export default function BasketForm(){
                       variant="filled"
                       type="number"
                       value={isWeight4FieldEmpty ? '' : currency4Weight}
+                      defaultValue={0}
                       onChange={event => {
                         handleWeight4(event);
                       }}
@@ -755,6 +804,7 @@ export default function BasketForm(){
                     variant="filled"
                     type="number"
                     value={isWeight5FieldEmpty ? '' : currency5Weight}
+                    defaultValue={0}
                     onChange={event => {
                       handleWeight5(event);
                     }}
