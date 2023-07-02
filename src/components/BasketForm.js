@@ -118,9 +118,15 @@ export default function BasketForm(){
 
   const [currency1, setCurrency1] = useState('');
   const [currency1Weight, setCurrency1Weight] = useState(0);
+  const [isWeight1FieldEmpty, setIsWeight1FieldEmpty] = useState(true)
   const [currency1APIKey, setCurrency1APIKey] = useState('');
   const [c1LongOrShort, setc1LongOrShort ] = useState('long'); 
   const currency1Q = 0;
+
+  const [isWeight2FieldEmpty, setIsWeight2FieldEmpty] = useState(true)
+  const [isWeight3FieldEmpty, setIsWeight3FieldEmpty] = useState(true)
+  const [isWeight4FieldEmpty, setIsWeight4FieldEmpty] = useState(true)
+  const [isWeight5FieldEmpty, setIsWeight5FieldEmpty] = useState(true)
 
   const [currency2, setCurrency2] = useState('');
   const [currency2Weight, setCurrency2Weight] = useState(0);
@@ -174,22 +180,27 @@ export default function BasketForm(){
 
   const handleWeight1 = event => {
     setCurrency1Weight(parseInt(event.target.value));
+    setIsWeight1FieldEmpty(false);
   };
 
   const handleWeight2 = event => {
     setCurrency2Weight(parseInt(event.target.value));
+    setIsWeight2FieldEmpty(false);
   };
 
   const handleWeight3 = event => {
     setCurrency3Weight(parseInt(event.target.value));
+    setIsWeight3FieldEmpty(false);
   };
 
   const handleWeight4 = event => {
     setCurrency4Weight(parseInt(event.target.value));
+    setIsWeight4FieldEmpty(false);
   };
 
   const handleWeight5 = event => {
     setCurrency5Weight(parseInt(event.target.value));
+    setIsWeight5FieldEmpty(false);
   };
 
   const handleChange1 = event => {
@@ -491,9 +502,10 @@ export default function BasketForm(){
         <Typography variant="p" style={{width: '60%', margin: '20px 0 40px'}}>
           Calculate the historical performance of a basket by selecting up to 5 crypto tokens and a weight for each crypto token. For example, try 50% Bitcoin and 50% Ether, and an initial basket value of your choice, with a start date of 01-01-2022 to see how the calculator works for yourself! 
         </Typography>
-        <Box mx="auto"  sx={{ border: '2px solid black', maxWidth: 'xl', margin: '20px auto', backgroundColor: 'white' }}>
+        <Box mx="auto"  sx={{ maxWidth: 'xl', margin: '20px auto', backgroundColor: 'white' }}>
           <form
             noValidate
+            label='basket-form'
             autoComplete="off"
             onSubmit={event => handleSubmit(event)}
           >
@@ -504,7 +516,7 @@ export default function BasketForm(){
               </Stack>}
                 <TextField
                   id="basketName"
-                  label="Basket Name"
+                  label="basket name"
                   name="basketName"
                   fullWidth
                   required
@@ -517,7 +529,7 @@ export default function BasketForm(){
                 <TextField
                   id="startingDate"
                   name="startingDate"
-                  label="Starting date"
+                  label="starting date"
                   fullWidth
                   required
                   defaultValue=""
@@ -550,7 +562,7 @@ export default function BasketForm(){
                       label="Weight (%)"
                       variant="filled"
                       type="number"
-                      defaultValue={0}
+                      value={isWeight1FieldEmpty ? '' : currency1Weight}
                       onChange={event => {
                       handleWeight1(event);
                       }}
@@ -600,7 +612,7 @@ export default function BasketForm(){
                               label="Weight (%)"
                               variant="filled"
                               type="number"
-                              defaultValue={0}
+                              value={isWeight2FieldEmpty ? '' : currency2Weight}
                               onChange={event => {
                                 handleWeight2(event);
                               }}
@@ -651,7 +663,7 @@ export default function BasketForm(){
                       label="Weight (%)"
                       variant="filled"
                       type="number"
-                      defaultValue={0}
+                      value={isWeight3FieldEmpty ? '' : currency3Weight}
                       onChange={event => {
                       handleWeight3(event);
                       }}
@@ -704,7 +716,7 @@ export default function BasketForm(){
                       label="Weight (%)"
                       variant="filled"
                       type="number"
-                      defaultValue={0}
+                      value={isWeight4FieldEmpty ? '' : currency4Weight}
                       onChange={event => {
                         handleWeight4(event);
                       }}
@@ -757,7 +769,7 @@ export default function BasketForm(){
                     label="Weight (%)"
                     variant="filled"
                     type="number"
-                    defaultValue={0}
+                    value={isWeight5FieldEmpty ? '' : currency5Weight}
                     onChange={event => {
                       handleWeight5(event);
                     }}
@@ -802,6 +814,7 @@ export default function BasketForm(){
             </Grid>
             <Grid item maxWidth='md'>
                 <Button
+                label='submit'
                 type="submit"
                 color="primary"
                 variant="contained" 

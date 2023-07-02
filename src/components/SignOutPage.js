@@ -1,9 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import { Link } from 'react-router-dom';
+import React from 'react';
 import '../components/styles.css';
 
 export default function SignOutPage() {

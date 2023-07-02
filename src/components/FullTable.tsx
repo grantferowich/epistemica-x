@@ -13,8 +13,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { TableHead } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { setUserEmail, setUserId, setUserName } from '../actions/userActions';
 
 let columns;
 
