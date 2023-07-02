@@ -390,28 +390,13 @@ export default function BasketForm(){
     const initialBasketValueStr = data.get('initialBasketValue')
 
     const weight1Int = data.get('weight1')
-    console.log('weight1Int', weight1Int)
-    console.log(typeof weight1Int)
     const asset1Str = data.get('asset1')
     const asset1LoSStr = data.get('asset1LoS')
 
     const weight2Int = data.get('weight2')
-    const asset2Str = data.get('asset2')
-    const asset2LoSStr = data.get('asset2LoS')
-
     const weight3Int = data.get('weight3')
-    const asset3Str = data.get('asset3')
-    const asset3LoSStr = data.get('asset3LoS')
-
     const weight4Int = data.get('weight4')
-    const asset4Str = data.get('asset4')
-    const asset4LoSStr = data.get('asset4LoS')
-
     const weight5Int = data.get('weight5')
-    const asset5Str = data.get('asset5')
-    const asset5LoSStr = data.get('asset5LoS')
-
-    const passwordStr = data.get('password') 
     
     // Error scenarios
     // basket name empty
