@@ -361,9 +361,13 @@ export default function BasketForm(){
       const result = await calculateQuantityX(currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate, basketData)
       for (let x = 0; x <= apiKeysArr.length; x++) {
         let directionLoSStr = directionsArr[x];
+        let jInt = x + 1;
+
         if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined) && directionLoSStr === 'long') {
           const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
           const presentPriceInt = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
+          // set the present price attribute 
+          basketData[`asset${jInt}HM`][`asset${jInt}PresentPriceInt`] = presentPriceInt;
           let value = parseFloat(presentPriceInt * currencyQs[x]);
           presentBasketValue = parseFloat(presentBasketValue+value);
           setPresentBasketValue(presentBasketValue);
@@ -374,10 +378,16 @@ export default function BasketForm(){
           const presentPriceInt = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
           let quantityInt = currencyQs[x];
           let weightInt = weights[x];
+
           let initialPositionValueInt = (weightInt/100) * initialBasketValue;
+
           let initialPriceInt = (initialPositionValueInt / quantityInt);
           let differenceInt = -1 * (presentPriceInt - initialPriceInt) * quantityInt;
-
+          // append present price, present position value for each assetHm 1-5
+          console.log('x is', x)
+          console.log('differenceInt ', differenceInt);
+          console.log('initialPositionValueInt', initialPositionValueInt);
+          console.log('presentBasketValue', presentBasketValue);
           presentBasketValue = initialPositionValueInt + differenceInt          
           setPresentBasketValue(presentBasketValue);
         }

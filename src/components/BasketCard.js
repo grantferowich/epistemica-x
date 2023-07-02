@@ -50,13 +50,18 @@ export default function BasketCard({basketHM}) {
   const getAssetInfo = (arr) => {
     let xInt = 1;
     let outputArr = []
-    while (xInt <= 5){
+    while (xInt < 6){
       let assetHM = arr[xInt -1];
       // console.log('assetHM', assetHM);
       if (assetHM[`asset${xInt}NameStr`] !== ''){
         let name = assetHM[`asset${xInt}NameStr`];
         let LoS = assetHM[`asset${xInt}LoSStr`]
-        outputArr.push([`Asset: ${name} | Direction: ${LoS}`])
+        let initialPosVal = assetHM[`asset${xInt}InitialPositionValueInt`];
+        let presentPosVal = assetHM[`asset${xInt}PresentPositionValueInt`];
+        let initialPrice = assetHM[`asset${xInt}IndexPriceInt`];
+        let presentPrice = assetHM[`asset${xInt}PresentPriceInt`];
+  
+        outputArr.push([`Asset: ${name} | Initial pos. val: ${initialPosVal} | Present pos. val: ${presentPosVal} | Initial p: ${initialPrice} | Present p: ${presentPrice}  Direction: ${LoS}`])
       }
       xInt++
     }
