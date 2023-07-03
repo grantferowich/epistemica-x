@@ -401,21 +401,11 @@ export default function BasketForm(){
                                        + parseInt(basketData.asset3HM.asset3PresentPositionValueInt)
                                        + parseInt(basketData.asset4HM.asset4PresentPositionValueInt)
                                        + parseInt(basketData.asset5HM.asset5PresentPositionValueInt);
-      console.log(basketData.asset4HM)
-      console.log(basketData.asset1HM.asset1PresentPositionValueInt)
-      console.log(basketData.asset2HM.asset2PresentPositionValueInt)
-      console.log(basketData.asset3HM.asset3PresentPositionValueInt)
-      console.log(basketData.asset4HM.asset4PresentPositionValueInt)
-      console.log(basketData.asset5HM.asset5PresentPositionValueInt)
-      
-                                       // basketData.percentReturnInt = (100 * (parseInt(basketData.presentBasketValueInt) - parseInt(basketData.initialBasketValueInt)) / parseInt(basketData.initialBasketValueInt));
+      // basketData.percentReturnInt = (100 * (parseInt(basketData.presentBasketValueInt) - parseInt(basketData.initialBasketValueInt)) / parseInt(basketData.initialBasketValueInt));
       // pass the basket data object to the post API
-      console.log(basketData.presentBasketValueInt)
-      console.log(basketData.initialBasketValueInt)
       const pctReturn = (100 * (basketData.presentBasketValueInt - basketData.initialBasketValueInt) / basketData.initialBasketValueInt);
       basketData.percentReturnInt = pctReturn
-      console.log(basketData.presentBasketValueInt)
-      console.log(basketData.percentReturnInt)
+
       sendPostRequestToAPI(basketData);
   });
 
