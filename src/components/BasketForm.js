@@ -368,8 +368,8 @@ export default function BasketForm(){
         if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined)){
           presentPriceInt = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
         }
-
-        if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined) && directionLoSStr === 'long') {
+        // case: LONG
+        if (directionLoSStr === 'long') { 
           basketData[`asset${jInt}HM`][`asset${jInt}PresentPriceInt`] = presentPriceInt;
           let presentPositionValueInt = presentPriceInt * quantityInt;
           basketData[`asset${jInt}HM`][`asset${jInt}PresentPositionValueInt`] = presentPositionValueInt;
@@ -377,8 +377,8 @@ export default function BasketForm(){
           presentBasketValue = parseFloat(presentBasketValue+value);
           setPresentBasketValue(presentBasketValue);
         } 
-        // appended logic to calculate position value of short position Sunday June 4, 2023 at 5:33pm
-        if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined) && directionLoSStr === 'short'){
+        // case: SHORT
+        if (directionLoSStr === 'short'){
           basketData[`asset${jInt}HM`][`asset${jInt}PresentPriceInt`] = presentPriceInt;
           let initialPositionValueInt = basketData[`asset${jInt}HM`][`asset${jInt}InitialPositionValueInt`];
           let initialPriceInt = basketData[`asset${jInt}HM`][`asset${jInt}IndexPriceInt`];
