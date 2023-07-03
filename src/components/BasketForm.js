@@ -358,8 +358,13 @@ export default function BasketForm(){
 
   const calculatePercentReturn = ( async (presentBasketValue, currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey, currency1Q, currency2Q, currency3Q, currency4Q, currency5Q) => {
       // eslint-disable-next-line
+      
       const result = await calculateQuantityX(currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate, basketData)
+      
       for (let x = 0; x <= apiKeysArr.length; x++) {
+        if (apiKeysArr[x] === "" || apiKeysArr[x] === undefined || currencies[x] === ''){
+          x++
+        }
         // state vars
         let directionLoSStr = directionsArr[x];
         let jInt = x + 1;
@@ -370,7 +375,7 @@ export default function BasketForm(){
           presentPriceInt = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
         }
         // case: LONG
-        if (directionLoSStr === 'long') { 
+        if (directionLoSStr === 'long' && (apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined)) { 
           basketData[`asset${jInt}HM`][`asset${jInt}PresentPriceInt`] = presentPriceInt;
           let presentPositionValueInt = presentPriceInt * quantityInt;
           basketData[`asset${jInt}HM`][`asset${jInt}PresentPositionValueInt`] = presentPositionValueInt;
@@ -379,7 +384,7 @@ export default function BasketForm(){
           setPresentBasketValue(presentBasketValue);
         } 
         // case: SHORT
-        if (directionLoSStr === 'short'){
+        if (directionLoSStr === 'short' && (apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined)){
           basketData[`asset${jInt}HM`][`asset${jInt}PresentPriceInt`] = presentPriceInt;
           let initialPositionValueInt = basketData[`asset${jInt}HM`][`asset${jInt}InitialPositionValueInt`];
           let initialPriceInt = basketData[`asset${jInt}HM`][`asset${jInt}IndexPriceInt`];
@@ -391,13 +396,26 @@ export default function BasketForm(){
         }
       } 
       // update the basket data object
-      basketData.presentBasketValueInt = basketData.asset1HM.asset1PresentPositionValueInt
-                                       + basketData.asset2HM.asset2PresentPositionValueInt 
-                                       + basketData.asset3HM.asset3PresentPositionValueInt 
-                                       + basketData.asset4HM.asset4PresentPositionValueInt
-                                       + basketData.asset5HM.asset5PresentPositionValueInt;
-      basketData.percentReturnInt = (100 * (basketData.presentBasketValueInt - basketData.initialBasketValueInt) / basketData.initialBasketValueInt);
+      basketData.presentBasketValueInt = parseInt(basketData.asset1HM.asset1PresentPositionValueInt)
+                                       + parseInt(basketData.asset2HM.asset2PresentPositionValueInt)
+                                       + parseInt(basketData.asset3HM.asset3PresentPositionValueInt)
+                                       + parseInt(basketData.asset4HM.asset4PresentPositionValueInt)
+                                       + parseInt(basketData.asset5HM.asset5PresentPositionValueInt);
+      console.log(basketData.asset4HM)
+      console.log(basketData.asset1HM.asset1PresentPositionValueInt)
+      console.log(basketData.asset2HM.asset2PresentPositionValueInt)
+      console.log(basketData.asset3HM.asset3PresentPositionValueInt)
+      console.log(basketData.asset4HM.asset4PresentPositionValueInt)
+      console.log(basketData.asset5HM.asset5PresentPositionValueInt)
+      
+                                       // basketData.percentReturnInt = (100 * (parseInt(basketData.presentBasketValueInt) - parseInt(basketData.initialBasketValueInt)) / parseInt(basketData.initialBasketValueInt));
       // pass the basket data object to the post API
+      console.log(basketData.presentBasketValueInt)
+      console.log(basketData.initialBasketValueInt)
+      const pctReturn = (100 * (basketData.presentBasketValueInt - basketData.initialBasketValueInt) / basketData.initialBasketValueInt);
+      basketData.percentReturnInt = pctReturn
+      console.log(basketData.presentBasketValueInt)
+      console.log(basketData.percentReturnInt)
       sendPostRequestToAPI(basketData);
   });
 

@@ -61,7 +61,7 @@ export default function BasketCard({basketHM}) {
         let initialPrice = assetHM[`asset${xInt}IndexPriceInt`];
         let presentPrice = assetHM[`asset${xInt}PresentPriceInt`];
         let q = assetHM[`asset${xInt}QuantityInt`];
-        outputArr.push([`Asset: ${name} | Initial pos. val: ${initialPosVal} | Q: ${q} | Present pos. val: ${presentPosVal} | Initial p: ${initialPrice} | Present p: ${presentPrice}  Direction: ${LoS}`])
+        outputArr.push([`Asset: ${name} | Initial pos. val: $${initialPosVal} | Q: ${q} | Present pos. val: $${presentPosVal} | Initial p: ${initialPrice} | Present p: ${presentPrice}  Direction: ${LoS}`])
       }
       xInt++
     }
