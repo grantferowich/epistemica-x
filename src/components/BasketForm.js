@@ -388,14 +388,15 @@ export default function BasketForm(){
           presentBasketValue = presentBasketValue - initialPositionValueInt + presentPositionValueInt
           setPresentBasketValue(presentBasketValue);
         }
-      }      
-      // basketData.presentBasketValueInt = presentBasketValue;
+      } 
+      // update the basket data object
       basketData.presentBasketValueInt = basketData.asset1HM.asset1PresentPositionValueInt
                                        + basketData.asset2HM.asset2PresentPositionValueInt 
                                        + basketData.asset3HM.asset3PresentPositionValueInt 
                                        + basketData.asset4HM.asset4PresentPositionValueInt
                                        + basketData.asset5HM.asset5PresentPositionValueInt;
       basketData.percentReturnInt = (100 * (basketData.presentBasketValueInt - basketData.initialBasketValueInt) / basketData.initialBasketValueInt);
+      // pass the basket data object to the post API
       sendPostRequestToAPI(basketData);
   });
 
