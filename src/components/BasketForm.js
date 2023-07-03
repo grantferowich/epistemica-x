@@ -409,11 +409,7 @@ export default function BasketForm(){
                                        + basketData.asset3HM.asset3PresentPositionValueInt 
                                        + basketData.asset4HM.asset4PresentPositionValueInt
                                        + basketData.asset5HM.asset5PresentPositionValueInt;
-      console.log('basketData.asset1HM.asset1PresentPositionValueInt', basketData.asset1HM.asset1PresentPositionValueInt)
-      console.log('basketData.asset2HM.asset2PresentPositionValueInt', basketData.asset2HM.asset2PresentPositionValueInt)
-      
       const pctReturn = (100 * (basketData.presentBasketValueInt - basketData.initialBasketValueInt) / basketData.initialBasketValueInt);
-      // setPercentReturn(pctReturn)
       basketData.percentReturnInt = pctReturn;
       sendPostRequestToAPI(basketData);
   });
