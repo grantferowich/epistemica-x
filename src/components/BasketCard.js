@@ -83,7 +83,7 @@ export default function BasketCard({basketHM}) {
                Return: {basketHM.percentReturnInt.toString().slice(0,5)}%
             </Typography>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-              Current basket value: ${basketHM.presentBasketValueInt.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+              Present basket value: ${basketHM.presentBasketValueInt.toLocaleString(undefined, { maximumFractionDigits: 2 })}
             <br></br>
               Initial basket value ({basketHM.indexDateStr}): ${basketHM.initialBasketValueInt.toLocaleString(undefined, { maximumFractionDigits: 2 })}
             </Typography>

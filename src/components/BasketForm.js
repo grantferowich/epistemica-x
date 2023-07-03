@@ -362,11 +362,14 @@ export default function BasketForm(){
       for (let x = 0; x <= apiKeysArr.length; x++) {
         let directionLoSStr = directionsArr[x];
         let jInt = x + 1;
+        let quantityInt = currencyQs[x]
+        let presentPriceInt;
+        let presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
+        if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined)){
+          presentPriceInt = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
+        }
+
         if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined) && directionLoSStr === 'long') {
-          const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
-          const presentPriceInt = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
-          // set the present price attribute 
-          let quantityInt = currencyQs[x]
           basketData[`asset${jInt}HM`][`asset${jInt}PresentPriceInt`] = presentPriceInt;
           let presentPositionValueInt = presentPriceInt * quantityInt;
           basketData[`asset${jInt}HM`][`asset${jInt}PresentPositionValueInt`] = presentPositionValueInt;
@@ -376,30 +379,13 @@ export default function BasketForm(){
         } 
         // appended logic to calculate position value of short position Sunday June 4, 2023 at 5:33pm
         if ((apiKeysArr[x] !== "") && !(apiKeysArr[x] === undefined) && directionLoSStr === 'short'){
-          const presentPriceAPI = "https://api.coingecko.com/api/v3/simple/price?ids="+apiKeysArr[x]+"&vs_currencies=usd";
-          const presentPriceInt = await axios.get(presentPriceAPI).then((response) => response.data[apiKeysArr[x]].usd); 
           basketData[`asset${jInt}HM`][`asset${jInt}PresentPriceInt`] = presentPriceInt;
-          let quantityInt = currencyQs[x];
-
-          // let weightInt = weights[x];
-          // let initialPositionValueInt = (weightInt/100) * initialBasketValue;
-
-          let initialPositionValueInt = basketData[`asset${jInt}HM`][`asset${jInt}InitialPositionValueInt`]
-          // let initialPriceInt = (initialPositionValueInt / quantityInt);
-          let initialPriceInt = basketData[`asset${jInt}HM`][`asset${jInt}IndexPriceInt`] 
+          let initialPositionValueInt = basketData[`asset${jInt}HM`][`asset${jInt}InitialPositionValueInt`];
+          let initialPriceInt = basketData[`asset${jInt}HM`][`asset${jInt}IndexPriceInt`];
           let differenceInt = -1 * (presentPriceInt - initialPriceInt) * quantityInt;
-          basketData[`asset${jInt}HM`][`asset${jInt}PresentPositionValueInt`] = initialPositionValueInt + differenceInt
-          let presentPositionValueInt = basketData[`asset${jInt}HM`][`asset${jInt}PresentPositionValueInt`];
-          // append present price, present position value for each assetHm 1-5
-          console.log('x is', x)
-          console.log('differenceInt ', differenceInt);
-          console.log('initialPositionValueInt', initialPositionValueInt);
-          console.log('presentPositionValueInt', presentBasketValue);
-      
+          basketData[`asset${jInt}HM`][`asset${jInt}PresentPositionValueInt`] = initialPositionValueInt + differenceInt;
+          let presentPositionValueInt = basketData[`asset${jInt}HM`][`asset${jInt}PresentPositionValueInt`]; 
           presentBasketValue = presentBasketValue - initialPositionValueInt + presentPositionValueInt
-          console.log('presentBasketValue', presentBasketValue);
-          // presentBasketValue = initialPositionValueInt + differenceInt  
-
           setPresentBasketValue(presentBasketValue);
         }
       }      
@@ -409,8 +395,7 @@ export default function BasketForm(){
                                        + basketData.asset3HM.asset3PresentPositionValueInt 
                                        + basketData.asset4HM.asset4PresentPositionValueInt
                                        + basketData.asset5HM.asset5PresentPositionValueInt;
-      const pctReturn = (100 * (basketData.presentBasketValueInt - basketData.initialBasketValueInt) / basketData.initialBasketValueInt);
-      basketData.percentReturnInt = pctReturn;
+      basketData.percentReturnInt = (100 * (basketData.presentBasketValueInt - basketData.initialBasketValueInt) / basketData.initialBasketValueInt);
       sendPostRequestToAPI(basketData);
   });
 
