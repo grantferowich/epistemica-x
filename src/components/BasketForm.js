@@ -360,6 +360,7 @@ export default function BasketForm(){
       // eslint-disable-next-line
       const result = await calculateQuantityX(currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate, basketData)
       for (let x = 0; x <= apiKeysArr.length; x++) {
+        // state vars
         let directionLoSStr = directionsArr[x];
         let jInt = x + 1;
         let quantityInt = currencyQs[x]
