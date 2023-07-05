@@ -356,6 +356,8 @@ export default function BasketForm(){
       }     
   }
 
+  // based on the quantity of each asset and the present price
+  // return the % return of each asset in the basket
   const calculatePercentReturn = ( async (presentBasketValue, currency1APIKey, currency2APIKey, currency3APIKey, currency4APIKey, currency5APIKey, currency1Q, currency2Q, currency3Q, currency4Q, currency5Q) => {
       // eslint-disable-next-line
       
@@ -593,7 +595,7 @@ export default function BasketForm(){
                 <TextField
                   id="initialBasketValue"
                   name="initialBasketValue"
-                  label="Initial Basket $ Value"
+                  label="initial basket value ($)"
                   required
                   fullWidth
                   defaultValue=""
