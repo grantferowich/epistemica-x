@@ -328,3 +328,30 @@
   //   )
   // }
 */
+
+
+      // dev environment 
+        // try {
+        //   console.log('//// RETRIEVING FRESH VERSION OF FUlL TABLE')
+        //   const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h" + query);
+        //   // ensure menu options are sorted by market cap rank
+        //   const apiDataArr = (response.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank));
+        //   await axios.delete(deleteCoinsAPIStr);
+        //   await axios.post(postCoinsAPIStr, JSON.stringify(apiDataArr), {
+        //     withCredentials: false,
+        //     headers: {
+        //       'Content-Type': 'application/json'
+        //     }
+        //   }).then(responseHM => {
+        //     console.log('200: Successfully posted to the coin/post API.');
+        //     dispatchFn({type: 'SET_COIN_LIST', payload: apiDataArr});
+        //     dispatchFn({type: 'SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL', payload: 0});
+        //     generateDataTable(apiDataArr)
+        //   }).catch(errorHM => {
+        //     console.log('Error running fetchData() inside FullTableContainer.js.')
+        //     console.error(errorHM)
+        //   })
+        // } catch (error){
+        //   console.log('Error running fetchData. Check FullTableContainer.js.')
+        //   console.log(error)
+        // }   
