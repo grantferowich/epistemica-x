@@ -23,7 +23,6 @@ import { setCoinList } from "../actions/systemActions.js";
 
 
 export default function FullTableContainer() {
-  const [data, setData] = useState([]);
   const [query] = useState('react');
   const [rows, setRows] = useState([]);
   const [pageUpToF, setPageUpToF] = useState(false);
@@ -117,13 +116,13 @@ export default function FullTableContainer() {
         // if the redux store contains the coins list, 
         // there's no need to fetch the coins from the local API
         if (coinListArr !== undefined && coinListArr.length > 0 ) {
-          console.log('//// RETRIEVING FUlL TABLE FROM REDUX STORE');
+          // console.log('//// RETRIEVING FUlL TABLE FROM REDUX STORE');
           const fullTableDataSortedArr = coinListArr.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
           generateDataTable(fullTableDataSortedArr);
         } else {
           // if the redux store does not contain the coins list, 
           // then fetch the coins list from the local API
-          console.log('//// RETRIEVING LOCAL API VERSION OF FUlL TABLE');
+          // console.log('//// RETRIEVING LOCAL API VERSION OF FUlL TABLE');
           const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250';    
           const get250CoinsHM = await axios.get(get250CoinsAPIStr);
           // ensure menu options are sorted by market cap rank

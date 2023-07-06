@@ -114,7 +114,6 @@ export default function BasketForm(){
 
   const [initialBasketValue, setInitialBasketValue] = useState('');
   const [presentBasketValue, setPresentBasketValue] = useState(0);
-  const [percentReturn, setPercentReturn ] = useState(0);
 
   const [currency1, setCurrency1] = useState('');
   const [currency1Weight, setCurrency1Weight] = useState(0);
@@ -235,12 +234,10 @@ export default function BasketForm(){
 
   const handleLoSChange1 = event => {
     const newState = event.target.checked ? 'long' : 'short';
-    console.log(newState)
     setc1LongOrShort(newState)
   }
   const handleLoSChange2 = event => {
     const newState = event.target.checked ? 'long' : 'short';
-    console.log(newState)
     setc2LongOrShort(newState)
   }
   const handleLoSChange3 = event => {
@@ -326,19 +323,6 @@ export default function BasketForm(){
       }
   }
 
-  // started July 2, 2023 at 3:41pm
-  /// function which returns position value of long position
-  const getLongReturn = (quantityInt, initialPriceInt, presentPriceInt) => {
-
-    let percentReturnInt;
-
-
-    return percentReturnInt
-  }
-
-  // function which returns position value of short position
-
-
   const calculateQuantityX = async (currency1APIKey, currency1Weight,currency2APIKey, currency2Weight,currency3APIKey, currency3Weight, currency4APIKey, currency4Weight, currency5APIKey, currency5Weight, indexDate) => {     
     for (let z=0; z < apiKeysArr.length; z++) {
         if (apiKeysArr[z] !== ""){
@@ -403,11 +387,9 @@ export default function BasketForm(){
                                        + parseInt(basketData.asset3HM.asset3PresentPositionValueInt)
                                        + parseInt(basketData.asset4HM.asset4PresentPositionValueInt)
                                        + parseInt(basketData.asset5HM.asset5PresentPositionValueInt);
-      // basketData.percentReturnInt = (100 * (parseInt(basketData.presentBasketValueInt) - parseInt(basketData.initialBasketValueInt)) / parseInt(basketData.initialBasketValueInt));
       // pass the basket data object to the post API
       const pctReturn = (100 * (basketData.presentBasketValueInt - basketData.initialBasketValueInt) / basketData.initialBasketValueInt);
       basketData.percentReturnInt = pctReturn
-
       sendPostRequestToAPI(basketData);
   });
 
@@ -505,13 +487,7 @@ export default function BasketForm(){
       messagesArr.push('The weights must be valid.')
     }
 
-    let totalWeightInt = parseInt(weight1Int) + parseInt(weight2Int) + parseInt(weight3Int) + parseInt(weight4Int) + parseInt(weight5Int)
-    console.log(parseInt(weight1Int))
-    console.log(weight2Int)
-    console.log(weight3Int)
-    console.log(weight4Int)
-    console.log(weight5Int)
-    console.log(totalWeightInt)
+    let totalWeightInt = parseInt(weight1Int) + parseInt(weight2Int) + parseInt(weight3Int) + parseInt(weight4Int) + parseInt(weight5Int);
     if (parseInt(totalWeightInt) !== 100){
       messagesArr.push('The total weight of the basket must equal 100.')
     }
