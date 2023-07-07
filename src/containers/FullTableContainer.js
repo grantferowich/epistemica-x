@@ -89,7 +89,7 @@ export default function FullTableContainer() {
       } else {
         // if the redux store contains the coins list, 
         // there's no need to fetch the coins from the local API
-        if (coinListArr !== undefined && coinListArr.length < 10 ) {
+        if (coinListArr !== undefined && coinListArr.length > 100 ) {
           console.log('//// RETRIEVING FUlL TABLE FROM REDUX STORE');
           const fullTableDataSortedArr = coinListArr.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
           console.log('fullTableDataSortedARr', fullTableDataSortedArr.length)
