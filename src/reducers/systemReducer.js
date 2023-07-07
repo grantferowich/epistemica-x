@@ -1,4 +1,4 @@
-import { SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL, SET_COIN_LIST } from '../actions/systemActions';
+import { SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL, SET_COIN_LIST, CLEAR_COIN_LIST } from '../actions/systemActions';
 
 const initialState = {
   hoursSinceLastExternalAPICall: '',
@@ -17,6 +17,10 @@ const systemReducer = (state = initialState, action) => {
         ...state,
         coinList: action.payload
       };
+    case CLEAR_COIN_LIST:
+      return {
+        ...state
+      }
     default:
       return state;
   }

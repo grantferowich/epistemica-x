@@ -19,7 +19,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import FullTable from "../components/FullTable.tsx";
 import { useSelector, useDispatch } from "react-redux";
-import { setCoinList } from "../actions/systemActions.js";
+import { setCoinList, clearCoinList } from "../actions/systemActions.js";
 
 
 export default function FullTableContainer() {
@@ -89,7 +89,7 @@ export default function FullTableContainer() {
       } else {
         // if the redux store contains the coins list, 
         // there's no need to fetch the coins from the local API
-        if (coinListArr !== undefined && coinListArr.length > 0 ) {
+        if (coinListArr !== undefined && coinListArr.length < 10 ) {
           console.log('//// RETRIEVING FUlL TABLE FROM REDUX STORE');
           const fullTableDataSortedArr = coinListArr.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
           console.log('fullTableDataSortedARr', fullTableDataSortedArr.length)
