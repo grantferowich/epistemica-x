@@ -26,6 +26,7 @@ export default function BasketForm(){
   const dispatchFn = useDispatch();
   const coinListArr = useSelector(state => state.system.coinList);
   
+  
   useEffect(() => {
     const fetchDataArr = async () => {
       if (coinListArr !== '' && coinListArr.length > 0){
