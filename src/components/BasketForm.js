@@ -26,7 +26,7 @@ export default function BasketForm(){
   const dispatchFn = useDispatch();
   const coinListArr = useSelector(state => state.system.coinList);
   
-  
+
   useEffect(() => {
     const fetchDataArr = async () => {
       if (coinListArr !== '' && coinListArr.length > 0){
@@ -35,13 +35,14 @@ export default function BasketForm(){
       } else {
         const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250';
         let coinHM = await axios.get(get250CoinsAPIStr)
+        dispatchFn({type: 'SET_COIN_LIST', payload: coinHM});
         let coinArray = coinHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
         setData(coinArray)
         return 
       }
     }
     fetchDataArr()
-  }, [coinListArr])
+  }, [coinListArr, dispatchFn])
   
   
   // DATA MANAGEMENT SYSTEM (DMS)
