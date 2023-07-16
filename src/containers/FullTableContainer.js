@@ -27,11 +27,6 @@ export default function FullTableContainer() {
   const [rows, setRows] = useState([]);
   const [pageUpToF, setPageUpToF] = useState(false);
   const coinListArr = useSelector(state => state.system.coinList);
-
-  const getLastUpdatedAPIStr = 'https://epistemica-x-db.vercel.app/api/time/last-record';
-  const postCoinsAPIStr = 'https://epistemica-x-db.vercel.app/api/coin/post';
-  const postNewTimeAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/time/post';
-  const deleteCoinsAPIStr = 'https://epistemica-x-db.vercel.app/api/coin/delete-all';
   const dispatchFn = useDispatch();
   
   const generateDataTable = (dataArr) => {
@@ -49,57 +44,14 @@ export default function FullTableContainer() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const currentTimeInt = Date.now();
-      // retrieve the date string of the last time the external api call was made
-      const responseHM = await axios.get(getLastUpdatedAPIStr);
-      const lastUpdatedDateStr = responseHM.data.lastUpdatedDate;
-      const lastUpdatedInt = Date.parse(lastUpdatedDateStr);
-      const timeDifferenceInt = currentTimeInt - lastUpdatedInt;
-      // miliseconds to seconds, seconds to minutes, minutes to hours
-      const hoursDifferenceInt = timeDifferenceInt / (1000 * 60 * 60)
-        
-      // PRODUCTION ENVIRONMENT CODE
-      if (hoursDifferenceInt >= 24) {
-        try {
-          console.log('//// RETRIEVING FRESH VERSION OF FUlL TABLE');
-          const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h" + query);
-          // ensure menu options are sorted by market cap rank
-          // coinListARr in the redux store will be sorted! great!
-          const apiDataArr = (response.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank));
-          await axios.delete(deleteCoinsAPIStr);
-          await axios.post(postCoinsAPIStr, JSON.stringify(apiDataArr), {
-            withCredentials: false,
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }).then(responseHM => {
-            console.log('200: Successfully posted to the coin/post API.');
-            setCoinList(apiDataArr)
-            dispatchFn({type: 'SET_COIN_LIST', payload: apiDataArr});
-            dispatchFn({type: 'SET_HOURS_SINCE_LAST_EXTERNAL_API_CALL', payload: 0});
-            generateDataTable(apiDataArr)
-          }).catch(errorHM => {
-            console.log('Error running fetchData() inside BasketForm.js.')
-            console.error(errorHM)
-          })
-        } catch (error){
-          console.log('Error running fetchData. Check FullTableContainer.js.')
-          console.log(error)
-        }   
-      } else {
-        // if the redux store contains the coins list, 
-        // there's no need to fetch the coins from the local API
         if (coinListArr !== undefined && coinListArr.length > 100 ) {
           console.log('//// RETRIEVING FUlL TABLE FROM REDUX STORE');
-          const fullTableDataSortedArr = coinListArr.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
-          console.log('fullTableDataSortedARr', fullTableDataSortedArr.length)
-          generateDataTable(fullTableDataSortedArr);
+          generateDataTable(coinListArr);
         } else {
           // if the redux store does not contain the coins list, 
           // then fetch the coins list from the local API
           console.log('//// RETRIEVING FUlL TABLE FROM LOCAL API');
           const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250';  
-            
           const get250CoinsHM = await axios.get(get250CoinsAPIStr);
           // ensure menu options are sorted by market cap rank
           const apiDataArr = get250CoinsHM.data.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
@@ -107,17 +59,6 @@ export default function FullTableContainer() {
           generateDataTable(apiDataArr);
         }
       }
-      if (hoursDifferenceInt >= 24){
-        console.log('Hours difference int', hoursDifferenceInt)
-        await axios.post(postNewTimeAPIStr)
-        .then(response => {
-          console.log('200: Successfully posted to the time/post API.')
-        })
-        .catch ( error => { console.log('Error with posting to the time post api,', error)})
-      } else {
-        console.log('Hours difference int', hoursDifferenceInt)
-      }
-    }
     fetchData();
   }, []);
 
