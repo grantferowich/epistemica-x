@@ -28,7 +28,6 @@ export default function FullTableContainer() {
   const [pageUpToF, setPageUpToF] = useState(false);
   const coinListArr = useSelector(state => state.system.coinList);
   const dispatchFn = useDispatch();
-  
   const generateDataTable = (dataArr) => {
     const rows = dataArr.map(coin => 
     [ coin.name,
@@ -41,7 +40,6 @@ export default function FullTableContainer() {
     setRows(rows)
     setPageUpToF(true);
   };
-
   useEffect(() => {
     const fetchData = async () => {
         if (coinListArr !== undefined && coinListArr.length > 100 ) {
@@ -61,7 +59,6 @@ export default function FullTableContainer() {
       }
     fetchData();
   }, []);
-
   return (
     <div>
       <div>
