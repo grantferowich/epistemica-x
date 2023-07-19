@@ -30,7 +30,7 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
 const theme = createTheme();
-const loginURLStr = 'https://epistemica-x-db.vercel.app/api/user/login';
+
 
 const Login = () => {
   const navigateFn = useNavigate();
@@ -77,7 +77,7 @@ const Login = () => {
     }
     
     event.preventDefault();
-    
+    const loginURLStr = 'https://epistemica-x-db.vercel.app/api/user/login';
     try {
       const data = new FormData(event.currentTarget);
       const email = data.get('email');
