@@ -17,9 +17,10 @@ const systemReducer = (state = initialState, action) => {
         ...state,
         coinList: action.payload
       };
-    case CLEAR_COIN_LIST:
+    case CLEAR_COIN_LIST: 
       return {
-        ...state
+        ...state,
+        coinList: action.payload
       }
     default:
       return state;

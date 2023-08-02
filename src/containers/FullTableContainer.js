@@ -19,7 +19,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import FullTable from "../components/FullTable.tsx";
 import { useSelector, useDispatch } from "react-redux";
-import { setCoinList, clearCoinList } from "../actions/systemActions.js";
+import { setCoinList } from "../actions/systemActions.js";
 
 
 export default function FullTableContainer() {

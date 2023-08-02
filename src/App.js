@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavBar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from "./components/Login";
@@ -8,8 +8,16 @@ import UserHome from "./components/UserHome";
 import BasketForm from "./components/BasketForm";
 import SignOutPage from "./components/SignOutPage";
 import ViewSingleBasketPage from "./components/ViewSingleBasketPage";
+import { useDispatch } from "react-redux";
+import { clearCoinList } from "./actions/systemActions";
 
 function App() {
+  const dispatchFn = useDispatch();
+  setTimeout(() => {
+    localStorage.clear('system')
+    dispatchFn(clearCoinList());
+  }, 60 * 60 * 1000);
+  
   return (
       <Router>
         <div style={{ backgroundColor: '#cbe3ff', minHeight: '100vh'}}>
