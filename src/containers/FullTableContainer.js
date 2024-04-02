@@ -43,12 +43,13 @@ export default function FullTableContainer() {
   useEffect(() => {
     const fetchData = async () => {
         if (coinListArr !== undefined && coinListArr.length > 100 ) {
-          console.log('//// RETRIEVING FUlL TABLE FROM REDUX STORE');
+          console.log('***RETRIEVING FUlL TABLE FROM REDUX STORE');
+          console.log("Coins List Arr", coinListArr);
           generateDataTable(coinListArr);
         } else {
           // if the redux store does not contain the coins list, 
           // then fetch the coins list from the local API
-          console.log('//// RETRIEVING FUlL TABLE FROM LOCAL API');
+          console.log('***RETRIEVING FUlL TABLE FROM LOCAL API');
           const get250CoinsAPIStr = 'https://epistemica-x-db-git-main-clariti23.vercel.app/api/coin/get250';  
           const get250CoinsHM = await axios.get(get250CoinsAPIStr);
           // ensure menu options are sorted by market cap rank

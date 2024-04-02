@@ -18,14 +18,12 @@ import { setUserEmail, setUserId, setUserLoggedIn, setUserName } from '../action
 const NavTabs = () => {   
   const userLoggedIn = useSelector(state => state.user.userLoggedIn)
   const dispatchFn = useDispatch();
-  
   const handleExit = (eventHM) => {
     eventHM.preventDefault()
     dispatchFn(setUserName(''));
     dispatchFn(setUserEmail(''));
     dispatchFn(setUserId(''));
     dispatchFn(setUserLoggedIn(false))
-
   }
   return (
       <div style={{ display: "flex" }}>
